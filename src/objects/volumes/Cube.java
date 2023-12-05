@@ -12,6 +12,7 @@ public class Cube extends GraphicalObject {
 	/* PROPRIÉTÉS/ATTRIBUTS */
 	// Faces du cube
 	private ArrayList<Square> faces;
+
 	private enum Face {
 		TOP, FRONT, BACK, LEFT, RIGHT, BOTTOM
 	}
@@ -45,7 +46,7 @@ public class Cube extends GraphicalObject {
 		super(gl, posX, posY, posZ, angleX, angleY, angleZ, scale, r, g, b);
 
 		// Créer la liste des faces
-		this.faces = new ArrayList<Square>();
+		this.setFaces(new ArrayList<Square>());
 		// Ajouter la face supérieure
 		faces.add(new Square(gl, 0, 1, 0,
 				90, 0, 0,
@@ -90,8 +91,20 @@ public class Cube extends GraphicalObject {
 				RGBColor.WHITE[2]);
 	}
 
-	/* MÉTHODES */
-	/* Getters/Setters */
+	/**
+	 * Définir les faces du cube
+	 * 
+	 * @param faces Un tableau de carrés (faces) du cube
+	 */
+	public void setFaces(ArrayList<Square> faces) {
+		this.faces = faces;
+	}
+
+	/**
+	 * Récupérer les faces du cube
+	 * 
+	 * @return Un tableau de carrés (faces) du cube
+	 */
 	public ArrayList<Square> getFaces() {
 		return this.faces;
 	}
