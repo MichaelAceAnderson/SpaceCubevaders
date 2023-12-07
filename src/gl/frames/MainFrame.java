@@ -181,9 +181,7 @@ public class MainFrame extends GLCanvas
 		gl.glPushMatrix();
 		{
 			// Pour tous les objets
-			for (GraphicalObject object : this.objects) {
-				// Faire une rotation
-				object.rotate(0.0f, 0.0f, 0.0f);
+			for (GraphicalObject object : this.getObjects()) {
 				// Dessiner l'objet dans le contexte OpenGL courant
 				object.display();
 			}
