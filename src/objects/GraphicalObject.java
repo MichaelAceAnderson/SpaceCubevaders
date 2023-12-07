@@ -9,7 +9,7 @@ public abstract class GraphicalObject {
 	// Angle
 	protected float angleX, angleY, angleZ;
 	// Taille
-	protected float scale;
+	protected float scaleX, scaleY, scaleZ;
 	// Couleur
 	protected float red, green, blue;
 	// Contexte OpenGL
@@ -26,25 +26,31 @@ public abstract class GraphicalObject {
 	 * @param angleX L'angle en X
 	 * @param angleY L'angle en Y
 	 * @param angleZ L'angle en Z
-	 * @param scale  La taille
+	 * @param scaleX La taille sur l'axe X
+	 * @param scaleY La taille sur l'axe Y
+	 * @param scaleZ La taille sur l'axe Z
 	 * @param r      La couleur rouge
 	 * @param g      La couleur verte
 	 * @param b      La couleur bleue
 	 * 
 	 */
-	public GraphicalObject(GL2 gl, float posX, float posY, float posZ, float angleX, float angleY, float angleZ, float scale,
+	public GraphicalObject(GL2 gl, float posX, float posY, float posZ,
+			float angleX, float angleY, float angleZ,
+			float scaleX, float scaleY, float scaleZ,
 			float r, float g, float b) {
-		this.gl = gl;
-		this.posX = posX;
-		this.posY = posY;
-		this.posZ = posZ;
-		this.angleX = angleX;
-		this.angleY = angleY;
-		this.angleZ = angleZ;
-		this.scale = scale;
-		this.red = r;
-		this.green = g;
-		this.blue = b;
+		this.setGl(gl);
+		this.setPosX(posX);
+		this.setPosY(posY);
+		this.setPosZ(posZ);
+		this.setAngleX(angleX);
+		this.setAngleY(angleY);
+		this.setAngleZ(angleZ);
+		this.setScaleX(scaleX);
+		this.setScaleY(scaleY);
+		this.setScaleZ(scaleZ);
+		this.setRed(r);
+		this.setGreen(g);
+		this.setBlue(b);
 	}
 
 	/* MÉTHODES */
@@ -97,36 +103,112 @@ public abstract class GraphicalObject {
 		this.angleZ = angleZ;
 	}
 	
-	public float getScale() {
-		return this.scale;
+	/**
+	 * Définir la taille de cet objet graphique sur l'axe X
+	 * 
+	 * @param scaleX La taille de l'objet sur l'axe X
+	 */
+	public void setScaleX(float scaleX) {
+		this.scaleX = scaleX;
+	}
+
+	/**
+	 * Récupérer la taille de cet objet graphique sur l'axe X
+	 * 
+	 * @return La taille de l'objet sur l'axe X
+	 */
+	public float getScaleX() {
+		return this.scaleX;
 	}
 	
-	public void setScale(float scale) {
-		this.scale = scale;
+	/**
+	 * Définir la taille de cet objet graphique sur l'axe Y
+	 * 
+	 * @param scaleY La taille de l'objet sur l'axe Y
+	 */
+	public void setScaleY(float scaleY) {
+		this.scaleY = scaleY;
 	}
 	
-	public float getRed() {
-		return this.red;
+	/**
+	 * Récupérer la taille de cet objet graphique sur l'axe Y
+	 * 
+	 * @return La taille de l'objet sur l'axe Y
+	 */
+	public float getScaleY() {
+		return this.scaleY;
+	}
+
+	/**
+	 * Définir la taille de cet objet graphique sur l'axe Z
+	 * 
+	 * @param scaleZ La taille de l'objet sur l'axe Z
+	 */
+	public void setScaleZ(float scaleZ) {
+		this.scaleZ = scaleZ;
 	}
 	
+	/**
+	 * Récupérer la taille de cet objet graphique sur l'axe Z
+	 * 
+	 * @return La taille de l'objet sur l'axe Z
+	 */
+	public float getScaleZ() {
+		return this.scaleZ;
+	}
+
+	/**
+	 * Définir le taux de rouge de cet objet graphique
+	 * 
+	 * @param red Le taux de couleur rouge (entre 0.0 et 1.0)
+	 */
 	public void setRed(float red) {
 		this.red = red;
 	}
 	
-	public float getGreen() {
-		return this.green;
+	/**
+	 * Récupérer le taux de rouge de cet objet graphique
+	 * 
+	 * @return Le taux de couleur rouge
+	 */
+	public float getRed() {
+		return this.red;
 	}
 	
+	/**
+	 * Définir le taux de vert de cet objet graphique
+	 * 
+	 * @param green Le taux de couleur verte (entre 0.0 et 1.0)
+	 */
 	public void setGreen(float green) {
 		this.green = green;
 	}
 	
-	public float getBlue() {
-		return this.blue;
+	/**
+	 * Récupérer le taux de vert de cet objet graphique
+	 * 
+	 * @return Le taux de couleur verte
+	 */
+	public float getGreen() {
+		return this.green;
 	}
 	
+	/**
+	 * Définir le taux de bleu de cet objet graphique
+	 * 
+	 * @param blue Le taux de couleur bleue (entre 0.0 et 1.0)
+	 */
 	public void setBlue(float blue) {
 		this.blue = blue;
+	}
+	
+	/**
+	 * Récupérer le taux de bleu de cet objet graphique
+	 * 
+	 * @return Le taux de couleur bleu
+	 */
+	public float getBlue() {
+		return this.blue;
 	}
 	
 	/**

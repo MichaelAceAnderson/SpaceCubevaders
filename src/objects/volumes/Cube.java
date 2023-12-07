@@ -33,48 +33,53 @@ public class Cube extends GraphicalObject {
 	 * @param angleX L'angle en X
 	 * @param angleY L'angle en Y
 	 * @param angleZ L'angle en Z
-	 * @param scale  La taille
+	 * @param scaleX La taille sur l'axe X
+	 * @param scaleY La taille sur l'axe Y
+	 * @param scaleZ La taille sur l'axe Z
 	 * @param r      La couleur rouge
 	 * @param g      La couleur verte
 	 * @param b      La couleur bleue
 	 * 
 	 * @see GL2
 	 */
-	public Cube(GL2 gl, float posX, float posY, float posZ, float angleX, float angleY, float angleZ, float scale,
+	public Cube(GL2 gl, float posX, float posY, float posZ,
+			float angleX, float angleY, float angleZ,
+			float scaleX, float scaleY, float scaleZ,
 			float r, float g, float b) {
 		// Appeler le constructeur de la classe mère pour instancier l'objet graphique
-		super(gl, posX, posY, posZ, angleX, angleY, angleZ, scale, r, g, b);
+		super(gl, posX, posY, posZ, angleX, angleY, angleZ, scaleX, scaleY, scaleZ, r, g, b);
 
 		// Créer la liste des faces
 		this.setFaces(new ArrayList<Square>());
 		// Ajouter la face supérieure
 		faces.add(new Square(gl, 0, 1, 0,
 				90, 0, 0,
-				1,
+				1, 1, 1,
 				RGBColor.CYAN[0], RGBColor.CYAN[1], RGBColor.CYAN[2]));
 		// Ajouter la face avant
 		faces.add(new Square(gl, 0, 0, 1,
 				0, 0, 0,
-				1,
+				1, 1, 1,
 				RGBColor.RED[0], RGBColor.RED[1], RGBColor.RED[2]));
 		// Ajouter la face arrière
-		faces.add(new Square(gl, 0, 0, -1, 0,
-				0, 0, 1,
+		faces.add(new Square(gl, 0, 0, -1,
+				0, 0, 0,
+				1, 1, 1,
 				RGBColor.GREEN[0], RGBColor.GREEN[1], RGBColor.GREEN[2]));
 		// Ajouter la face gauche
 		faces.add(new Square(gl, -1, 0, 0,
 				0, -90, 0,
-				1,
+				1, 1, 1,
 				RGBColor.YELLOW[0], RGBColor.YELLOW[1], RGBColor.YELLOW[2]));
 		// Ajouter la face droite
 		faces.add(new Square(gl, 1, 0, 0,
 				0, 90, 0,
-				1,
+				1, 1, 1,
 				RGBColor.BLUE[0], RGBColor.BLUE[1], RGBColor.BLUE[2]));
 		// Ajouter la face inférieure
 		faces.add(new Square(gl, 0, -1, 0,
 				90, 0, 0,
-				1,
+				1, 1, 1,
 				RGBColor.MAGENTA[0], RGBColor.MAGENTA[1], RGBColor.MAGENTA[2]));
 	}
 
@@ -87,7 +92,7 @@ public class Cube extends GraphicalObject {
 	 *      float, float)
 	 */
 	public Cube(GL2 gl) {
-		this(gl, 0.0f, 0.0f, -10.0f, 0.0f, 0.0f, 0.0f, 1.0f, RGBColor.WHITE[0], RGBColor.WHITE[1],
+		this(gl, 0.0f, 0.0f, -10.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, RGBColor.WHITE[0], RGBColor.WHITE[1],
 				RGBColor.WHITE[2]);
 	}
 
