@@ -21,7 +21,7 @@ public abstract class GraphicalObject {
 	 * 
 	 * @param gl     Le contexte OpenGL
 	 * @param posX   La position en X
-	 * @param posY   La position en Y	
+	 * @param posY   La position en Y
 	 * @param posZ   La position en Z
 	 * @param angleX L'angle en X
 	 * @param angleY L'angle en Y
@@ -120,7 +120,7 @@ public abstract class GraphicalObject {
 	public float getScaleX() {
 		return this.scaleX;
 	}
-	
+
 	/**
 	 * Définir la taille de cet objet graphique sur l'axe Y
 	 * 
@@ -129,7 +129,7 @@ public abstract class GraphicalObject {
 	public void setScaleY(float scaleY) {
 		this.scaleY = scaleY;
 	}
-	
+
 	/**
 	 * Récupérer la taille de cet objet graphique sur l'axe Y
 	 * 
@@ -147,7 +147,7 @@ public abstract class GraphicalObject {
 	public void setScaleZ(float scaleZ) {
 		this.scaleZ = scaleZ;
 	}
-	
+
 	/**
 	 * Récupérer la taille de cet objet graphique sur l'axe Z
 	 * 
@@ -165,7 +165,7 @@ public abstract class GraphicalObject {
 	public void setRed(float red) {
 		this.red = red;
 	}
-	
+
 	/**
 	 * Récupérer le taux de rouge de cet objet graphique
 	 * 
@@ -183,7 +183,7 @@ public abstract class GraphicalObject {
 	public void setGreen(float green) {
 		this.green = green;
 	}
-	
+
 	/**
 	 * Récupérer le taux de vert de cet objet graphique
 	 * 
@@ -210,7 +210,7 @@ public abstract class GraphicalObject {
 	public float getBlue() {
 		return this.blue;
 	}
-	
+
 	/**
 	 * Récupérer le contexte OpenGL
 	 * 
@@ -251,10 +251,12 @@ public abstract class GraphicalObject {
 		gl.glPushMatrix();
 		{
 			this.getGl().glTranslatef(this.posX, this.posY, this.posZ);
-			this.getGl().glRotatef(this.angleX, 1.0f, 0.0f, 0.0f);
+			// Note: L'ordre des rotations est important car elles sont appliquées dans
+			// l'ordre inverse et non dans l'ordre de déclaration (bottom-up)
 			this.getGl().glRotatef(this.angleY, 0.0f, 1.0f, 0.0f);
 			this.getGl().glRotatef(this.angleZ, 0.0f, 0.0f, 1.0f);
-			this.getGl().glScalef(this.scale, this.scale, this.scale);
+			this.getGl().glRotatef(this.angleX, 1.0f, 0.0f, 0.0f);
+			this.getGl().glScalef(this.scaleX, this.scaleY, this.scaleZ);
 			this.getGl().glColor3f(this.red, this.green, this.blue);
 			this.draw();
 		}
@@ -270,9 +272,9 @@ public abstract class GraphicalObject {
 	 * 
 	 */
 	public void move(float x, float y, float z) {
-		this.posX += x;
-		this.posY += y;
-		this.posZ += z;
+		this.setPosX(this.getPosX() + x);
+		this.setPosY(this.getPosY() + y);
+		this.setPosZ(this.getPosZ() + z);
 	}
 	
 	/**
