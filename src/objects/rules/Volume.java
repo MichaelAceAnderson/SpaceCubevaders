@@ -1,13 +1,16 @@
+package objects.rules;
 
-package objects.shapes;
+import java.util.ArrayList;
 
 import com.jogamp.opengl.GL2;
 
 import common.RGBColor;
-import objects.rules.GraphicalObject;
-import objects.rules.Shape;
+import objects.shapes.Square;
 
-public class Square extends Shape {
+public abstract class Volume extends GraphicalObject {
+	// Formes composant le volume
+	private ArrayList<Shape> shapes;
+
 	/**
 	 * Créer un carré avec une position, un angle et une taille
 	 * 
@@ -27,7 +30,7 @@ public class Square extends Shape {
 	 * 
 	 * @see GraphicalObject#GraphicalObject(GL2, float, float, float, float, float,
 	 */
-	public Square(GL2 gl, float posX, float posY, float posZ,
+	public Volume(GL2 gl, float posX, float posY, float posZ,
 			float angleX, float angleY, float angleZ,
 			float scaleX, float scaleY, float scaleZ,
 			float r, float g, float b) {
@@ -35,6 +38,7 @@ public class Square extends Shape {
 				angleX, angleY, angleZ,
 				scaleX, scaleY, scaleZ,
 				r, g, b);
+		this.setShapes(new ArrayList<Shape>());
 	}
 
 	/**
@@ -45,7 +49,7 @@ public class Square extends Shape {
 	 * @see Square#Square(GL2, float, float, float, float, float, float, float,
 	 *      float)
 	 */
-	public Square(GL2 gl) {
+	public Volume(GL2 gl) {
 		this(gl, 0.0f, 0.0f, -10.0f,
 				0.0f, 45.0f, 0.0f,
 				1.0f, 1.0f, 1.0f,
@@ -53,28 +57,41 @@ public class Square extends Shape {
 	}
 
 	/**
-	 * Dessiner un carré
+	 * Définir les formes composant ce volume
 	 * 
-	 * @see GraphicalObject#draw()
+	 * @param shapes Les formes composant ce volume
+	 */
+	public void setShapes(ArrayList<Shape> shapes) {
+		this.shapes = shapes;
+	}
+
+	/**
+	 * Obtenir les formes composant ce volume
+	 * 
+	 * @return Les formes composant ce volume
+	 */
+	public ArrayList<Shape> getShapes() {
+		return this.shapes;
+	}
+
+	/**
+	 * Récupérer une forme composant ce volume à partir de son index
+	 * 
+	 * @param index L'index de la forme à récupérer
+	 */
+	public Shape getShape(int index) {
+		return this.getShapes().get(index);
+	}
+
+	/**
+	 * Dessiner ce volume
+	 * 
+	 * @see GraphicalObject#display()
 	 */
 	public void draw() {
-		// Commencer à dessiner le carré (lecture bottom-up)
-		this.getGl().glBegin(GL2.GL_QUADS);
-		{
-			// Dessiner chaque point qui compose le carré sur le plan XYZ
-			// Point du haut à gauche
-			this.getGl().glVertex3f(-1f, 1f, 0f);
-			// Point du haut à droite
-			this.getGl().glVertex3f(1f, 1f, 0f);
-			// Point du bas à droite
-			this.getGl().glVertex3f(1f, -1f, 0f);
-			// Point du bas à gauche
-			this.getGl().glVertex3f(-1f, -1f, 0f);
-
-			// Définir la couleur pour toutes les opérations à venir
-			this.getGl().glColor3f(this.getRed(), this.getGreen(), this.getBlue());
+		// Dessiner ce volume consiste à afficher toutes les formes qui le composent
+		for (Shape shape : this.getShapes()) {
+			shape.display();
 		}
-		// Finir de dessiner le carré
-		this.getGl().glEnd();
 	}
 }

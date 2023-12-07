@@ -2,16 +2,15 @@ package gl;
 
 import com.jogamp.opengl.GL2;
 
+import common.DebugMode;
+import common.RGBColor;
 import gl.frames.MainFrame;
-import objects.volumes.*;
+import objects.volumes.Cube;
 
 public class MainGL
 {
-	/* MÉTHODES */
-	// Point d'entrée du programme
 	public static void main(String[] args)
 	{
-		// Créer un canvas (zone de dessin) OpenGL
 		MainFrame glCanvas = new MainFrame();
 
 		// Attendre que le contexte OpenGL soit initialisé
@@ -26,12 +25,19 @@ public class MainGL
 			}
 		}
 
-		// Lorsque le contexte OpenGL est initialisé, on peut commencer à dessiner
+		// Créer une grille de 11x5 cubes
+		for (int row = 0; row < 5; row++) {
+			for (int col = -5; col < 6; col++) {
+				// Créer un cube
+				Cube cube = new Cube(gl, col * 3, row * 3, -40.0f,
+						0.0f, 0.0f, 0.0f,
+						1.0f, 1.0f, 1.0f,
+						RGBColor.WHITE[0], RGBColor.WHITE[1], RGBColor.WHITE[2]);
+				// Ajouter le cube à la liste des objets à afficher
+				glCanvas.getObjects().add(cube);
+			}
+		}
 
-		// Créer un cube
-		Pyramid pyramid = new Pyramid(gl);
-		pyramid.setRotation(30.0f, 25.0f, 0.0f);
-		// Ajouter le cube à la liste des objets à afficher
-		glCanvas.getObjects().add(pyramid);
+		DebugMode.printInfo(glCanvas);
 	}
 }

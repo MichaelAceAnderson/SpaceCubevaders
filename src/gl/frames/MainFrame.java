@@ -17,7 +17,6 @@ import objects.rules.GraphicalObject;
 
 public class MainFrame extends GLCanvas
 		implements GLEventListener {
-	/* PROPRIÉTÉS/ATTRIBUTS */
 	// Nombre d'itérations d'affichage
 	private int frameCount;
 	// Temps écoulé depuis le début de la boucle de rendu
@@ -29,7 +28,6 @@ public class MainFrame extends GLCanvas
 	// Objets à afficher
 	private ArrayList<GraphicalObject> objects;
 
-	/* CONSTRUCTEURS */
 	/**
 	 * Créer un objet MainFrame où le rendu OpenGL est effectué
 	 * 
@@ -155,9 +153,6 @@ public class MainFrame extends GLCanvas
 	 * (cette action est répétée en boucle de façon automatique et infinie en
 	 * fonction de la fréquence d'affichage).
 	 * 
-	 * NOTE: Cette méthode est lue à l'envers (bottom-up) en raison du
-	 * fonctionnement des matrices
-	 * 
 	 * @param canvas Le canvas OpenGL
 	 * 
 	 * @see GLEventListener#display(com.jogamp.opengl.GLAutoDrawable)
@@ -178,6 +173,7 @@ public class MainFrame extends GLCanvas
 		// Charger la matrice identité afin de repartir de zéro à chaque fois
 		gl.glLoadIdentity();
 
+		// Afficher tous les objets
 		gl.glPushMatrix();
 		{
 			// Pour tous les objets
@@ -188,7 +184,6 @@ public class MainFrame extends GLCanvas
 		}
 		gl.glPopMatrix();
 
-		// Récupérer le temps actuel
 		long currentTime = System.nanoTime();
 		// Calculer le temps écoulé depuis le dernier calcul du temps (itération
 		// précédentes)
@@ -196,8 +191,6 @@ public class MainFrame extends GLCanvas
 		this.setElapsedTime(currentTime);
 		// Calculer le nombre de FPS
 		this.setFps((int) TimeUnit.SECONDS.toNanos(1) / (int) deltaTime);
-		// Toutes les 60 itérations, changer le titre de la fenêtre pour afficher le
-		// nombre de FPS
 		if (this.getFrameCount() % 60 == 0)
 			this.getFrame().setTitle("FPS: " + this.fps + ", Frame: " + this.getFrameCount());
 	}
@@ -227,6 +220,7 @@ public class MainFrame extends GLCanvas
 	@Override
 	public void init(GLAutoDrawable canvas) {
 		GL2 gl = canvas.getGL().getGL2();
+		// Définir la couleur de fond
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		// Vider le buffer de profondeur
 		gl.glClearDepth(1.0);
@@ -259,8 +253,8 @@ public class MainFrame extends GLCanvas
 		gl.glViewport(0, 0, width, height);
 		// Définir le mode de projection à utiliser
 		gl.glMatrixMode(GL2.GL_PROJECTION);
-		// Charger la matrice identité afin de repartir de zéro à chaque
-		// redimensionnement
+		// Charger la matrice identité pour effacer les transformations précédentes et
+		// repartir de zéro
 		gl.glLoadIdentity();
 		// Créer un GLU (OpenGL Utility Library) pour définir la perspective
 		GLU glu = new GLU();
@@ -268,7 +262,5 @@ public class MainFrame extends GLCanvas
 				0.1, 100.0);
 		// Définir le mode de projection à utiliser)
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
-		// Charger la matrice identité encore une fois pour
-		gl.glLoadIdentity();
 	}
 }

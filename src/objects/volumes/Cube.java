@@ -1,23 +1,18 @@
 package objects.volumes;
 
-import java.util.ArrayList;
-
 import com.jogamp.opengl.GL2;
 
+import common.DebugMode;
 import common.RGBColor;
-import objects.rules.GraphicalObject;
+import objects.rules.Shape;
+import objects.rules.Volume;
 import objects.shapes.Square;
 
-public class Cube extends GraphicalObject {
-	/* PROPRIÉTÉS/ATTRIBUTS */
-	// Faces du cube
-	private ArrayList<Square> faces;
-
+public class Cube extends Volume {
 	private enum Face {
 		TOP, FRONT, BACK, LEFT, RIGHT, BOTTOM
 	}
 
-	/* CONSTRUCTEURS */
 	/**
 	 * Créer un cube avec quatre instances de Square, une position, un angle, une
 	 * taille et une couleur
@@ -45,38 +40,66 @@ public class Cube extends GraphicalObject {
 		// Appeler le constructeur de la classe mère pour instancier l'objet graphique
 		super(gl, posX, posY, posZ, angleX, angleY, angleZ, scaleX, scaleY, scaleZ, r, g, b);
 
-		// Créer la liste des faces
-		this.setFaces(new ArrayList<Square>());
 		// Ajouter la face supérieure
-		this.getFaces().add(new Square(gl, 0, 1, 0,
+		if (DebugMode.RAINBOW) {
+			r = RGBColor.CYAN[0];
+			g = RGBColor.CYAN[1];
+			b = RGBColor.CYAN[2];
+		}
+		this.getShapes().add(new Square(gl, 0, 1, 0,
 				90, 0, 0,
 				1, 1, 1,
-				RGBColor.CYAN[0], RGBColor.CYAN[1], RGBColor.CYAN[2]));
+				r, g, b));
 		// Ajouter la face avant
-		this.getFaces().add(new Square(gl, 0, 0, 1,
+		if (DebugMode.RAINBOW) {
+			r = RGBColor.RED[0];
+			g = RGBColor.RED[1];
+			b = RGBColor.RED[2];
+		}
+		this.getShapes().add(new Square(gl, 0, 0, 1,
 				0, 0, 0,
 				1, 1, 1,
-				RGBColor.RED[0], RGBColor.RED[1], RGBColor.RED[2]));
+				r, g, b));
 		// Ajouter la face arrière
-		this.getFaces().add(new Square(gl, 0, 0, -1,
+		if (DebugMode.RAINBOW) {
+			r = RGBColor.GREEN[0];
+			g = RGBColor.GREEN[1];
+			b = RGBColor.GREEN[2];
+		}
+		this.getShapes().add(new Square(gl, 0, 0, -1,
 				0, 0, 0,
 				1, 1, 1,
-				RGBColor.GREEN[0], RGBColor.GREEN[1], RGBColor.GREEN[2]));
+				r, g, b));
 		// Ajouter la face gauche
-		this.getFaces().add(new Square(gl, -1, 0, 0,
+		if (DebugMode.RAINBOW) {
+			r = RGBColor.YELLOW[0];
+			g = RGBColor.YELLOW[1];
+			b = RGBColor.YELLOW[2];
+		}
+		this.getShapes().add(new Square(gl, -1, 0, 0,
 				0, -90, 0,
 				1, 1, 1,
-				RGBColor.YELLOW[0], RGBColor.YELLOW[1], RGBColor.YELLOW[2]));
+				r, g, b));
 		// Ajouter la face droite
-		this.getFaces().add(new Square(gl, 1, 0, 0,
+		if (DebugMode.RAINBOW) {
+			r = RGBColor.BLUE[0];
+			g = RGBColor.BLUE[1];
+			b = RGBColor.BLUE[2];
+		}
+		this.getShapes().add(new Square(gl, 1, 0, 0,
 				0, 90, 0,
 				1, 1, 1,
-				RGBColor.BLUE[0], RGBColor.BLUE[1], RGBColor.BLUE[2]));
+				r, g, b));
 		// Ajouter la face inférieure
-		this.getFaces().add(new Square(gl, 0, -1, 0,
+		if (DebugMode.RAINBOW) {
+			r = RGBColor.MAGENTA[0];
+			g = RGBColor.MAGENTA[1];
+			b = RGBColor.MAGENTA[2];
+		}
+		this.getShapes().add(new Square(gl, 0, -1, 0,
 				90, 0, 0,
 				1, 1, 1,
-				RGBColor.MAGENTA[0], RGBColor.MAGENTA[1], RGBColor.MAGENTA[2]));
+				r, g, b));
 	}
 
 	/**
@@ -88,50 +111,22 @@ public class Cube extends GraphicalObject {
 	 *      float, float)
 	 */
 	public Cube(GL2 gl) {
-		this(gl, 0.0f, 0.0f, -10.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, RGBColor.WHITE[0], RGBColor.WHITE[1],
-				RGBColor.WHITE[2]);
-	}
-
-	/**
-	 * Définir les faces du cube
-	 * 
-	 * @param faces Un tableau de carrés (faces) du cube
-	 */
-	public void setFaces(ArrayList<Square> faces) {
-		this.faces = faces;
-	}
-
-	/**
-	 * Récupérer les faces du cube
-	 * 
-	 * @return Un tableau de carrés (faces) du cube
-	 */
-	public ArrayList<Square> getFaces() {
-		return this.faces;
+		this(gl, 0.0f, 0.0f, -10.0f,
+				0.0f, 0.0f, 0.0f,
+				1.0f, 1.0f, 1.0f,
+				RGBColor.WHITE[0], RGBColor.WHITE[1], RGBColor.WHITE[2]);
 	}
 
 	/**
 	 * Récupérer une face du cube
 	 * 
 	 * @param face La face du cube selon l'énumération Face
+	 * 
 	 * @return La face du cube
 	 * 
 	 * @see Face
 	 */
-	public Square getFace(Face face) {
-		return this.getFaces().get(face.ordinal());
-	}
-
-	/* Autres méthodes */
-	/**
-	 * Afficher ce cube
-	 * 
-	 * @see GraphicalObject#draw()
-	 */
-	public void draw() {
-		// Afficher chaque face du cube
-		for (Square face : this.faces) {
-			face.display();
-		}
+	public Shape getFace(Face face) {
+		return this.getShapes().get(face.ordinal());
 	}
 }

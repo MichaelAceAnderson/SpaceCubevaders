@@ -4,9 +4,9 @@ import com.jogamp.opengl.GL2;
 
 import common.RGBColor;
 import objects.rules.GraphicalObject;
+import objects.rules.Shape;
 
-public class Triangle extends GraphicalObject {
-	/* CONSTRUCTEURS */
+public class Triangle extends Shape {
 	/**
 	 * Créer un triangle avec une position, un angle et une taille
 	 * 
@@ -49,10 +49,11 @@ public class Triangle extends GraphicalObject {
 	}
 
 	/**
-	 * Dessiner un triangle
+	 * Dessiner le triangle
 	 * 
 	 * @see GraphicalObject#draw()
 	 */
+	@Override
 	public void draw() {
 		// Commencer à dessiner le triangle (lecture bottom-up)
 		this.getGl().glBegin(GL2.GL_TRIANGLES);
@@ -66,7 +67,7 @@ public class Triangle extends GraphicalObject {
 			this.getGl().glVertex3f(0.0f, 1.0f, 0.0f);
 
 			// Définir la couleur pour toutes les opérations à venir
-			this.getGl().glColor3f(this.red, this.green, this.blue);
+			this.getGl().glColor3f(this.getRed(), this.getGreen(), this.getBlue());
 		}
 		// Finir de dessiner les triangles
 		this.getGl().glEnd();

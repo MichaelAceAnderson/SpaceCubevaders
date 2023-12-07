@@ -1,9 +1,11 @@
 package objects.rules;
 
+import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 
+import common.DebugMode;
+
 public abstract class GraphicalObject {
-	/* PROPRIÉTÉS/ATTRIBUTS */
 	// Position
 	protected float posX, posY, posZ;
 	// Angle
@@ -15,7 +17,6 @@ public abstract class GraphicalObject {
 	// Contexte OpenGL
 	protected GL2 gl;
 
-	/* CONSTRUCTEURS */
 	/**
 	 * Créer un objet graphique
 	 * 
@@ -53,7 +54,6 @@ public abstract class GraphicalObject {
 		this.setBlue(b);
 	}
 
-	/* MÉTHODES */
 	/* Getters/Setters */
 	public float getPosX() {
 		return this.posX;
@@ -234,33 +234,48 @@ public abstract class GraphicalObject {
 	}
 
 	/**
-	 * Afficher cet objet graphique
+	 * Dessiner cet objet graphique.
+	 * Cette méthode doit être implémentée dans les classes filles afin de
+	 * déterminer comment l'objet doit être dessiné et affiché dans la méthode
+	 * display().
 	 * 
-	 * @param gl Le contexte OpenGL
-	 * 
-	 * @see GL2
+	 * @see GraphicalObject#display()
 	 */
 	public abstract void draw();
 
 	/**
-	 * Afficher cet objet graphique dans son contexte courant
+	 * Afficher cet objet graphique dans son contexte courant.
+	 * 
+	 * NOTE: Cette méthode est lue à l'envers (bottom-up) en raison du
+	 * fonctionnement des matrices
 	 * 
 	 * @see GL2
 	 */
 	public void display() {
-		gl.glPushMatrix();
+		// Sauvegarder la matrice actuelle
+		this.getGl().glPushMatrix();
 		{
-			this.getGl().glTranslatef(this.posX, this.posY, this.posZ);
-			// Note: L'ordre des rotations est important car elles sont appliquées dans
-			// l'ordre inverse et non dans l'ordre de déclaration (bottom-up)
-			this.getGl().glRotatef(this.angleY, 0.0f, 1.0f, 0.0f);
-			this.getGl().glRotatef(this.angleZ, 0.0f, 0.0f, 1.0f);
-			this.getGl().glRotatef(this.angleX, 1.0f, 0.0f, 0.0f);
-			this.getGl().glScalef(this.scaleX, this.scaleY, this.scaleZ);
-			this.getGl().glColor3f(this.red, this.green, this.blue);
+			// Déplacer l'objet graphique
+			this.getGl().glTranslatef(this.getPosX(), this.getPosY(), this.getPosZ());
+			// Tourner l'objet graphique (l'ordre des rotations est important)
+			this.getGl().glRotatef(this.getAngleX(), 1.0f, 0.0f, 0.0f);
+			this.getGl().glRotatef(this.getAngleZ(), 0.0f, 0.0f, 1.0f);
+			this.getGl().glRotatef(this.getAngleY(), 0.0f, 1.0f, 0.0f);
+			// Mettre à l'échelle l'objet graphique
+			this.getGl().glScalef(this.getScaleX(), this.getScaleY(), this.getScaleZ());
+			if (DebugMode.LINE_MODE) {
+				// Activer le mode contour
+				gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_LINE);
+			}
+			// Dessiner l'objet graphique
 			this.draw();
+			if (DebugMode.LINE_MODE) {
+				// Revenir au mode de remplissage normal
+				gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_FILL);
+			}
 		}
-		gl.glPopMatrix();
+		// Restaurer la matrice précédente
+		this.getGl().glPopMatrix();
 	}
 
 	/**
@@ -305,5 +320,18 @@ public abstract class GraphicalObject {
 		this.setAngleX(angleX);
 		this.setAngleY(angleY);
 		this.setAngleZ(angleZ);
+	}
+
+	/**
+	 * Afficher en console les caractéristiques de cet objet graphique
+	 */
+	@Override
+	public String toString() {
+		return "GraphicalObject: " + "\n"
+				+ "\tType: " + this.getClass().getSimpleName() + "\n"
+				+ "\tPosition: X: " + this.getPosX() + ", Y: " + this.getPosY() + ", Z: " + this.getPosZ() + "\n"
+				+ "\tAngle: X: " + this.getAngleX() + ", Y: " + this.getAngleY() + ", Z: " + this.getAngleZ() + "\n"
+				+ "\tScale: X: " + this.getScaleX() + ", Y: " + this.getScaleY() + ", Z: " + this.getScaleZ() + "\n"
+				+ "\tCouleur: R: " + this.getRed() + ", G: " + this.getGreen() + ", B: " + this.getBlue();
 	}
 }

@@ -1,0 +1,142 @@
+@startuml Space Cubevaders
+class MainGL {
+  +main(args : String[]) : void
+}
+
+
+' un MainGL contient un MainFrame
+MainGL "1" --> "1" MainFrame
+
+' MainFrame hérite de GLCanvas et implémente GLEventListener
+MainFrame <|-- GLCanvas
+MainFrame <|.. GLEventListener
+class MainFrame {
+  -frameCount : int
+  -elapsedTime : long
+  -fps : int
+  -frame : JFrame
+  -objects : ArrayList<GraphicalObject>
+  
+  +MainFrame()
+  +getFrameCount() : int
+  +setFrameCount(renderedFrame : int) : void
+  +getElapsedTime() : long
+  +setElapsedTime(elapsedTime : long) : void
+  +getFps() : int
+  +setFps(fps : int) : void
+  +getFrame() : JFrame
+  +setFrame(frame : JFrame) : void
+  +getObjects() : ArrayList<GraphicalObject>
+  +setObjects(objects : ArrayList<GraphicalObject>) : void
+  +getPreferredSize() : Dimension
+}
+
+' un MainFrame contient plusieurs GraphicalObject
+MainFrame "1" --> "*" GraphicalObject
+
+abstract class GraphicalObject {
+  -posX : float
+  -posY : float
+  -posZ : float
+  -angleX : float
+  -angleY : float
+  -angleZ : float
+  -scaleX : float
+  -scaleY : float
+  -scaleZ : float
+  -red : float
+  -green : float
+  -blue : float
+  -gl : GL2
+  
+  +GraphicalObject(gl : GL2, posX : float, posY : float, posZ : float, angleX : float, angleY : float, angleZ : float, scaleX : float, scaleY : float, scaleZ : float, r : float, g : float, b : float)
+  +getPosX() : float
+  +setPosX(posX : float) : void
+  +getPosY() : float
+  +setPosY(posY : float) : void
+  +getPosZ() : float
+  +setPosZ(posZ : float) : void
+  +getAngleX() : float
+  +setAngleX(angleX : float) : void
+  +getAngleY() : float
+  +setAngleY(angleY : float) : void
+  +getAngleZ() : float
+  +setAngleZ(angleZ : float) : void
+  +setScaleX(scaleX : float) : void
+  +getScaleX() : float
+  +setScaleY(scaleY : float) : void
+  +getScaleY() : float
+  +setScaleZ(scaleZ : float) : void
+  +getScaleZ() : float
+  +setRed(red : float) : void
+  +getRed() : float
+  +setGreen(green : float) : void
+  +getGreen() : float
+  +setBlue(blue : float) : void
+  +getBlue() : float
+  +getGl() : GL2
+  +draw() : void (abstract)
+  +setGl(gl : GL2) : void
+  +display() : void
+  +move(x : float, y : float, z : float) : void
+  +rotate(angleX : float, angleY : float, angleZ : float) : void
+  +setRotation(angleX : float, angleY : float, angleZ : float) : void
+}
+
+' Shape hérite de GraphicalObject
+Shape --|> GraphicalObject
+abstract class Shape {
+  +Shape(gl : GL2, posX : float, posY : float, posZ : float, angleX : float, angleY : float, angleZ : float, scaleX : float, scaleY : float, scaleZ : float, r : float, g : float, b : float)
+  +Shape(gl : GL2)
+  +draw() : void (abstract)
+}
+
+' Square hérite de Shape
+Square --|> Shape
+class Square {
+  +Square(gl : GL2, posX : float, posY : float, posZ : float, angleX : float, angleY : float, angleZ : float, scaleX : float, scaleY : float, scaleZ : float, r : float, g : float, b : float)
+  +Square(gl : GL2)
+  +draw() : void (implémentation)
+}
+
+' Triangle hérite de Shape
+Triangle --|> Shape
+class Triangle {
+  +Triangle(gl : GL2, posX : float, posY : float, posZ : float, angleX : float, angleY : float, angleZ : float, scaleX : float, scaleY : float, scaleZ : float, r : float, g : float, b : float)
+  +Triangle(gl : GL2)
+  +draw() : void (implémentation)
+}
+
+abstract class Volume {
+  -shapes : ArrayList<Shape>
+  
+  +Volume(gl : GL2, posX : float, posY : float, posZ : float, angleX : float, angleY : float, angleZ : float, scaleX : float, scaleY : float, scaleZ : float, r : float, g : float, b : float)
+  +Volume(gl : GL2)
+  +setShapes(shapes : ArrayList<Shape>) : void
+  +getShapes() : ArrayList<Shape>
+  +getShape(index : int) : Shape
+  +draw() : void (implémentation)
+}
+
+' un Volume contient plusieurs Shape
+Volume "1" --> "*" Shape
+
+' Pyramid hérite de Volume
+Pyramid --|> Volume
+class Pyramid {
+  -Face : enum
+  +Pyramid(gl : GL2, posX : float, posY : float, posZ : float, angleX : float, angleY : float, angleZ : float, scaleX : float, scaleY : float, scaleZ : float, r : float, g : float, b : float)
+  +Pyramid(gl : GL2)
+  +getFace(face : Face) : Shape
+}
+
+' Cube hérite de Volume
+Cube --|> Volume
+class Cube {
+  -Face : enum
+  +Cube(gl : GL2, posX : float, posY : float, posZ : float, angleX : float, angleY : float, angleZ : float, scaleX : float, scaleY : float, scaleZ : float, r : float, g : float, b : float)
+  +Cube(gl : GL2)
+  +getFace(face : Face) : Shape
+}
+
+@enduml
