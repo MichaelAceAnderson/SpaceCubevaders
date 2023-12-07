@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.jogamp.opengl.GL2;
 
 import common.RGBColor;
-import objects.GraphicalObject;
+import objects.rules.GraphicalObject;
 import objects.shapes.Square;
 
 public class Cube extends GraphicalObject {
@@ -23,10 +23,6 @@ public class Cube extends GraphicalObject {
 	 * taille et une couleur
 	 * 
 	 * @param gl     Le contexte OpenGL
-	 * @param front  L'instance de Square pour la face avant
-	 * @param back   L'instance de Square pour la face arrière
-	 * @param left   L'instance de Square pour la face gauche
-	 * @param right  L'instance de Square pour la face droite
 	 * @param posX   La position en X
 	 * @param posY   La position en Y
 	 * @param posZ   La position en Z
@@ -52,32 +48,32 @@ public class Cube extends GraphicalObject {
 		// Créer la liste des faces
 		this.setFaces(new ArrayList<Square>());
 		// Ajouter la face supérieure
-		faces.add(new Square(gl, 0, 1, 0,
+		this.getFaces().add(new Square(gl, 0, 1, 0,
 				90, 0, 0,
 				1, 1, 1,
 				RGBColor.CYAN[0], RGBColor.CYAN[1], RGBColor.CYAN[2]));
 		// Ajouter la face avant
-		faces.add(new Square(gl, 0, 0, 1,
+		this.getFaces().add(new Square(gl, 0, 0, 1,
 				0, 0, 0,
 				1, 1, 1,
 				RGBColor.RED[0], RGBColor.RED[1], RGBColor.RED[2]));
 		// Ajouter la face arrière
-		faces.add(new Square(gl, 0, 0, -1,
+		this.getFaces().add(new Square(gl, 0, 0, -1,
 				0, 0, 0,
 				1, 1, 1,
 				RGBColor.GREEN[0], RGBColor.GREEN[1], RGBColor.GREEN[2]));
 		// Ajouter la face gauche
-		faces.add(new Square(gl, -1, 0, 0,
+		this.getFaces().add(new Square(gl, -1, 0, 0,
 				0, -90, 0,
 				1, 1, 1,
 				RGBColor.YELLOW[0], RGBColor.YELLOW[1], RGBColor.YELLOW[2]));
 		// Ajouter la face droite
-		faces.add(new Square(gl, 1, 0, 0,
+		this.getFaces().add(new Square(gl, 1, 0, 0,
 				0, 90, 0,
 				1, 1, 1,
 				RGBColor.BLUE[0], RGBColor.BLUE[1], RGBColor.BLUE[2]));
 		// Ajouter la face inférieure
-		faces.add(new Square(gl, 0, -1, 0,
+		this.getFaces().add(new Square(gl, 0, -1, 0,
 				90, 0, 0,
 				1, 1, 1,
 				RGBColor.MAGENTA[0], RGBColor.MAGENTA[1], RGBColor.MAGENTA[2]));

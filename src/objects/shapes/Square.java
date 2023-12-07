@@ -4,7 +4,7 @@ package objects.shapes;
 import com.jogamp.opengl.GL2;
 
 import common.RGBColor;
-import objects.GraphicalObject;
+import objects.rules.GraphicalObject;
 
 public class Square extends GraphicalObject {
 	/* CONSTRUCTEURS */

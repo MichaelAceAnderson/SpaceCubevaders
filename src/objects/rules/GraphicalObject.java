@@ -1,4 +1,4 @@
-package objects;
+package objects.rules;
 
 import com.jogamp.opengl.GL2;
 
@@ -58,51 +58,51 @@ public abstract class GraphicalObject {
 	public float getPosX() {
 		return this.posX;
 	}
-	
+
 	public void setPosX(float posX) {
 		this.posX = posX;
 	}
-	
+
 	public float getPosY() {
 		return this.posY;
 	}
-	
+
 	public void setPosY(float posY) {
 		this.posY = posY;
 	}
-	
+
 	public float getPosZ() {
 		return this.posZ;
 	}
-	
+
 	public void setPosZ(float posZ) {
 		this.posZ = posZ;
 	}
-	
+
 	public float getAngleX() {
 		return this.angleX;
 	}
-	
+
 	public void setAngleX(float angleX) {
 		this.angleX = angleX;
 	}
-	
+
 	public float getAngleY() {
 		return this.angleY;
 	}
-	
+
 	public void setAngleY(float angleY) {
 		this.angleY = angleY;
 	}
-	
+
 	public float getAngleZ() {
 		return this.angleZ;
 	}
-	
+
 	public void setAngleZ(float angleZ) {
 		this.angleZ = angleZ;
 	}
-	
+
 	/**
 	 * Définir la taille de cet objet graphique sur l'axe X
 	 * 
@@ -174,7 +174,7 @@ public abstract class GraphicalObject {
 	public float getRed() {
 		return this.red;
 	}
-	
+
 	/**
 	 * Définir le taux de vert de cet objet graphique
 	 * 
@@ -192,7 +192,7 @@ public abstract class GraphicalObject {
 	public float getGreen() {
 		return this.green;
 	}
-	
+
 	/**
 	 * Définir le taux de bleu de cet objet graphique
 	 * 
@@ -201,7 +201,7 @@ public abstract class GraphicalObject {
 	public void setBlue(float blue) {
 		this.blue = blue;
 	}
-	
+
 	/**
 	 * Récupérer le taux de bleu de cet objet graphique
 	 * 
@@ -276,7 +276,7 @@ public abstract class GraphicalObject {
 		this.setPosY(this.getPosY() + y);
 		this.setPosZ(this.getPosZ() + z);
 	}
-	
+
 	/**
 	 * Faire tourner cet objet graphique (par rapport à sa position actuelle)
 	 * 

@@ -13,7 +13,7 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.Animator;
 
-import objects.GraphicalObject;
+import objects.rules.GraphicalObject;
 
 public class MainFrame extends GLCanvas
 		implements GLEventListener {

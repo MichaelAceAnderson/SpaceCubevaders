@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.jogamp.opengl.GL2;
 
 import common.RGBColor;
-import objects.GraphicalObject;
+import objects.rules.GraphicalObject;
 import objects.shapes.Square;
 import objects.shapes.Triangle;
 
@@ -25,11 +25,6 @@ public class Pyramid extends GraphicalObject {
 	 * taille et une couleur
 	 * 
 	 * @param gl     Le contexte OpenGL
-	 * @param base   L'instance de Triangle pour la base de la pyramide
-	 * @param front  L'instance de Triangle pour la face avant
-	 * @param back   L'instance de Triangle pour la face arrière
-	 * @param left   L'instance de Triangle pour la face gauche
-	 * @param right  L'instance de Triangle pour la face droite
 	 * @param posX   La position en X
 	 * @param posY   La position en Y
 	 * @param posZ   La position en Z
