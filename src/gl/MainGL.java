@@ -30,7 +30,7 @@ public class MainGL
 
 		// Créer un cube
 		Pyramid pyramid = new Pyramid(gl);
-		pyramid.setRotation(10.0f, 45.0f, 0.0f);
+		pyramid.setRotation(30.0f, 25.0f, 0.0f);
 		// Ajouter le cube à la liste des objets à afficher
 		glCanvas.getObjects().add(pyramid);
 	}

@@ -183,7 +183,7 @@ public class MainFrame extends GLCanvas
 			// Pour tous les objets
 			for (GraphicalObject object : this.objects) {
 				// Faire une rotation
-				object.rotate(0.0f, 1.0f, 0.0f);
+				object.rotate(0.0f, 0.0f, 0.0f);
 				// Dessiner l'objet dans le contexte OpenGL courant
 				object.display();
 			}
