@@ -14,30 +14,42 @@ public abstract class GraphicalObject {
 	protected float scaleX, scaleY, scaleZ;
 	// Couleur
 	protected float red, green, blue;
+	// Mouvements dans le temps
+	protected float speedX, speedY, speedZ;
+	// Rotations dans le temps
+	protected float rotationX, rotationY, rotationZ;
 	// Contexte OpenGL
 	protected GL2 gl;
 
 	/**
 	 * Créer un objet graphique
 	 * 
-	 * @param gl     Le contexte OpenGL
-	 * @param posX   La position en X
-	 * @param posY   La position en Y
-	 * @param posZ   La position en Z
-	 * @param angleX L'angle en X
-	 * @param angleY L'angle en Y
-	 * @param angleZ L'angle en Z
-	 * @param scaleX La taille sur l'axe X
-	 * @param scaleY La taille sur l'axe Y
-	 * @param scaleZ La taille sur l'axe Z
-	 * @param r      La couleur rouge
-	 * @param g      La couleur verte
-	 * @param b      La couleur bleue
+	 * @param gl        Le contexte OpenGL
+	 * @param posX      La position en X
+	 * @param posY      La position en Y
+	 * @param posZ      La position en Z
+	 * @param angleX    L'angle en X
+	 * @param angleY    L'angle en Y
+	 * @param angleZ    L'angle en Z
+	 * @param scaleX    La taille sur l'axe X
+	 * @param scaleY    La taille sur l'axe Y
+	 * @param scaleZ    La taille sur l'axe Z
+	 * @param speedX    La vitesse sur l'axe X
+	 * @param speedY    La vitesse sur l'axe Y
+	 * @param speedZ    La vitesse sur l'axe Z
+	 * @param rotationX La rotation sur l'axe X
+	 * @param rotationY La rotation sur l'axe Y
+	 * @param rotationZ La rotation sur l'axe Z
+	 * @param r         La couleur rouge
+	 * @param g         La couleur verte
+	 * @param b         La couleur bleue
 	 * 
 	 */
 	public GraphicalObject(GL2 gl, float posX, float posY, float posZ,
 			float angleX, float angleY, float angleZ,
 			float scaleX, float scaleY, float scaleZ,
+			float speedX, float speedY, float speedZ,
+			float rotationX, float rotationY, float rotationZ,
 			float r, float g, float b) {
 		this.setGl(gl);
 		this.setPosX(posX);
@@ -49,56 +61,115 @@ public abstract class GraphicalObject {
 		this.setScaleX(scaleX);
 		this.setScaleY(scaleY);
 		this.setScaleZ(scaleZ);
+		this.setSpeedX(speedX);
+		this.setSpeedY(speedY);
+		this.setSpeedZ(speedZ);
+		this.setRotationX(rotationX);
+		this.setRotationY(rotationY);
+		this.setRotationZ(rotationZ);
 		this.setRed(r);
 		this.setGreen(g);
 		this.setBlue(b);
 	}
 
-	/* Getters/Setters */
+	/**
+	 * Récupérer la position en X de cet objet graphique
+	 * 
+	 * @return La position en X
+	 */
 	public float getPosX() {
 		return this.posX;
 	}
 
+	/**
+	 * Définir la position en X de cet objet graphique
+	 */
 	public void setPosX(float posX) {
 		this.posX = posX;
 	}
 
+	/**
+	 * Récupérer la position en Y de cet objet graphique
+	 * 
+	 * @return La position en Y
+	 */
 	public float getPosY() {
 		return this.posY;
 	}
 
+	/**
+	 * Définir la position en Y de cet objet graphique
+	 * 
+	 * @param posY La position en Y
+	 */
 	public void setPosY(float posY) {
 		this.posY = posY;
 	}
 
+	/**
+	 * Récupérer la position en Z de cet objet graphique
+	 * 
+	 * @return La position en Z
+	 */
 	public float getPosZ() {
 		return this.posZ;
 	}
 
+	/**
+	 * Définir la position en Z de cet objet graphique
+	 * 
+	 * @param posZ La position en Z
+	 */
 	public void setPosZ(float posZ) {
 		this.posZ = posZ;
 	}
 
+	/**
+	 * Récupérer l'angle en X de cet objet graphique
+	 * 
+	 * @return L'angle en X
+	 */
 	public float getAngleX() {
 		return this.angleX;
 	}
 
+	/**
+	 * Définir l'angle en X de cet objet graphique
+	 * 
+	 * @param angleX L'angle en X
+	 */
 	public void setAngleX(float angleX) {
 		this.angleX = angleX;
 	}
 
+	/**
+	 * Récupérer l'angle en Y de cet objet graphique
+	 * 
+	 * @return L'angle en Y
+	 */
 	public float getAngleY() {
 		return this.angleY;
 	}
 
+	/**
+	 * Définir l'angle en Y de cet objet graphique
+	 */
 	public void setAngleY(float angleY) {
 		this.angleY = angleY;
 	}
 
+	/**
+	 * Récupérer l'angle en Z de cet objet graphique
+	 */
 	public float getAngleZ() {
 		return this.angleZ;
 	}
 
+	/**
+	 * Définir l'angle en Z de cet objet graphique
+	 * 
+	 * @param angleZ L'angle en Z
+	 */
 	public void setAngleZ(float angleZ) {
 		this.angleZ = angleZ;
 	}
@@ -140,12 +211,111 @@ public abstract class GraphicalObject {
 	}
 
 	/**
-	 * Définir la taille de cet objet graphique sur l'axe Z
+	 * Récupérer la vitesse de cet objet graphique sur l'axe X
 	 * 
-	 * @param scaleZ La taille de l'objet sur l'axe Z
+	 * @return La vitesse de l'objet sur l'axe X
 	 */
-	public void setScaleZ(float scaleZ) {
-		this.scaleZ = scaleZ;
+	public float getSpeedX() {
+		return this.speedX;
+	}
+
+	/**
+	 * Définir la vitesse de cet objet graphique sur l'axe X
+	 * 
+	 * @param speedX La vitesse de l'objet sur l'axe X
+	 */
+	public void setSpeedX(float speedX) {
+		this.speedX = speedX;
+	}
+
+	/**
+	 * Récupérer la vitesse de cet objet graphique sur l'axe Y
+	 * 
+	 * @return La vitesse de l'objet sur l'axe Y
+	 */
+	public float getSpeedY() {
+		return this.speedY;
+	}
+
+	/**
+	 * Définir la vitesse de cet objet graphique sur l'axe Y
+	 * 
+	 * @param speedY La vitesse de l'objet sur l'axe Y
+	 */
+	public void setSpeedY(float speedY) {
+		this.speedY = speedY;
+	}
+
+	/**
+	 * Récupérer la vitesse de cet objet graphique sur l'axe Z
+	 * 
+	 * @return La vitesse de l'objet sur l'axe Z
+	 */
+	public float getSpeedZ() {
+		return this.speedZ;
+	}
+
+	/**
+	 * Définir la vitesse de cet objet graphique sur l'axe Z
+	 * 
+	 * @param speedZ La vitesse de l'objet sur l'axe Z
+	 */
+	public void setSpeedZ(float speedZ) {
+		this.speedZ = speedZ;
+	}
+
+	/**
+	 * Récupérer la rotation de cet objet graphique sur l'axe X
+	 * 
+	 * @return La rotation de l'objet sur l'axe X
+	 */
+	public float getRotationX() {
+		return this.rotationX;
+	}
+
+	/**
+	 * Définir la rotation de cet objet graphique sur l'axe X
+	 * 
+	 * @param rotationX La rotation de l'objet sur l'axe X
+	 */
+	public void setRotationX(float rotationX) {
+		this.rotationX = rotationX;
+	}
+
+	/**
+	 * Récupérer la rotation de cet objet graphique sur l'axe Y
+	 * 
+	 * @return La rotation de l'objet sur l'axe Y
+	 */
+	public float getRotationY() {
+		return this.rotationY;
+	}
+
+	/**
+	 * Définir la rotation de cet objet graphique sur l'axe Y
+	 * 
+	 * @param rotationY La rotation de l'objet sur l'axe Y
+	 */
+	public void setRotationY(float rotationY) {
+		this.rotationY = rotationY;
+	}
+
+	/**
+	 * Récupérer la rotation de cet objet graphique sur l'axe Z
+	 * 
+	 * @return La rotation de l'objet sur l'axe Z
+	 */
+	public float getRotationZ() {
+		return this.rotationZ;
+	}
+
+	/**
+	 * Définir la rotation de cet objet graphique sur l'axe Z
+	 * 
+	 * @param rotationZ La rotation de l'objet sur l'axe Z
+	 */
+	public void setRotationZ(float rotationZ) {
+		this.rotationZ = rotationZ;
 	}
 
 	/**
@@ -155,6 +325,15 @@ public abstract class GraphicalObject {
 	 */
 	public float getScaleZ() {
 		return this.scaleZ;
+	}
+
+	/**
+	 * Définir la taille de cet objet graphique sur l'axe Z
+	 * 
+	 * @param scaleZ La taille de l'objet sur l'axe Z
+	 */
+	public void setScaleZ(float scaleZ) {
+		this.scaleZ = scaleZ;
 	}
 
 	/**

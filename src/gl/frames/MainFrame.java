@@ -180,6 +180,10 @@ public class MainFrame extends GLCanvas
 			for (GraphicalObject object : this.getObjects()) {
 				// Dessiner l'objet dans le contexte OpenGL courant
 				object.display();
+				// Déplacer l'objet en fonction de sa vitesse
+				object.move(object.getSpeedX(), object.getSpeedY(), object.getSpeedZ());
+				// Tourner l'objet en fonction de sa rotation
+				object.rotate(object.getRotationX(), object.getRotationY(), object.getRotationZ());
 			}
 		}
 		gl.glPopMatrix();

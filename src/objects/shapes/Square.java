@@ -21,6 +21,12 @@ public class Square extends Shape {
 	 * @param scaleX La taille sur l'axe X
 	 * @param scaleY La taille sur l'axe Y
 	 * @param scaleZ La taille sur l'axe Z
+	 * @param speedX La vitesse sur l'axe X
+	 * @param speedY La vitesse sur l'axe Y
+	 * @param speedZ La vitesse sur l'axe Z
+	 * @param rotationX La rotation sur l'axe X
+	 * @param rotationY La rotation sur l'axe Y
+	 * @param rotationZ La rotation sur l'axe Z
 	 * @param r La couleur rouge
 	 * @param g La couleur verte
 	 * @param b La couleur bleue
@@ -30,10 +36,14 @@ public class Square extends Shape {
 	public Square(GL2 gl, float posX, float posY, float posZ,
 			float angleX, float angleY, float angleZ,
 			float scaleX, float scaleY, float scaleZ,
+			float speedX, float speedY, float speedZ,
+			float rotationX, float rotationY, float rotationZ,
 			float r, float g, float b) {
 		super(gl, posX, posY, posZ,
 				angleX, angleY, angleZ,
 				scaleX, scaleY, scaleZ,
+				speedX, speedY, speedZ,
+				rotationX, rotationY, rotationZ,
 				r, g, b);
 	}
 
@@ -49,6 +59,8 @@ public class Square extends Shape {
 		this(gl, 0.0f, 0.0f, -10.0f,
 				0.0f, 45.0f, 0.0f,
 				1.0f, 1.0f, 1.0f,
+				0.0f, 0.0f, 0.0f,
+				0.0f, 0.0f, 0.0f,
 				RGBColor.RED[0], RGBColor.RED[1], RGBColor.RED[2]);
 	}
 

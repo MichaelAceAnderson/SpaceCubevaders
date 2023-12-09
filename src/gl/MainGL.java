@@ -32,11 +32,21 @@ public class MainGL
 				Cube cube = new Cube(gl, col * 3, row * 3, -40.0f,
 						0.0f, 0.0f, 0.0f,
 						1.0f, 1.0f, 1.0f,
-						RGBColor.WHITE[0], RGBColor.WHITE[1], RGBColor.WHITE[2]);
-				// Ajouter le cube à la liste des objets à afficher
+						0.0f, 0.0f, 0.0f,
+						0.0f, 0.0f, 0.0f,
+						RGBColor.GREEN[0], RGBColor.GREEN[1], RGBColor.GREEN[2]);
 				glCanvas.getObjects().add(cube);
 			}
 		}
+
+		// Créer le cube joueur
+		Cube player = new Cube(gl, 0.0f, -10.0f, -39.0f,
+				0.0f, 0.0f, 0.0f,
+				1.0f, 1.0f, 1.0f,
+				0.0f, 0.0f, 0.0f,
+				0.0f, 5.0f, 0.0f,
+				RGBColor.WHITE[0], RGBColor.WHITE[1], RGBColor.WHITE[2]);
+		glCanvas.getObjects().add(player);
 
 		DebugMode.printInfo(glCanvas);
 	}

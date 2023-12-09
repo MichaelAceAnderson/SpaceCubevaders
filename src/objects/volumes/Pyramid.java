@@ -19,28 +19,41 @@ public class Pyramid extends Volume {
 	 * une
 	 * taille et une couleur
 	 * 
-	 * @param gl     Le contexte OpenGL
-	 * @param posX   La position en X
-	 * @param posY   La position en Y
-	 * @param posZ   La position en Z
-	 * @param angleX L'angle en X
-	 * @param angleY L'angle en Y
-	 * @param angleZ L'angle en Z
-	 * @param scaleX La taille sur l'axe X
-	 * @param scaleY La taille sur l'axe Y
-	 * @param scaleZ La taille sur l'axe Z
-	 * @param r      La couleur rouge
-	 * @param g      La couleur verte
-	 * @param b      La couleur bleue
+	 * @param gl        Le contexte OpenGL
+	 * @param posX      La position en X
+	 * @param posY      La position en Y
+	 * @param posZ      La position en Z
+	 * @param angleX    L'angle en X
+	 * @param angleY    L'angle en Y
+	 * @param angleZ    L'angle en Z
+	 * @param scaleX    La taille sur l'axe X
+	 * @param scaleY    La taille sur l'axe Y
+	 * @param scaleZ    La taille sur l'axe Z
+	 * @param speedX    La vitesse sur l'axe X
+	 * @param speedY    La vitesse sur l'axe Y
+	 * @param speedZ    La vitesse sur l'axe Z
+	 * @param rotationX La rotation sur l'axe X
+	 * @param rotationY La rotation sur l'axe Y
+	 * @param rotationZ La rotation sur l'axe Z
+	 * @param r         La couleur rouge
+	 * @param g         La couleur verte
+	 * @param b         La couleur bleue
 	 * 
 	 * @see GL2
 	 */
 	public Pyramid(GL2 gl, float posX, float posY, float posZ,
 			float angleX, float angleY, float angleZ,
 			float scaleX, float scaleY, float scaleZ,
+			float speedX, float speedY, float speedZ,
+			float rotationX, float rotationY, float rotationZ,
 			float r, float g, float b) {
 		// Appeler le constructeur de la classe mère pour instancier l'objet graphique
-		super(gl, posX, posY, posZ, angleX, angleY, angleZ, scaleX, scaleY, scaleZ, r, g, b);
+		super(gl, posX, posY, posZ,
+				angleX, angleY, angleZ,
+				scaleX, scaleY, scaleZ,
+				speedX, speedY, speedZ,
+				rotationX, rotationY, rotationZ,
+				r, g, b);
 
 		// Ajouter la base de la pyramide
 		if (DebugMode.RAINBOW) {
@@ -51,6 +64,8 @@ public class Pyramid extends Volume {
 		this.getShapes().add(new Square(gl, 0, 0, 0,
 				90, 0, 0,
 				1, 1, 1,
+				0, 0, 0,
+				0, 0, 0,
 				r, g, b));
 		// Ajouter la face avant
 		if (DebugMode.RAINBOW) {
@@ -61,6 +76,8 @@ public class Pyramid extends Volume {
 		this.getShapes().add(new Triangle(gl, 0, 0, 1,
 				-45, 0, 0,
 				1, 1.5f, 1,
+				0, 0, 0,
+				0, 0, 0,
 				r, g, b));
 		// Ajouter la face arrière
 		if (DebugMode.RAINBOW) {
@@ -71,6 +88,8 @@ public class Pyramid extends Volume {
 		this.getShapes().add(new Triangle(gl, 0, 0, -1,
 				45, 0, 0,
 				1, 1.5f, 1,
+				0, 0, 0,
+				0, 0, 0,
 				r, g, b));
 		// Ajouter la face gauche
 		if (DebugMode.RAINBOW) {
@@ -81,6 +100,8 @@ public class Pyramid extends Volume {
 		this.getShapes().add(new Triangle(gl, -1, 0, 0,
 				0, -90, -45,
 				1, 1.5f, 1,
+				0, 0, 0,
+				0, 0, 0,
 				r, g, b));
 		// Ajouter la face droite
 		if (DebugMode.RAINBOW) {
@@ -91,6 +112,8 @@ public class Pyramid extends Volume {
 		this.getShapes().add(new Triangle(gl, 1, 0, 0,
 				0, 90, 45,
 				1, 1.5f, 1,
+				0, 0, 0,
+				0, 0, 0,
 				r, g, b));
 
 	}
@@ -108,6 +131,8 @@ public class Pyramid extends Volume {
 		this(gl, 0.0f, 0.0f, -10.0f,
 				0.0f, 0.0f, 0.0f,
 				1.0f, 1.0f, 1.0f,
+				0.0f, 0.0f, 0.0f,
+				0.0f, 0.0f, 0.0f,
 				RGBColor.WHITE[0], RGBColor.WHITE[1], RGBColor.WHITE[2]);
 	}
 
