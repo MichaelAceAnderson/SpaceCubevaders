@@ -27,7 +27,7 @@ public class MainGL {
 		for (int row = 0; row < 5; row++) {
 			for (int col = -5; col < 6; col++) {
 				// Créer un cube
-				Cube cube = new Cube(gl, col * 3, row * 3, -40.0f,
+				Cube cube = new Cube(glCanvas, col * 3, row * 3, -40.0f,
 						0.0f, 0.0f, 0.0f,
 						1.0f, 1.0f, 1.0f,
 						0.0f, 0.0f, 0.0f,
@@ -38,7 +38,7 @@ public class MainGL {
 		}
 
 		// Créer le cube joueur
-		Cube player = new Cube(gl, 0.0f, -10.0f, -39.0f,
+		Cube player = new Cube(glCanvas, 0.0f, -10.0f, -39.0f,
 				0.0f, 0.0f, 0.0f,
 				1.0f, 1.0f, 1.0f,
 				0.0f, 0.0f, 0.0f,

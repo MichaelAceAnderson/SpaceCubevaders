@@ -24,7 +24,7 @@ public class DebugGL {
 			}
 		}
 
-		Square square = new Square(gl, 1.0f, 0.0f, -10.0f,
+		Square square = new Square(glCanvas, 1.0f, 0.0f, -10.0f,
 				30.0f, 25.0f, 0.0f,
 				1.0f, 1.0f, 1.0f,
 				0.0f, 0.0f, 0.0f,
@@ -32,7 +32,7 @@ public class DebugGL {
 				RGBColor.WHITE[0], RGBColor.WHITE[1], RGBColor.WHITE[2]);
 		glCanvas.getObjects().add(square);
 
-		Triangle triangle = new Triangle(gl, 2.0f, 0.0f, -10.0f,
+		Triangle triangle = new Triangle(glCanvas, 2.0f, 0.0f, -10.0f,
 				30.0f, 25.0f, 0.0f,
 				1.0f, 1.0f, 1.0f,
 				0.0f, 0.0f, 0.0f,
@@ -40,7 +40,7 @@ public class DebugGL {
 				RGBColor.GREEN[0], RGBColor.GREEN[1], RGBColor.GREEN[2]);
 		glCanvas.getObjects().add(triangle);
 
-		Cube cube = new Cube(gl, 0.0f, 1.0f, -10.0f,
+		Cube cube = new Cube(glCanvas, 0.0f, 1.0f, -10.0f,
 				30.0f, 25.0f, 0.0f,
 				1.0f, 1.0f, 1.0f,
 				0.0f, 0.0f, 0.0f,
@@ -48,13 +48,12 @@ public class DebugGL {
 				RGBColor.PURPLE[0], RGBColor.PURPLE[1], RGBColor.PURPLE[2]);
 		glCanvas.getObjects().add(cube);
 
-		Pyramid pyramid = new Pyramid(gl, 0.0f, 2.0f, -10.0f,
+		Pyramid pyramid = new Pyramid(glCanvas, 100.0f, 2.0f, -10.0f,
 				30.0f, 25.0f, 0.0f,
 				1.0f, 1.0f, 1.0f,
 				0.0f, 0.0f, 0.0f,
 				0.0f, 1.0f, 0.0f,
 				RGBColor.YELLOW[0], RGBColor.YELLOW[1], RGBColor.YELLOW[2]);
-
 		glCanvas.getObjects().add(pyramid);
 
 		DebugMode.printInfo(glCanvas);

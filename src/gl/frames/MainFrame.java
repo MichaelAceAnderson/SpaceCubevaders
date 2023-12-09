@@ -34,7 +34,7 @@ public class MainFrame extends GLCanvas
 	 * @see GLEventListener
 	 */
 	public MainFrame() {
-		// Ajouter un listener à ce canvas
+		// Ajouter le listener pour les événements OpenGL dans ce canvas
 		this.addGLEventListener(this);
 		this.setFrameCount(0);
 		this.setObjects(new ArrayList<GraphicalObject>());
@@ -137,9 +137,12 @@ public class MainFrame extends GLCanvas
 	}
 
 	/**
-	 * Récupérer la taille préférée du canvas
+	 * Récupérer la taille préférée de la fenêtre de rendu
 	 * 
-	 * @return Taille préférée du canvas
+	 * @return Taille préférée de la fenêtre de rendu
+	 * 
+	 * @see GLCanvas#getPreferredSize()
+	 * 
 	 */
 	@Override
 	public Dimension getPreferredSize() {

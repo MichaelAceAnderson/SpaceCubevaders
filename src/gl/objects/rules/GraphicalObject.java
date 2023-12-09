@@ -2,6 +2,7 @@ package gl.objects.rules;
 
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.awt.GLCanvas;
 
 import gl.common.DebugMode;
 
@@ -18,13 +19,13 @@ public abstract class GraphicalObject {
 	protected float speedX, speedY, speedZ;
 	// Rotations dans le temps
 	protected float rotationX, rotationY, rotationZ;
-	// Contexte OpenGL
-	protected GL2 gl;
+	// Canvas dans lequel l'objet est affiché
+	protected GLCanvas glCanvas;
 
 	/**
 	 * Créer un objet graphique
 	 * 
-	 * @param gl        Le contexte OpenGL
+	 * @param glCanvas  Le canvas OpenGL
 	 * @param posX      La position en X
 	 * @param posY      La position en Y
 	 * @param posZ      La position en Z
@@ -45,13 +46,13 @@ public abstract class GraphicalObject {
 	 * @param b         La couleur bleue
 	 * 
 	 */
-	public GraphicalObject(GL2 gl, float posX, float posY, float posZ,
+	public GraphicalObject(GLCanvas glCanvas, float posX, float posY, float posZ,
 			float angleX, float angleY, float angleZ,
 			float scaleX, float scaleY, float scaleZ,
 			float speedX, float speedY, float speedZ,
 			float rotationX, float rotationY, float rotationZ,
 			float r, float g, float b) {
-		this.setGl(gl);
+		this.setCanvas(glCanvas);
 		this.setPosX(posX);
 		this.setPosY(posY);
 		this.setPosZ(posZ);
@@ -397,17 +398,31 @@ public abstract class GraphicalObject {
 	 * 
 	 * @see GL2
 	 */
-	public GL2 getGl() {
-		return this.gl;
+	public GL2 getGl2() {
+		return this.getCanvas().getGL().getGL2();
 	}
 
 	/**
 	 * Définir le contexte OpenGL
 	 * 
-	 * @param gl Le contexte OpenGL
+	 * @param canvas Le canvas OpenGL
 	 * 
-	 * @see GL2
+	 * @see GLCanvas
 	 */
+	public void setCanvas(GLCanvas glCanvas) {
+		this.glCanvas = glCanvas;
+	}
+
+	/**
+	 * Récupérer le canvas OpenGL
+	 * 
+	 * @return Le canvas OpenGL
+	 * 
+	 * @see GLCanvas
+	 */
+	public GLCanvas getCanvas() {
+		return this.glCanvas;
+	}
 	public void setGl(GL2 gl) {
 		this.gl = gl;
 	}
@@ -432,29 +447,29 @@ public abstract class GraphicalObject {
 	 */
 	public void display() {
 		// Sauvegarder la matrice actuelle
-		this.getGl().glPushMatrix();
+		this.getGl2().glPushMatrix();
 		{
 			// Déplacer l'objet graphique
-			this.getGl().glTranslatef(this.getPosX(), this.getPosY(), this.getPosZ());
+			this.getGl2().glTranslatef(this.getPosX(), this.getPosY(), this.getPosZ());
 			// Tourner l'objet graphique (l'ordre des rotations est important)
-			this.getGl().glRotatef(this.getAngleX(), 1.0f, 0.0f, 0.0f);
-			this.getGl().glRotatef(this.getAngleZ(), 0.0f, 0.0f, 1.0f);
-			this.getGl().glRotatef(this.getAngleY(), 0.0f, 1.0f, 0.0f);
+			this.getGl2().glRotatef(this.getAngleX(), 1.0f, 0.0f, 0.0f);
+			this.getGl2().glRotatef(this.getAngleZ(), 0.0f, 0.0f, 1.0f);
+			this.getGl2().glRotatef(this.getAngleY(), 0.0f, 1.0f, 0.0f);
 			// Mettre à l'échelle l'objet graphique
-			this.getGl().glScalef(this.getScaleX(), this.getScaleY(), this.getScaleZ());
+			this.getGl2().glScalef(this.getScaleX(), this.getScaleY(), this.getScaleZ());
 			if (DebugMode.LINE_MODE) {
 				// Activer le mode contour
-				gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_LINE);
+				this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_LINE);
 			}
 			// Dessiner l'objet graphique
 			this.draw();
 			if (DebugMode.LINE_MODE) {
 				// Revenir au mode de remplissage normal
-				gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_FILL);
+				this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_FILL);
 			}
 		}
 		// Restaurer la matrice précédente
-		this.getGl().glPopMatrix();
+		this.getGl2().glPopMatrix();
 	}
 
 	/**
@@ -511,6 +526,10 @@ public abstract class GraphicalObject {
 				+ "\tPosition: X: " + this.getPosX() + ", Y: " + this.getPosY() + ", Z: " + this.getPosZ() + "\n"
 				+ "\tAngle: X: " + this.getAngleX() + ", Y: " + this.getAngleY() + ", Z: " + this.getAngleZ() + "\n"
 				+ "\tScale: X: " + this.getScaleX() + ", Y: " + this.getScaleY() + ", Z: " + this.getScaleZ() + "\n"
-				+ "\tCouleur: R: " + this.getRed() + ", G: " + this.getGreen() + ", B: " + this.getBlue();
+				+ "\tCouleur: R: " + this.getRed() + ", G: " + this.getGreen() + ", B: " + this.getBlue() + "\n"
+				+ "\tVitesse: X: " + this.getSpeedX() + ", Y: " + this.getSpeedY() + ", Z: " + this.getSpeedZ() + "\n"
+				+ "\tRotation: X: " + this.getRotationX() + ", Y: " + this.getRotationY() + ", Z: "
+				+ this.getRotationZ() + "\n"
+				+ "\tVisible: " + this.isVisible();
 	}
 }
