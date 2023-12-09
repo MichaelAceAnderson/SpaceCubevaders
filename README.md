@@ -6,6 +6,14 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 
 ## Détails techniques
 
+### To-do
+
+- [ ] Trier les packages
+- [ ] Créer une méthode permettant de déterminer si un objet est visible par la caméra selon sa position et sa taille
+- [ ] Calculer la vitesse de déplacement/rotation des objets selon la fréquence d'affichage
+- [ ] Ajouter un système de score
+- [ ] Ajouter un système de vies
+
 ### Bugs connus
 
 - L'affichage d'un volume change les couleurs des autres objets graphiques
