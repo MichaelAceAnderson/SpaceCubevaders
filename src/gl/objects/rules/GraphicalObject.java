@@ -1,9 +1,9 @@
-package objects.rules;
+package gl.objects.rules;
 
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 
-import common.DebugMode;
+import gl.common.DebugMode;
 
 public abstract class GraphicalObject {
 	// Position

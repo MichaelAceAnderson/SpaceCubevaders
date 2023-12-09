@@ -1,7 +1,7 @@
-package common;
+package gl.common;
 
 import gl.frames.MainFrame;
-import objects.rules.GraphicalObject;
+import gl.objects.rules.GraphicalObject;
 
 public final class DebugMode {
 	public static enum Mode {

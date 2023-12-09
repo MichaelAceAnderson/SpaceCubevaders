@@ -1,12 +1,12 @@
-package gl;
+package main;
 
 import com.jogamp.opengl.GL2;
 
-import common.DebugMode;
-import common.RGBColor;
+import gl.common.DebugMode;
+import gl.common.RGBColor;
 import gl.frames.MainFrame;
-import objects.shapes.*;
-import objects.volumes.*;
+import gl.objects.shapes.*;
+import gl.objects.volumes.*;
 
 public class DebugGL {
 	public static void main(String[] args) {

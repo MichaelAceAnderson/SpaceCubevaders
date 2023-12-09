@@ -1,16 +1,14 @@
-package gl;
+package main;
 
 import com.jogamp.opengl.GL2;
 
-import common.DebugMode;
-import common.RGBColor;
+import gl.common.DebugMode;
+import gl.common.RGBColor;
 import gl.frames.MainFrame;
-import objects.volumes.Cube;
+import gl.objects.volumes.Cube;
 
-public class MainGL
-{
-	public static void main(String[] args)
-	{
+public class MainGL {
+	public static void main(String[] args) {
 		MainFrame glCanvas = new MainFrame();
 
 		// Attendre que le contexte OpenGL soit initialisé

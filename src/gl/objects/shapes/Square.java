@@ -1,11 +1,11 @@
 
-package objects.shapes;
+package gl.objects.shapes;
 
 import com.jogamp.opengl.GL2;
 
-import common.RGBColor;
-import objects.rules.GraphicalObject;
-import objects.rules.Shape;
+import gl.common.RGBColor;
+import gl.objects.rules.GraphicalObject;
+import gl.objects.rules.Shape;
 
 public class Square extends Shape {
 	/**

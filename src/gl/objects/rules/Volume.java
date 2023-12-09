@@ -1,11 +1,11 @@
-package objects.rules;
+package gl.objects.rules;
 
 import java.util.ArrayList;
 
 import com.jogamp.opengl.GL2;
 
-import common.RGBColor;
-import objects.shapes.Square;
+import gl.common.RGBColor;
+import gl.objects.shapes.Square;
 
 public abstract class Volume extends GraphicalObject {
 	// Formes composant le volume

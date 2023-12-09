@@ -1,9 +1,9 @@
-package objects.rules;
+package gl.objects.rules;
 
 import com.jogamp.opengl.GL2;
 
-import common.RGBColor;
-import objects.shapes.Square;
+import gl.common.RGBColor;
+import gl.objects.shapes.Square;
 
 public abstract class Shape extends GraphicalObject {
 	/**

@@ -1,22 +1,20 @@
-package objects.volumes;
+package gl.objects.volumes;
 
 import com.jogamp.opengl.GL2;
 
-import common.DebugMode;
-import common.RGBColor;
-import objects.rules.Shape;
-import objects.rules.Volume;
-import objects.shapes.Square;
-import objects.shapes.Triangle;
+import gl.common.DebugMode;
+import gl.common.RGBColor;
+import gl.objects.rules.Shape;
+import gl.objects.rules.Volume;
+import gl.objects.shapes.Square;
 
-public class Pyramid extends Volume {
+public class Cube extends Volume {
 	private enum Face {
-		BASE, FRONT, BACK, LEFT, RIGHT
+		TOP, FRONT, BACK, LEFT, RIGHT, BOTTOM
 	}
 
 	/**
-	 * Créer une pyramide avec cinq instances de Triangle, une position, un angle,
-	 * une
+	 * Créer un cube avec quatre instances de Square, une position, un angle, une
 	 * taille et une couleur
 	 * 
 	 * @param gl        Le contexte OpenGL
@@ -41,7 +39,7 @@ public class Pyramid extends Volume {
 	 * 
 	 * @see GL2
 	 */
-	public Pyramid(GL2 gl, float posX, float posY, float posZ,
+	public Cube(GL2 gl, float posX, float posY, float posZ,
 			float angleX, float angleY, float angleZ,
 			float scaleX, float scaleY, float scaleZ,
 			float speedX, float speedY, float speedZ,
@@ -55,13 +53,13 @@ public class Pyramid extends Volume {
 				rotationX, rotationY, rotationZ,
 				r, g, b);
 
-		// Ajouter la base de la pyramide
+		// Ajouter la face supérieure
 		if (DebugMode.RAINBOW) {
-			r = RGBColor.WHITE[0];
-			g = RGBColor.WHITE[1];
-			b = RGBColor.WHITE[2];
+			r = RGBColor.CYAN[0];
+			g = RGBColor.CYAN[1];
+			b = RGBColor.CYAN[2];
 		}
-		this.getShapes().add(new Square(gl, 0, 0, 0,
+		this.getShapes().add(new Square(gl, 0, 1, 0,
 				90, 0, 0,
 				1, 1, 1,
 				0, 0, 0,
@@ -73,21 +71,21 @@ public class Pyramid extends Volume {
 			g = RGBColor.RED[1];
 			b = RGBColor.RED[2];
 		}
-		this.getShapes().add(new Triangle(gl, 0, 0, 1,
-				-45, 0, 0,
-				1, 1.5f, 1,
+		this.getShapes().add(new Square(gl, 0, 0, 1,
+				0, 0, 0,
+				1, 1, 1,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
 		// Ajouter la face arrière
 		if (DebugMode.RAINBOW) {
-			r = RGBColor.PURPLE[0];
-			g = RGBColor.PURPLE[1];
-			b = RGBColor.PURPLE[2];
+			r = RGBColor.GREEN[0];
+			g = RGBColor.GREEN[1];
+			b = RGBColor.GREEN[2];
 		}
-		this.getShapes().add(new Triangle(gl, 0, 0, -1,
-				45, 0, 0,
-				1, 1.5f, 1,
+		this.getShapes().add(new Square(gl, 0, 0, -1,
+				0, 0, 0,
+				1, 1, 1,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
@@ -97,9 +95,9 @@ public class Pyramid extends Volume {
 			g = RGBColor.YELLOW[1];
 			b = RGBColor.YELLOW[2];
 		}
-		this.getShapes().add(new Triangle(gl, -1, 0, 0,
-				0, -90, -45,
-				1, 1.5f, 1,
+		this.getShapes().add(new Square(gl, -1, 0, 0,
+				0, -90, 0,
+				1, 1, 1,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
@@ -109,25 +107,35 @@ public class Pyramid extends Volume {
 			g = RGBColor.BLUE[1];
 			b = RGBColor.BLUE[2];
 		}
-		this.getShapes().add(new Triangle(gl, 1, 0, 0,
-				0, 90, 45,
-				1, 1.5f, 1,
+		this.getShapes().add(new Square(gl, 1, 0, 0,
+				0, 90, 0,
+				1, 1, 1,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
-
+		// Ajouter la face inférieure
+		if (DebugMode.RAINBOW) {
+			r = RGBColor.MAGENTA[0];
+			g = RGBColor.MAGENTA[1];
+			b = RGBColor.MAGENTA[2];
+		}
+		this.getShapes().add(new Square(gl, 0, -1, 0,
+				90, 0, 0,
+				1, 1, 1,
+				0, 0, 0,
+				0, 0, 0,
+				r, g, b));
 	}
 
 	/**
-	 * Créer une pyramide par défaut
+	 * Créer un cube par défaut
 	 * 
 	 * @param gl Le contexte OpenGL
 	 * 
-	 * @see Pyramid#Pyramid(GL2, float, float, float, float, float, float, float,
-	 *      float,
+	 * @see Cube#Cube(GL2, float, float, float, float, float, float, float, float,
 	 *      float, float)
 	 */
-	public Pyramid(GL2 gl) {
+	public Cube(GL2 gl) {
 		this(gl, 0.0f, 0.0f, -10.0f,
 				0.0f, 0.0f, 0.0f,
 				1.0f, 1.0f, 1.0f,
@@ -137,11 +145,11 @@ public class Pyramid extends Volume {
 	}
 
 	/**
-	 * Récupérer une face de la pyramide
+	 * Récupérer une face du cube
 	 * 
-	 * @param face La face de la pyramide selon l'énumération Face
+	 * @param face La face du cube selon l'énumération Face
 	 * 
-	 * @return La face de la pyramide
+	 * @return La face du cube
 	 * 
 	 * @see Face
 	 */

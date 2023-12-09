@@ -1,4 +1,4 @@
-package common;
+package gl.common;
 
 public final class RGBColor {
 	public static final float RED[] = { 1.0f, 0.0f, 0.0f };
@@ -66,5 +66,5 @@ public final class RGBColor {
 	public static final float VERY_LIGHT_TURQUOISE[] = { 0.625f, 0.97f, 0.94f };
 	public static final float VERY_LIGHT_SKY_BLUE[] = { 0.895f, 0.955f, 0.98f };
 	public static final float VERY_LIGHT_NAVY[] = { 0.75f, 0.75f, 0.875f };
-	
+
 }
