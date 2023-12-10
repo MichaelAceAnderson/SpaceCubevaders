@@ -60,7 +60,7 @@ public class Triangle extends Shape {
 	 */
 	@Override
 	public void draw() {
-		// Commencer à dessiner le triangle (lecture bottom-up)
+		// Commencer à dessiner le triangle
 		this.getGl2().glBegin(GL2.GL_TRIANGLES);
 		{
 			// Définir la couleur pour toutes les opérations à venir

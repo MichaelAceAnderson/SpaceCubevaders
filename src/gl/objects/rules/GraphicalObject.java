@@ -525,9 +525,8 @@ public abstract class GraphicalObject {
 
 	/**
 	 * Afficher cet objet graphique dans son contexte courant.
-	 * 
-	 * NOTE: Cette méthode est lue à l'envers (bottom-up) en raison du
-	 * fonctionnement des matrices
+	 * Note: Les transformations sont appliquées dans l'ordre inverse de leur
+	 * apparition dans le code en raison du fonctionnement des matrices
 	 * 
 	 * @see GL2
 	 */

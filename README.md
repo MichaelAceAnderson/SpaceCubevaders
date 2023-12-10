@@ -8,11 +8,13 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 
 ### To-do
 
-- [ ] Créer une méthode permettant de déterminer si un objet est visible par la caméra selon sa position et sa taille
-- [ ] Calculer la vitesse de déplacement/rotation des objets selon la fréquence d'affichage
+- [ ] Corriger la BoundingBox (Notamment via la taille initiale des objets dessinés avant transformation et en dessinant les objets à partir de leur centre)
+- [ ] Construire un missile à partir d'un cube et d'une pyramide
+- [ ] Ajouter la logique de jeu (déplacements, tirs, etc...)
 - [ ] Ajouter un système de score
 - [ ] Ajouter un système de vies
 - [ ] Mettre à jour la documentation
+- [ ] (Optionnel) Vérifier si les commentaires sont à jour par rapport au fonctionnement actuel du code
 
 ### Bugs connus
 
@@ -56,9 +58,8 @@ Pour dessiner un objet, il faut donc :
 - recommencer pour chaque objet à dessiner
 
 Ces opérations sont ici dans la méthode `display()` de [GraphicalObject](src/objects/rules/GraphicalObject.java).
-On notera que cette méthode est lue à l'envers (bottom-up) en raison du système de pile d'OpenGL et des matrices.
 
-On notera également que les affichages sont donc récursifs puisque le dessin d'un volume nécessite l'appel à display sur chacune de ses formes géométriques qui le composent.  
+On notera que les affichages sont donc récursifs puisque le dessin d'un volume nécessite l'appel à display sur chacune de ses formes géométriques qui le composent.  
 Exemple:
 
 ```java
@@ -72,7 +73,7 @@ Exemple:
    // Tourner l'objet graphique
    [...]
    // Mettre à l'échelle l'objet graphique
-    [...]
+   [...]
    // Dessiner l'objet graphique
    this.draw();
   }

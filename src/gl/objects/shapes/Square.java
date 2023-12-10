@@ -60,7 +60,7 @@ public class Square extends Shape {
 	 */
 	@Override
 	public void draw() {
-		// Commencer à dessiner le carré (lecture bottom-up)
+		// Commencer à dessiner le carré
 		this.getGl2().glBegin(GL2.GL_QUADS);
 		{
 			// Définir la couleur pour toutes les opérations à venir
