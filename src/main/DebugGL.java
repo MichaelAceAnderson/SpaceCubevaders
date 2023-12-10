@@ -3,6 +3,7 @@ package main;
 import gl.canvas.MainCanvas;
 import gl.common.DebugMode;
 import gl.common.RGBColor;
+import gl.objects.items.*;
 import gl.objects.shapes.*;
 import gl.objects.volumes.*;
 
