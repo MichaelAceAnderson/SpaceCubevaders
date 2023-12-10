@@ -6,19 +6,22 @@ import gl.objects.rules.GraphicalObject;
 public final class DebugMode {
 	// Variables booléennes définissant les modes de débogage
 	public static enum Mode {
-		VERBOSE, LINE_MODE, RAINBOW
+		DRAW_AXIS, DRAW_GRID, VERBOSE, LINE_MODE, RAINBOW
 	}
+
+	public static final boolean DRAW_AXIS = true;
+	public static final boolean DRAW_GRID = true;
 	public static final boolean VERBOSE = true;
 	public static final boolean LINE_MODE = true;
 	public static final boolean RAINBOW = false;
-	public static final boolean[] MODES = { VERBOSE, LINE_MODE, RAINBOW };
+	public static final boolean[] MODES = { DRAW_AXIS, DRAW_GRID, VERBOSE, LINE_MODE, RAINBOW };
 
 	// Types de collisions à dessiner
 	public static enum COLLISION_TYPE {
-		NONE, VOLUME, SHAPE
+		NONE, SHAPE, VOLUME, ITEM
 	}
 
-	public static final COLLISION_TYPE DRAW_COLLISIONS = COLLISION_TYPE.VOLUME;
+	public static final COLLISION_TYPE DRAW_COLLISIONS = COLLISION_TYPE.NONE;
 
 	public static void printInfo(Canvas canvas) {
 

@@ -65,6 +65,7 @@ public class Triangle extends Shape {
 		{
 			// Définir la couleur pour toutes les opérations à venir
 			this.getGl2().glColor3f(this.getRed(), this.getGreen(), this.getBlue());
+
 			// Dessiner chaque point qui compose le triangle sur le plan XYZ
 			// Point de gauche
 			this.getGl2().glVertex3f(-1.0f, 0.0f, 0.0f);

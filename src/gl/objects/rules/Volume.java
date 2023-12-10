@@ -69,7 +69,8 @@ public abstract class Volume extends GraphicalObject {
 	/**
 	 * Dessiner ce volume
 	 * 
-	 * @see GraphicalObject#display()
+	 * @see GraphicalObject#draw()
+	 * @see Shape#display()
 	 */
 	@Override
 	public void draw() {
