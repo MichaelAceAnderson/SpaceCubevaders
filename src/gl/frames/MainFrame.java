@@ -2,7 +2,6 @@ package gl.frames;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 
@@ -11,7 +10,7 @@ import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
-import com.jogamp.opengl.util.Animator;
+import com.jogamp.opengl.util.FPSAnimator;
 
 import gl.objects.rules.GraphicalObject;
 
@@ -27,6 +26,8 @@ public class MainFrame extends GLCanvas
 	private JFrame frame;
 	// Objets à afficher
 	private ArrayList<GraphicalObject> objects;
+	// Limite de FPS
+	private static final int FPS_LIMIT = 60;
 
 	/**
 	 * Créer un objet MainFrame où le rendu OpenGL est effectué
@@ -43,9 +44,8 @@ public class MainFrame extends GLCanvas
 		this.getFrame().pack();
 		this.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getFrame().setVisible(true);
-		Animator animator = new Animator(this);
-		// Appelle implicitement init et reshape une fois
-		animator.start();
+		this.setAnimator(new FPSAnimator(this, MainFrame.FPS_LIMIT));
+		this.getAnimator().start();
 	}
 
 	/**
@@ -191,15 +191,10 @@ public class MainFrame extends GLCanvas
 		}
 		gl.glPopMatrix();
 
-		long currentTime = System.nanoTime();
-		// Calculer le temps écoulé depuis le dernier calcul du temps (itération
-		// précédentes)
-		long deltaTime = currentTime - this.elapsedTime;
-		this.setElapsedTime(currentTime);
-		// Calculer le nombre de FPS
-		this.setFps((int) TimeUnit.SECONDS.toNanos(1) / (int) deltaTime);
-		if (this.getFrameCount() % 60 == 0)
-			this.getFrame().setTitle("FPS: " + this.fps + ", Frame: " + this.getFrameCount());
+		// Afficher le nombre d'itérations d'affichage
+		this.getFrame()
+				.setTitle("Frame: " + ((FPSAnimator) this.getAnimator()).getFPS() + " Frame: " + this.getFrameCount());
+
 	}
 
 	/**
