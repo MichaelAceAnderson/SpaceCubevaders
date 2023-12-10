@@ -63,6 +63,8 @@ public class Triangle extends Shape {
 		// Commencer à dessiner le triangle (lecture bottom-up)
 		this.getGl2().glBegin(GL2.GL_TRIANGLES);
 		{
+			// Définir la couleur pour toutes les opérations à venir
+			this.getGl2().glColor3f(this.getRed(), this.getGreen(), this.getBlue());
 			// Dessiner chaque point qui compose le triangle sur le plan XYZ
 			// Point de gauche
 			this.getGl2().glVertex3f(-1.0f, 0.0f, 0.0f);
@@ -70,9 +72,6 @@ public class Triangle extends Shape {
 			this.getGl2().glVertex3f(1.0f, 0.0f, 0.0f);
 			// Point du haut
 			this.getGl2().glVertex3f(0.0f, 1.0f, 0.0f);
-
-			// Définir la couleur pour toutes les opérations à venir
-			this.getGl2().glColor3f(this.getRed(), this.getGreen(), this.getBlue());
 		}
 		// Finir de dessiner les triangles
 		this.getGl2().glEnd();

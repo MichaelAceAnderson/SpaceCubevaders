@@ -16,8 +16,6 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 
 ### Bugs connus
 
-- L'affichage d'un volume change les couleurs des autres objets graphiques
-
 ### Architecture
 
 #### Diagramme de classes

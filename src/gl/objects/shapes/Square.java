@@ -62,6 +62,9 @@ public class Square extends Shape {
 		// Commencer à dessiner le carré (lecture bottom-up)
 		this.getGl2().glBegin(GL2.GL_QUADS);
 		{
+			// Définir la couleur pour toutes les opérations à venir
+			this.getGl2().glColor3f(this.getRed(), this.getGreen(), this.getBlue());
+
 			// Dessiner chaque point qui compose le carré sur le plan XYZ
 			// Point du haut à gauche
 			this.getGl2().glVertex3f(-1f, 1f, 0f);
@@ -71,9 +74,6 @@ public class Square extends Shape {
 			this.getGl2().glVertex3f(1f, -1f, 0f);
 			// Point du bas à gauche
 			this.getGl2().glVertex3f(-1f, -1f, 0f);
-
-			// Définir la couleur pour toutes les opérations à venir
-			this.getGl2().glColor3f(this.getRed(), this.getGreen(), this.getBlue());
 		}
 		// Finir de dessiner le carré
 		this.getGl2().glEnd();
