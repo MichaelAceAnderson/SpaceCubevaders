@@ -2,7 +2,12 @@ package gl.objects.rules;
 
 import java.util.ArrayList;
 
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.util.gl2.GLUT;
+
 import gl.canvas.rules.Canvas;
+import gl.common.DebugMode;
 
 public abstract class Volume extends GraphicalObject {
 	// Formes composant le volume
@@ -66,10 +71,28 @@ public abstract class Volume extends GraphicalObject {
 	 * 
 	 * @see GraphicalObject#display()
 	 */
+	@Override
 	public void draw() {
 		// Dessiner ce volume consiste à afficher toutes les formes qui le composent
 		for (Shape shape : this.getShapes()) {
 			shape.display();
+		}
+	}
+
+	/**
+	 * Dessiner les collisions de cette forme
+	 * 
+	 * @see GraphicalObject#drawCollisions()
+	 */
+	@Override
+	public void drawCollisions() {
+		// Dessiner la boîte de collision à partir d'un cube
+		if (DebugMode.DRAW_COLLISIONS == DebugMode.COLLISION_TYPE.VOLUME) {
+			this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_LINE);
+			this.getGl2().glColor3f(1.0f, 1.0f, 1.0f);
+			GLUT glut = new GLUT();
+			glut.glutWireCube(2.0f);
+			this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_FILL);
 		}
 	}
 }

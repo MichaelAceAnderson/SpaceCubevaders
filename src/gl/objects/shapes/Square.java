@@ -58,6 +58,7 @@ public class Square extends Shape {
 	 * 
 	 * @see GraphicalObject#draw()
 	 */
+	@Override
 	public void draw() {
 		// Commencer à dessiner le carré (lecture bottom-up)
 		this.getGl2().glBegin(GL2.GL_QUADS);

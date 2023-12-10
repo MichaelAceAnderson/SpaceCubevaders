@@ -22,9 +22,9 @@ public abstract class GraphicalObject {
 	// Canvas dans lequel l'objet est affiché
 	protected Canvas canvas;
 
-	// Faces du cube de collisions
+	// Limites de la boîte de collision
 	public static enum Boundary {
-		TOP, FRONT, BACK, LEFT, RIGHT, BOTTOM
+		MAX_Y, MAX_Z, MIN_Z, MIN_X, MAX_X, MIN_Y
 	}
 
 	/**
@@ -430,22 +430,27 @@ public abstract class GraphicalObject {
 	}
 
 	/**
-	 * Récupérer les coordonnées de la boîte de collision de cet objet graphique
+	 * Récupérer les coordonnées des limites de cet objet
 	 * 
-	 * @return Les coordonnées de la boîte de collision
+	 * @return Les coordonnées des limites
+	 */
+	/**
+	 * Récupérer les coordonnées des limites de ce volume
+	 * 
+	 * @see GraphicalObject#getBoundingBox()
 	 */
 	public float[] getBoundingBox() {
 		float[] centerPosition = { this.getPosX(), this.getPosY(), this.getPosZ() };
 		float[] size = { this.getScaleX(), this.getScaleY(), this.getScaleZ() };
 
-		float[] boundaryBox = new float[6];
+		float[] boundaryBox = new float[Boundary.values().length];
 
-		boundaryBox[Boundary.TOP.ordinal()] = centerPosition[1] + size[1] / 2;
-		boundaryBox[Boundary.FRONT.ordinal()] = centerPosition[2] + size[2] / 2;
-		boundaryBox[Boundary.BACK.ordinal()] = centerPosition[2] - size[2] / 2;
-		boundaryBox[Boundary.LEFT.ordinal()] = centerPosition[0] - size[0] / 2;
-		boundaryBox[Boundary.RIGHT.ordinal()] = centerPosition[0] + size[0] / 2;
-		boundaryBox[Boundary.BOTTOM.ordinal()] = centerPosition[1] - size[1] / 2;
+		boundaryBox[Boundary.MAX_Y.ordinal()] = centerPosition[1] + size[1];
+		boundaryBox[Boundary.MIN_Y.ordinal()] = centerPosition[1] - size[1];
+		boundaryBox[Boundary.MAX_Z.ordinal()] = centerPosition[2] + size[2];
+		boundaryBox[Boundary.MIN_Z.ordinal()] = centerPosition[2] - size[2];
+		boundaryBox[Boundary.MIN_X.ordinal()] = centerPosition[0] - size[0];
+		boundaryBox[Boundary.MAX_X.ordinal()] = centerPosition[0] + size[0];
 
 		return boundaryBox;
 	}
@@ -462,15 +467,45 @@ public abstract class GraphicalObject {
 		float[] thisBoundingBox = this.getBoundingBox();
 		float[] objectBoundingBox = object.getBoundingBox();
 
-		boolean isColliding = (thisBoundingBox[Boundary.TOP.ordinal()] > objectBoundingBox[Boundary.BOTTOM.ordinal()]
-				&& thisBoundingBox[Boundary.BOTTOM.ordinal()] < objectBoundingBox[Boundary.TOP.ordinal()]
-				&& thisBoundingBox[Boundary.FRONT.ordinal()] > objectBoundingBox[Boundary.BACK.ordinal()]
-				&& thisBoundingBox[Boundary.BACK.ordinal()] < objectBoundingBox[Boundary.FRONT.ordinal()]
-				&& thisBoundingBox[Boundary.LEFT.ordinal()] < objectBoundingBox[Boundary.RIGHT.ordinal()]
-				&& thisBoundingBox[Boundary.RIGHT.ordinal()] > objectBoundingBox[Boundary.LEFT.ordinal()]);
+		boolean isColliding = (thisBoundingBox[Boundary.MAX_Y.ordinal()] > objectBoundingBox[Boundary.MIN_Y.ordinal()]
+				&& thisBoundingBox[Boundary.MIN_Y.ordinal()] < objectBoundingBox[Boundary.MAX_Y.ordinal()]
+				&& thisBoundingBox[Boundary.MAX_Z.ordinal()] > objectBoundingBox[Boundary.MIN_Z.ordinal()]
+				&& thisBoundingBox[Boundary.MIN_Z.ordinal()] < objectBoundingBox[Boundary.MAX_Z.ordinal()]
+				&& thisBoundingBox[Boundary.MIN_X.ordinal()] < objectBoundingBox[Boundary.MAX_X.ordinal()]
+				&& thisBoundingBox[Boundary.MAX_X.ordinal()] > objectBoundingBox[Boundary.MIN_X.ordinal()]);
 
 		return isColliding;
 	}
+
+	/**
+	 * Vérifier si cet objet graphique est visible par la caméra du canvas à partir
+	 * de la position et de la taille de sa boîte de collision. NOTE: La caméra doit
+	 * être positionnée à (0, 0, 0) et orientée vers l'axe négatif des Z.
+	 * 
+	 * @return true si l'objet est visible, false sinon
+	 */
+	public boolean isVisible() {
+		// Si l'objet est derrière le champ de vision de la caméra
+		if (this.getBoundingBox()[Boundary.MAX_Z.ordinal()] > 0) {
+			return false;
+		}
+
+		// Si l'objet est plus loin que la profondeur maximum
+		if (this.getBoundingBox()[Boundary.MIN_Z.ordinal()] < -this.getCanvas().getMaxDepth()) {
+			return false;
+		}
+
+		// Si l'objet est plus à gauche que la limite de gauche
+		if (this.getBoundingBox()[Boundary.MIN_X.ordinal()] < -this.getCanvas().getMaxDepth()) {
+			return false;
+		}
+
+		// Si l'objet est plus à droite que la limite de droite
+		if (this.getBoundingBox()[Boundary.MAX_X.ordinal()] > this.getCanvas().getMaxDepth()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -482,6 +517,11 @@ public abstract class GraphicalObject {
 	 * @see GraphicalObject#display()
 	 */
 	public abstract void draw();
+
+	/**
+	 * Dessiner les collisions de cet objet graphique
+	 */
+	public abstract void drawCollisions();
 
 	/**
 	 * Afficher cet objet graphique dans son contexte courant.
@@ -509,6 +549,7 @@ public abstract class GraphicalObject {
 			}
 			// Dessiner l'objet graphique
 			this.draw();
+			this.drawCollisions();
 			if (DebugMode.LINE_MODE) {
 				// Revenir au mode de remplissage normal
 				this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_FILL);
@@ -576,6 +617,13 @@ public abstract class GraphicalObject {
 				+ "\tVitesse: X: " + this.getSpeedX() + ", Y: " + this.getSpeedY() + ", Z: " + this.getSpeedZ() + "\n"
 				+ "\tRotation: X: " + this.getRotationX() + ", Y: " + this.getRotationY() + ", Z: "
 				+ this.getRotationZ() + "\n"
+				+ "\tBoundingBox: " + "\n"
+				+ "\t\tDessus (MAX_Y): " + this.getBoundingBox()[Boundary.MAX_Y.ordinal()] + "\n"
+				+ "\t\tAvant (MAX_Z): " + this.getBoundingBox()[Boundary.MAX_Z.ordinal()] + "\n"
+				+ "\t\tArrière (MIN_Z): " + this.getBoundingBox()[Boundary.MIN_Z.ordinal()] + "\n"
+				+ "\t\tGauche: (MIN_X): " + this.getBoundingBox()[Boundary.MIN_X.ordinal()] + "\n"
+				+ "\t\tDroite: (MAX_X): " + this.getBoundingBox()[Boundary.MAX_X.ordinal()] + "\n"
+				+ "\t\tDessous: (MIN_Y): " + this.getBoundingBox()[Boundary.MIN_Y.ordinal()] + "\n"
 				+ "\tVisible: " + this.isVisible();
 	}
 }

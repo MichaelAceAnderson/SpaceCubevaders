@@ -16,6 +16,9 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 
 ### Bugs connus
 
+- La détection de la visibilité d'un objet graphique n'est pas calculée à partir de la perspective de la caméra mais à partir de la profondeur d'affichage maximum (Voir `isVisible()` de [GraphicalObject](src/gl/objects/rules/GraphicalObject.java))
+- La boîte de collisions est pour l'instant un cube qui ne prend pas en compte les rotations de l'objet ou la profondeur nulle d'une forme (Voir `getBoundingBox()` de [GraphicalObject](src/gl/objects/rules/GraphicalObject.java))
+
 ### Architecture
 
 #### Diagramme de classes
