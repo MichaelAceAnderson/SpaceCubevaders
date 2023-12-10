@@ -22,6 +22,11 @@ public abstract class GraphicalObject {
 	// Canvas dans lequel l'objet est affiché
 	protected GLCanvas glCanvas;
 
+	// Faces du cube de collisions
+	public static enum Boundary {
+		TOP, FRONT, BACK, LEFT, RIGHT, BOTTOM
+	}
+
 	/**
 	 * Créer un objet graphique
 	 * 
@@ -423,8 +428,49 @@ public abstract class GraphicalObject {
 	public GLCanvas getCanvas() {
 		return this.glCanvas;
 	}
-	public void setGl(GL2 gl) {
-		this.gl = gl;
+
+	/**
+	 * Récupérer les coordonnées de la boîte de collision de cet objet graphique
+	 * 
+	 * @return Les coordonnées de la boîte de collision
+	 */
+	public float[] getBoundingBox() {
+		float[] centerPosition = { this.getPosX(), this.getPosY(), this.getPosZ() };
+		float[] size = { this.getScaleX(), this.getScaleY(), this.getScaleZ() };
+
+		float[] boundaryBox = new float[6];
+
+		boundaryBox[Boundary.TOP.ordinal()] = centerPosition[1] + size[1] / 2;
+		boundaryBox[Boundary.FRONT.ordinal()] = centerPosition[2] + size[2] / 2;
+		boundaryBox[Boundary.BACK.ordinal()] = centerPosition[2] - size[2] / 2;
+		boundaryBox[Boundary.LEFT.ordinal()] = centerPosition[0] - size[0] / 2;
+		boundaryBox[Boundary.RIGHT.ordinal()] = centerPosition[0] + size[0] / 2;
+		boundaryBox[Boundary.BOTTOM.ordinal()] = centerPosition[1] - size[1] / 2;
+
+		return boundaryBox;
+	}
+
+	/**
+	 * Vérifier si cet objet graphique est en collision avec un autre objet
+	 * graphique
+	 * 
+	 * @param object L'objet graphique avec lequel vérifier la collision
+	 * 
+	 * @return true si les objets sont en collision, false sinon
+	 */
+	public boolean isColliding(GraphicalObject object) {
+		float[] thisBoundingBox = this.getBoundingBox();
+		float[] objectBoundingBox = object.getBoundingBox();
+
+		boolean isColliding = (thisBoundingBox[Boundary.TOP.ordinal()] > objectBoundingBox[Boundary.BOTTOM.ordinal()]
+				&& thisBoundingBox[Boundary.BOTTOM.ordinal()] < objectBoundingBox[Boundary.TOP.ordinal()]
+				&& thisBoundingBox[Boundary.FRONT.ordinal()] > objectBoundingBox[Boundary.BACK.ordinal()]
+				&& thisBoundingBox[Boundary.BACK.ordinal()] < objectBoundingBox[Boundary.FRONT.ordinal()]
+				&& thisBoundingBox[Boundary.LEFT.ordinal()] < objectBoundingBox[Boundary.RIGHT.ordinal()]
+				&& thisBoundingBox[Boundary.RIGHT.ordinal()] > objectBoundingBox[Boundary.LEFT.ordinal()]);
+
+		return isColliding;
+	}
 	}
 
 	/**

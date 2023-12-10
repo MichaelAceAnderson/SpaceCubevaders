@@ -48,7 +48,7 @@ public class DebugGL {
 				RGBColor.PURPLE[0], RGBColor.PURPLE[1], RGBColor.PURPLE[2]);
 		glCanvas.getObjects().add(cube);
 
-		Pyramid pyramid = new Pyramid(glCanvas, 100.0f, 2.0f, -10.0f,
+		Pyramid pyramid = new Pyramid(glCanvas, 0.0f, 1.5f, -10.0f,
 				30.0f, 25.0f, 0.0f,
 				1.0f, 1.0f, 1.0f,
 				0.0f, 0.0f, 0.0f,
