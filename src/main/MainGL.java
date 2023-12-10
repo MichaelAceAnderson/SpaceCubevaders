@@ -13,10 +13,9 @@ public class MainGL {
 
 		// Attendre que le contexte OpenGL soit initialisé
 		boolean initialized = false;
-		GL2 gl = null;
 		while (initialized == false) {
 			try {
-				gl = glCanvas.getGL().getGL2();
+				glCanvas.getGL().getGL2();
 				initialized = true;
 			} catch (Exception e) {
 				initialized = false;
