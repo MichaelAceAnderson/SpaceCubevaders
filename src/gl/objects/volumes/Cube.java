@@ -1,7 +1,7 @@
 package gl.objects.volumes;
 
-import com.jogamp.opengl.awt.GLCanvas;
 
+import gl.canvas.rules.Canvas;
 import gl.common.DebugMode;
 import gl.common.RGBColor;
 import gl.objects.rules.GraphicalObject;
@@ -17,7 +17,7 @@ public class Cube extends Volume {
 	/**
 	 * Créer un cube
 	 * 
-	 * @see GraphicalObject#GraphicalObject(GLCanvas, float, float, float,
+	 * @see GraphicalObject#GraphicalObject(Canvas, float, float, float,
 	 *      float, float, float,
 	 *      float, float, float,
 	 *      float, float, float,
@@ -25,14 +25,14 @@ public class Cube extends Volume {
 	 *      float, float, float)
 	 * 
 	 */
-	public Cube(GLCanvas glCanvas, float posX, float posY, float posZ,
+	public Cube(Canvas canvas, float posX, float posY, float posZ,
 			float angleX, float angleY, float angleZ,
 			float scaleX, float scaleY, float scaleZ,
 			float speedX, float speedY, float speedZ,
 			float rotationX, float rotationY, float rotationZ,
 			float r, float g, float b) {
 		// Appeler le constructeur de la classe mère pour instancier l'objet graphique
-		super(glCanvas, posX, posY, posZ,
+		super(canvas, posX, posY, posZ,
 				angleX, angleY, angleZ,
 				scaleX, scaleY, scaleZ,
 				speedX, speedY, speedZ,
@@ -45,7 +45,7 @@ public class Cube extends Volume {
 			g = RGBColor.CYAN[1];
 			b = RGBColor.CYAN[2];
 		}
-		this.getShapes().add(new Square(glCanvas, 0, 1, 0,
+		this.getShapes().add(new Square(canvas, 0, 1, 0,
 				90, 0, 0,
 				1, 1, 1,
 				0, 0, 0,
@@ -57,7 +57,7 @@ public class Cube extends Volume {
 			g = RGBColor.RED[1];
 			b = RGBColor.RED[2];
 		}
-		this.getShapes().add(new Square(glCanvas, 0, 0, 1,
+		this.getShapes().add(new Square(canvas, 0, 0, 1,
 				0, 0, 0,
 				1, 1, 1,
 				0, 0, 0,
@@ -69,7 +69,7 @@ public class Cube extends Volume {
 			g = RGBColor.GREEN[1];
 			b = RGBColor.GREEN[2];
 		}
-		this.getShapes().add(new Square(glCanvas, 0, 0, -1,
+		this.getShapes().add(new Square(canvas, 0, 0, -1,
 				0, 0, 0,
 				1, 1, 1,
 				0, 0, 0,
@@ -81,7 +81,7 @@ public class Cube extends Volume {
 			g = RGBColor.YELLOW[1];
 			b = RGBColor.YELLOW[2];
 		}
-		this.getShapes().add(new Square(glCanvas, -1, 0, 0,
+		this.getShapes().add(new Square(canvas, -1, 0, 0,
 				0, -90, 0,
 				1, 1, 1,
 				0, 0, 0,
@@ -93,7 +93,7 @@ public class Cube extends Volume {
 			g = RGBColor.BLUE[1];
 			b = RGBColor.BLUE[2];
 		}
-		this.getShapes().add(new Square(glCanvas, 1, 0, 0,
+		this.getShapes().add(new Square(canvas, 1, 0, 0,
 				0, 90, 0,
 				1, 1, 1,
 				0, 0, 0,
@@ -105,7 +105,7 @@ public class Cube extends Volume {
 			g = RGBColor.MAGENTA[1];
 			b = RGBColor.MAGENTA[2];
 		}
-		this.getShapes().add(new Square(glCanvas, 0, -1, 0,
+		this.getShapes().add(new Square(canvas, 0, -1, 0,
 				90, 0, 0,
 				1, 1, 1,
 				0, 0, 0,
@@ -116,7 +116,7 @@ public class Cube extends Volume {
 	/**
 	 * Créer un cube par défaut
 	 * 
-	 * @see Cube#Cube(GLCanvas, float, float, float,
+	 * @see Cube#Cube(Canvas, float, float, float,
 	 *      float, float, float,
 	 *      float, float, float,
 	 *      float, float, float,
@@ -124,8 +124,8 @@ public class Cube extends Volume {
 	 *      float, float, float)
 	 * 
 	 */
-	public Cube(GLCanvas glCanvas) {
-		this(glCanvas, 0.0f, 0.0f, -10.0f,
+	public Cube(Canvas canvas) {
+		this(canvas, 0.0f, 0.0f, -10.0f,
 				0.0f, 0.0f, 0.0f,
 				1.0f, 1.0f, 1.0f,
 				0.0f, 0.0f, 0.0f,

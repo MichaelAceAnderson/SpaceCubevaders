@@ -1,8 +1,8 @@
 package gl.objects.shapes;
 
 import com.jogamp.opengl.GL2;
-import com.jogamp.opengl.awt.GLCanvas;
 
+import gl.canvas.rules.Canvas;
 import gl.common.RGBColor;
 import gl.objects.rules.GraphicalObject;
 import gl.objects.rules.Shape;
@@ -12,20 +12,20 @@ public class Triangle extends Shape {
 	/**
 	 * Créer un triangle
 	 * 
-	 * @see GraphicalObject#GraphicalObject(GLCanvas, float, float, float,
+	 * @see GraphicalObject#GraphicalObject(Canvas, float, float, float,
 	 *      float, float, float,
 	 *      float, float, float,
 	 *      float, float, float,
 	 *      float, float, float,
 	 *      float, float, float)
 	 */
-	public Triangle(GLCanvas glCanvas, float posX, float posY, float posZ,
+	public Triangle(Canvas canvas, float posX, float posY, float posZ,
 			float angleX, float angleY, float angleZ,
 			float scaleX, float scaleY, float scaleZ,
 			float speedX, float speedY, float speedZ,
 			float rotationX, float rotationY, float rotationZ,
 			float r, float g, float b) {
-		super(glCanvas, posX, posY, posZ,
+		super(canvas, posX, posY, posZ,
 				angleX, angleY, angleZ,
 				scaleX, scaleY, scaleZ,
 				speedX, speedY, speedZ,
@@ -36,7 +36,7 @@ public class Triangle extends Shape {
 	/**
 	 * Créer un triangle par défaut
 	 * 
-	 * @see Triangle#Triangle(GLCanvas, float, float, float,
+	 * @see Triangle#Triangle(Canvas, float, float, float,
 	 *      float, float, float,
 	 *      float, float, float,
 	 *      float, float, float,
@@ -44,8 +44,8 @@ public class Triangle extends Shape {
 	 *      float, float, float)
 	 * 
 	 */
-	public Triangle(GLCanvas glCanvas) {
-		this(glCanvas, 0.0f, 0.0f, -10.0f,
+	public Triangle(Canvas canvas) {
+		this(canvas, 0.0f, 0.0f, -10.0f,
 				0.0f, 45.0f, 0.0f,
 				1.0f, 1.0f, 1.0f,
 				0.0f, 0.0f, 0.0f,

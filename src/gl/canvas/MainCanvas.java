@@ -1,9 +1,6 @@
-package gl.frames;
+package gl.canvas;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
-
-import javax.swing.JFrame;
 
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
@@ -12,128 +9,16 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.FPSAnimator;
 
+import gl.canvas.rules.Canvas;
 import gl.objects.rules.GraphicalObject;
 
-public class MainFrame extends GLCanvas
-		implements GLEventListener {
-	// Nombre d'itérations d'affichage
-	private int frameCount;
-	// Temps écoulé depuis le début de la boucle de rendu
-	private long elapsedTime;
-	// Nombre de FPS
-	private int fps;
-	// Fenêtre de rendu
-	private JFrame frame;
-	// Objets à afficher
-	private ArrayList<GraphicalObject> objects;
-	// Limite de FPS
-	private static final int FPS_LIMIT = 60;
+public class MainCanvas extends Canvas {
 
 	/**
-	 * Créer un objet MainFrame où le rendu OpenGL est effectué
-	 * 
-	 * @see GLEventListener
+	 * @see Canvas
 	 */
-	public MainFrame() {
-		// Ajouter le listener pour les événements OpenGL dans ce canvas
-		this.addGLEventListener(this);
-		this.setFrameCount(0);
-		this.setObjects(new ArrayList<GraphicalObject>());
-		this.setFrame(new JFrame());
-		this.getFrame().getContentPane().add(this);
-		this.getFrame().pack();
-		this.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.getFrame().setVisible(true);
-		this.setAnimator(new FPSAnimator(this, MainFrame.FPS_LIMIT));
-		this.getAnimator().start();
-	}
-
-	/**
-	 * Récupérer le nombre d'itérations d'affichage
-	 * 
-	 * @return Nombre d'itérations d'affichage
-	 */
-	public int getFrameCount() {
-		return this.frameCount;
-	}
-
-	/**
-	 * Stocker le nombre d'itérations d'affichage
-	 * 
-	 * @param renderedFrame Nombre de l'itération en cours
-	 */
-	public void setFrameCount(int renderedFrame) {
-		this.frameCount = renderedFrame;
-	}
-
-	/**
-	 * Récupérer le temps écoulé depuis le début de la boucle de rendu
-	 * 
-	 * @return Temps écoulé depuis le début de la boucle de rendu (en nanosecondes)
-	 */
-	public long getElapsedTime() {
-		return this.elapsedTime;
-	}
-
-	/**
-	 * Stocker le temps écoulé depuis le début de la boucle de rendu (en
-	 * nanosecondes)
-	 * 
-	 * @param elapsedTime
-	 */
-	public void setElapsedTime(long elapsedTime) {
-		this.elapsedTime = elapsedTime;
-	}
-
-	/**
-	 * Récupérer le nombre de FPS actuel
-	 * 
-	 * @return Nombre de FPS
-	 */
-	public int getFps() {
-		return this.fps;
-	}
-
-	/**
-	 * Stocker le nombre de FPS actuel
-	 * 
-	 * @param fps Nombre de FPS
-	 */
-	public void setFps(int fps) {
-		this.fps = fps;
-	}
-
-	/**
-	 * Récupérer la fenêtre de rendu
-	 * 
-	 * @return Fenêtre de rendu
-	 */
-	public JFrame getFrame() {
-		return this.frame;
-	}
-
-	/**
-	 * Définir la fenêtre de rendu
-	 * 
-	 * @param frame Fenêtre de rendu
-	 * 
-	 * @see JFrame
-	 */
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
-	}
-
-	/**
-	 * Récupérer la liste des objets à afficher
-	 * 
-	 * @return Liste des objets à afficher
-	 */
-	public ArrayList<GraphicalObject> getObjects() {
-		return this.objects;
-	}
-
-	public void setObjects(ArrayList<GraphicalObject> objects) {
-		this.objects = objects;
+	public MainCanvas() {
+		super();
 	}
 
 	/**
@@ -162,22 +47,21 @@ public class MainFrame extends GLCanvas
 	 */
 	@Override
 	public void display(GLAutoDrawable canvas) {
-		// Incrémenter le nombre d'itérations d'affichage
-		this.setFrameCount(this.getFrameCount() + 1);
+		super.display(canvas);
 
 		// Récupérer le contexte OpenGL
-		GL2 gl = canvas.getGL().getGL2();
+		GL2 gl2 = canvas.getGL().getGL2();
 		// Vide le buffer de couleur et de profondeur
-		gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
+		gl2.glClear(GL2.GL_COLOR_BUFFER_BIT);
 		// Vider le buffer de profondeur
-		gl.glClear(GL2.GL_DEPTH_BUFFER_BIT);
+		gl2.glClear(GL2.GL_DEPTH_BUFFER_BIT);
 		// gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT); // Vider les
 		// deux buffers d'un coup
 		// Charger la matrice identité afin de repartir de zéro à chaque fois
-		gl.glLoadIdentity();
+		gl2.glLoadIdentity();
 
 		// Afficher tous les objets
-		gl.glPushMatrix();
+		gl2.glPushMatrix();
 		{
 			// Pour tous les objets
 			for (GraphicalObject object : this.getObjects()) {
@@ -189,7 +73,7 @@ public class MainFrame extends GLCanvas
 				object.rotate(object.getRotationX(), object.getRotationY(), object.getRotationZ());
 			}
 		}
-		gl.glPopMatrix();
+		gl2.glPopMatrix();
 
 		// Afficher le nombre d'itérations d'affichage
 		this.getFrame()
@@ -221,18 +105,18 @@ public class MainFrame extends GLCanvas
 	 */
 	@Override
 	public void init(GLAutoDrawable canvas) {
-		GL2 gl = canvas.getGL().getGL2();
+		GL2 gl2 = canvas.getGL().getGL2();
 		// Définir la couleur de fond
-		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		gl2.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		// Vider le buffer de profondeur
-		gl.glClearDepth(1.0);
+		gl2.glClearDepth(1.0);
 		// Mettre en place le test de profondeur
-		gl.glEnable(GL2.GL_DEPTH_TEST);
+		gl2.glEnable(GL2.GL_DEPTH_TEST);
 		// Accepter le fragment si il est plus proche de la caméra que le fragment
 		// précédent
-		gl.glDepthFunc(GL2.GL_LEQUAL);
+		gl2.glDepthFunc(GL2.GL_LEQUAL);
 		// Corriger la perspective en fonction de la distance
-		gl.glHint(GL2.GL_PERSPECTIVE_CORRECTION_HINT, GL2.GL_NICEST);
+		gl2.glHint(GL2.GL_PERSPECTIVE_CORRECTION_HINT, GL2.GL_NICEST);
 	}
 
 	/**
@@ -250,19 +134,23 @@ public class MainFrame extends GLCanvas
 	public void reshape(GLAutoDrawable drawable,
 			int x, int y, int width, int height) {
 		// Récupérer le contexte OpenGL
-		GL2 gl = drawable.getGL().getGL2();
+		GL2 gl2 = drawable.getGL().getGL2();
 		// Définir la zone d'affichage
-		gl.glViewport(0, 0, width, height);
+		gl2.glViewport(0, 0, width, height);
 		// Définir le mode de projection à utiliser
-		gl.glMatrixMode(GL2.GL_PROJECTION);
+		gl2.glMatrixMode(GL2.GL_PROJECTION);
 		// Charger la matrice identité pour effacer les transformations précédentes et
 		// repartir de zéro
-		gl.glLoadIdentity();
+		gl2.glLoadIdentity();
 		// Créer un GLU (OpenGL Utility Library) pour définir la perspective
 		GLU glu = new GLU();
-		glu.gluPerspective(45.0, (float) width / height,
-				0.1, 100.0);
+		this.setAspect((float) width / height);
+		this.setFov(45.0f);
+		this.setNearClip(0.1f);
+		this.setMaxDepth(100.0f);
+		glu.gluPerspective(this.getFov(), this.getAspect(),
+				this.getNearClip(), this.getMaxDepth());
 		// Définir le mode de projection à utiliser)
-		gl.glMatrixMode(GL2.GL_MODELVIEW);
+		gl2.glMatrixMode(GL2.GL_MODELVIEW);
 	}
 }

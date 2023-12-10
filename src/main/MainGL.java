@@ -1,21 +1,19 @@
 package main;
 
-import com.jogamp.opengl.GL2;
-
+import gl.canvas.MainCanvas;
 import gl.common.DebugMode;
 import gl.common.RGBColor;
-import gl.frames.MainFrame;
 import gl.objects.volumes.Cube;
 
 public class MainGL {
 	public static void main(String[] args) {
-		MainFrame glCanvas = new MainFrame();
+		MainCanvas canvas = new MainCanvas();
 
 		// Attendre que le contexte OpenGL soit initialisé
 		boolean initialized = false;
 		while (initialized == false) {
 			try {
-				glCanvas.getGL().getGL2();
+				canvas.getGL().getGL2();
 				initialized = true;
 			} catch (Exception e) {
 				initialized = false;
@@ -26,25 +24,25 @@ public class MainGL {
 		for (int row = 0; row < 5; row++) {
 			for (int col = -5; col < 6; col++) {
 				// Créer un cube
-				Cube cube = new Cube(glCanvas, col * 3, row * 3, -40.0f,
+				Cube cube = new Cube(canvas, col * 3, row * 3, -40.0f,
 						0.0f, 0.0f, 0.0f,
 						1.0f, 1.0f, 1.0f,
 						0.0f, 0.0f, 0.0f,
 						0.0f, 0.0f, 0.0f,
 						RGBColor.GREEN[0], RGBColor.GREEN[1], RGBColor.GREEN[2]);
-				glCanvas.getObjects().add(cube);
+				canvas.getObjects().add(cube);
 			}
 		}
 
 		// Créer le cube joueur
-		Cube player = new Cube(glCanvas, 0.0f, -10.0f, -39.0f,
+		Cube player = new Cube(canvas, 0.0f, -10.0f, -39.0f,
 				0.0f, 0.0f, 0.0f,
 				1.0f, 1.0f, 1.0f,
 				0.0f, 0.0f, 0.0f,
 				0.0f, 5.0f, 0.0f,
 				RGBColor.WHITE[0], RGBColor.WHITE[1], RGBColor.WHITE[2]);
-		glCanvas.getObjects().add(player);
+		canvas.getObjects().add(player);
 
-		DebugMode.printInfo(glCanvas);
+		DebugMode.printInfo(canvas);
 	}
 }

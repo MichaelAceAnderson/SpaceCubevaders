@@ -2,8 +2,8 @@ package gl.objects.rules;
 
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
-import com.jogamp.opengl.awt.GLCanvas;
 
+import gl.canvas.rules.Canvas;
 import gl.common.DebugMode;
 
 public abstract class GraphicalObject {
@@ -20,7 +20,7 @@ public abstract class GraphicalObject {
 	// Rotations dans le temps
 	protected float rotationX, rotationY, rotationZ;
 	// Canvas dans lequel l'objet est affiché
-	protected GLCanvas glCanvas;
+	protected Canvas canvas;
 
 	// Faces du cube de collisions
 	public static enum Boundary {
@@ -30,7 +30,7 @@ public abstract class GraphicalObject {
 	/**
 	 * Créer un objet graphique
 	 * 
-	 * @param glCanvas  Le canvas OpenGL
+	 * @param canvas    Le canvas OpenGL
 	 * @param posX      La position en X
 	 * @param posY      La position en Y
 	 * @param posZ      La position en Z
@@ -51,13 +51,13 @@ public abstract class GraphicalObject {
 	 * @param b         La couleur bleue
 	 * 
 	 */
-	public GraphicalObject(GLCanvas glCanvas, float posX, float posY, float posZ,
+	public GraphicalObject(Canvas canvas, float posX, float posY, float posZ,
 			float angleX, float angleY, float angleZ,
 			float scaleX, float scaleY, float scaleZ,
 			float speedX, float speedY, float speedZ,
 			float rotationX, float rotationY, float rotationZ,
 			float r, float g, float b) {
-		this.setCanvas(glCanvas);
+		this.setCanvas(canvas);
 		this.setPosX(posX);
 		this.setPosY(posY);
 		this.setPosZ(posZ);
@@ -412,10 +412,10 @@ public abstract class GraphicalObject {
 	 * 
 	 * @param canvas Le canvas OpenGL
 	 * 
-	 * @see GLCanvas
+	 * @see Canvas
 	 */
-	public void setCanvas(GLCanvas glCanvas) {
-		this.glCanvas = glCanvas;
+	public void setCanvas(Canvas canvas) {
+		this.canvas = canvas;
 	}
 
 	/**
@@ -423,10 +423,10 @@ public abstract class GraphicalObject {
 	 * 
 	 * @return Le canvas OpenGL
 	 * 
-	 * @see GLCanvas
+	 * @see Canvas
 	 */
-	public GLCanvas getCanvas() {
-		return this.glCanvas;
+	public Canvas getCanvas() {
+		return this.canvas;
 	}
 
 	/**

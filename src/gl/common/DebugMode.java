@@ -1,6 +1,6 @@
 package gl.common;
 
-import gl.frames.MainFrame;
+import gl.canvas.rules.Canvas;
 import gl.objects.rules.GraphicalObject;
 
 public final class DebugMode {
@@ -14,7 +14,7 @@ public final class DebugMode {
 
 	public static final boolean[] MODES = { VERBOSE, LINE_MODE, RAINBOW };
 
-	public static void printInfo(MainFrame glCanvas) {
+	public static void printInfo(Canvas canvas) {
 
 		if (DebugMode.VERBOSE) {
 			System.out.println("Mode d'information activé\nConstantes définies:\n");
@@ -24,11 +24,11 @@ public final class DebugMode {
 				System.out.println(mode.toString() + " = " + DebugMode.MODES[mode.ordinal()]);
 			}
 
-			for (GraphicalObject object : glCanvas.getObjects()) {
+			for (GraphicalObject object : canvas.getObjects()) {
 				// Afficher les propriétés de l'objet
 				System.out.println(object.toString());
 				// Vérifier les collisions avec les autres objets
-				for (GraphicalObject otherObject : glCanvas.getObjects()) {
+				for (GraphicalObject otherObject : canvas.getObjects()) {
 					if (object != otherObject) {
 						if (object.isColliding(otherObject)) {
 							System.out.println(
