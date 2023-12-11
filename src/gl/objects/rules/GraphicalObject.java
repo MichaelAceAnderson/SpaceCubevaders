@@ -505,6 +505,16 @@ public abstract class GraphicalObject {
 			return false;
 		}
 
+		// Si l'objet est plus haut que la limite haute
+		if (this.getBoundingBox()[Boundary.MAX_Y.ordinal()] > this.getCanvas().getMaxDepth()) {
+			return false;
+		}
+
+		// Si l'objet est plus bas que la limite basse
+		if (this.getBoundingBox()[Boundary.MIN_Y.ordinal()] < -this.getCanvas().getMaxDepth()) {
+			return false;
+		}
+
 		return true;
 	}
 

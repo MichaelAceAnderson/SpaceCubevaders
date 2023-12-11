@@ -10,7 +10,8 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 
 - [ ] Corriger la BoundingBox (Notamment via la taille initiale des objets dessinés avant transformation et en dessinant les objets à partir de leur centre)
 - [ ] Corriger la détection des collisions pour prendre en compte les items composés de plusieurs objets graphiques (abstract `isColliding` ?)
-- [ ] Construire un missile à partir d'un cube et d'une pyramide
+- [ ] Réparer la rotation des missiles
+- [ ] Attacher des labels 3D aux objets graphiques en mode debug
 - [ ] Ajouter la logique de jeu (déplacements, tirs, etc...)
 - [ ] Ajouter un système de score
 - [ ] Ajouter un système de vies
@@ -20,6 +21,8 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 
 ### Bugs connus
 
+- Les missiles disparaissent avant d'avoir visuellement dépassé les limites du jeu & se détruisent avant la collision visuelle
+- Les collisions ne sont pas détectées correctement
 - Les items ne tournent pas autour d'eux même mais autour d'un point fixe distant de leur centre
 - La détection de la visibilité d'un objet graphique n'est pas calculée à partir de la perspective de la caméra mais à partir de la profondeur d'affichage maximum (Voir `isVisible()` de [GraphicalObject](src/gl/objects/rules/GraphicalObject.java))
 - La boîte de collisions est pour l'instant un cube qui ne prend pas en compte les rotations de l'objet ou la profondeur nulle d'une forme (Voir `getBoundingBox()` de [GraphicalObject](src/gl/objects/rules/GraphicalObject.java))
@@ -52,6 +55,7 @@ Créer une forme revient à créer un fichier dans le package **shapes** qui imp
 Créer un volume revient donc à créer un fichier dans le package **volumes** qui implémente les méthodes héritées de [Volume](src/objects/rules/Volume.java) et se dessine avec un ensemble de formes géométriques ([Shape](src/objects/rules/Shape.java)).
 
 OpenGL fonctionne avec un système de pile. Chaque affichage d'objet doit donc être encadré par un `glPushMatrix()` et un `glPopMatrix()`, dans lesquels on peut effectuer des transformations ([glTranslate](https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml), [glRotate](https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glRotate.xml), [glScale](https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml)).  
+On notera que les transformations s'appliquent dans l'ordre inverse de leur appel en raison du fonctionnement de la pile de matrices.  
 Pour dessiner un objet, il faut donc :
 
 - appeler `glPushMatrix()` pour sauvegarder la matrice de transformation courante
@@ -77,8 +81,10 @@ Exemple:
    [...]
    // Mettre à l'échelle l'objet graphique
    [...]
-   // Dessiner l'objet graphique
+   // Dessiner l'objet graphique en position 0,0,0 avant de le déplacer à sa position réelle
    this.draw();
+   // Dessiner les collisions en position 0,0,0 avant de déplacer l'objet graphique à sa position réelle
+   this.drawCollisions();
   }
   // Restaurer la matrice précédente
   this.getGl().glPopMatrix();

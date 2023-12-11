@@ -82,10 +82,12 @@ public class MainCanvas extends Canvas {
 		}
 		gl2.glPopMatrix();
 
-		// Afficher le nombre d'itérations d'affichage
-		this.getFrame()
-				.setTitle("Frame: " + ((FPSAnimator) this.getAnimator()).getFPS() + " Frame: " + this.getFrameCount());
+		this.getParentFrame()
+				.setTitle("FPS: " + ((FPSAnimator) this.getAnimator()).getFPS() + " Frame: " + this.getFrameCount());
 
+		if (this.getGame() != null) {
+			this.getGame().update();
+		}
 	}
 
 	/**

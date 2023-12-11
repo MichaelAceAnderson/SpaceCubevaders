@@ -1,9 +1,8 @@
-package gl.objects.items.rules;
+package gl.objects.rules;
 
 import java.util.ArrayList;
 
 import gl.canvas.rules.Canvas;
-import gl.objects.rules.GraphicalObject;
 
 public abstract class Item extends GraphicalObject {
 	// Objets composants l'item

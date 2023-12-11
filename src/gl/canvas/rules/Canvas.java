@@ -11,6 +11,7 @@ import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.FPSAnimator;
 
+import game.Game;
 import gl.common.RGBColor;
 import gl.objects.rules.GraphicalObject;
 
@@ -29,6 +30,8 @@ public abstract class Canvas extends GLCanvas
 	private float fov;
 	private float nearClip;
 	private float maxDepth;
+	// Jeu en cours dans ce canvas
+	private Game game;
 
 	/**
 	 * Créer un GLCanvas où le rendu OpenGL est effectué
@@ -41,11 +44,11 @@ public abstract class Canvas extends GLCanvas
 		this.addGLEventListener(this);
 		this.setFrameCount(0);
 		this.setObjects(new ArrayList<GraphicalObject>());
-		this.setFrame(new JFrame());
-		this.getFrame().getContentPane().add(this);
-		this.getFrame().pack();
-		this.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.getFrame().setVisible(true);
+		this.setParentFrame(new JFrame());
+		this.getParentFrame().getContentPane().add(this);
+		this.getParentFrame().pack();
+		this.getParentFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.getParentFrame().setVisible(true);
 		this.setAnimator(new FPSAnimator(this, Canvas.FPS_LIMIT));
 		this.getAnimator().start();
 	}
@@ -73,7 +76,7 @@ public abstract class Canvas extends GLCanvas
 	 * 
 	 * @return Fenêtre de rendu
 	 */
-	public JFrame getFrame() {
+	public JFrame getParentFrame() {
 		return this.frame;
 	}
 
@@ -84,7 +87,7 @@ public abstract class Canvas extends GLCanvas
 	 * 
 	 * @see JFrame
 	 */
-	public void setFrame(JFrame frame) {
+	public void setParentFrame(JFrame frame) {
 		this.frame = frame;
 	}
 
@@ -231,6 +234,24 @@ public abstract class Canvas extends GLCanvas
 			}
 			gl2.glEnd();
 		}
+	}
+
+	/**
+	 * Définir le jeu en cours dans ce canvas
+	 * 
+	 * @param game Jeu en cours dans ce canvas
+	 */
+	public void setGame(Game game) {
+		this.game = game;
+	}
+
+	/**
+	 * Récupérer le jeu en cours dans ce canvas
+	 * 
+	 * @return Jeu en cours dans ce canvas
+	 */
+	public Game getGame() {
+		return this.game;
 	}
 
 	/**
