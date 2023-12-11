@@ -85,7 +85,8 @@ public class MainCanvas extends Canvas {
 		gl2.glPopMatrix();
 
 		this.getParentFrame()
-				.setTitle("FPS: " + ((FPSAnimator) this.getAnimator()).getFPS() + " Frame: " + this.getFrameCount());
+				.setTitle("FPS: " + this.getFps() + "/" + ((FPSAnimator) this.getAnimator()).getFPS()
+						+ " Frame: " + this.getFrameCount());
 
 		if (this.getGame() != null) {
 			this.getGame().update();

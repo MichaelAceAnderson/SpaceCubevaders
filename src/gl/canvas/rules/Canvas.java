@@ -2,6 +2,7 @@ package gl.canvas.rules;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 
@@ -23,6 +24,10 @@ public abstract class Canvas extends GLCanvas
 	private JFrame frame;
 	// Objets à afficher
 	private ArrayList<GraphicalObject> objects;
+	// Nombre de FPS actuel
+	private int fps;
+	// Temps écoulé depuis le dernier rendu
+	private long lastRenderTime;
 	// Limite de FPS
 	private static final int FPS_LIMIT = 60;
 	// Perspective
@@ -242,6 +247,42 @@ public abstract class Canvas extends GLCanvas
 	}
 
 	/**
+	 * Stocker le nombre de FPS actuel
+	 * 
+	 * @param fps Nombre de FPS
+	 */
+	public void setFps(int fps) {
+		this.fps = fps;
+	}
+
+	/**
+	 * Récupérer le nombre de FPS actuel
+	 * 
+	 * @return Nombre de FPS
+	 */
+	public int getFps() {
+		return this.fps;
+	}
+
+	/**
+	 * Stocker le temps écoulé depuis le dernier rendu
+	 * 
+	 * @param lastRenderTime Temps écoulé depuis le dernier rendu
+	 */
+	public void setLastRenderTime(long lastRenderTime) {
+		this.lastRenderTime = lastRenderTime;
+	}
+
+	/**
+	 * Récupérer le temps écoulé depuis le dernier rendu
+	 * 
+	 * @return Temps écoulé depuis le dernier rendu
+	 */
+	public long getLastRenderTime() {
+		return this.lastRenderTime;
+	}
+
+	/**
 	 * Définir le jeu en cours dans ce canvas
 	 * 
 	 * @param game Jeu en cours dans ce canvas
@@ -287,5 +328,16 @@ public abstract class Canvas extends GLCanvas
 	public void display(GLAutoDrawable canvas) {
 		// Incrémenter le nombre d'itérations d'affichage
 		this.setFrameCount(this.getFrameCount() + 1);
+		// Récupérer le temps actuel
+		long currentTime = System.nanoTime();
+		// Calculer le temps écoulé depuis le dernier calcul du temps (itération
+		// précédentes)
+		long deltaTime = currentTime - this.getLastRenderTime();
+		this.setLastRenderTime(currentTime);
+		// Calculer le nombre de FPS
+		this.setFps((int) TimeUnit.SECONDS.toNanos(1) / (int) deltaTime);
+		// Toutes les 60 itérations, changer le titre de la fenêtre pour afficher le
+		// nombre de FPS
+
 	}
 }
