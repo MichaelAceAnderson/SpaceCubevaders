@@ -6,8 +6,8 @@ import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.util.gl2.GLUT;
 
+import common.DebugMode;
 import gl.canvas.rules.Canvas;
-import gl.common.DebugMode;
 
 public abstract class Volume extends GraphicalObject {
 	// Formes composant le volume

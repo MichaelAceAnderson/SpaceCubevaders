@@ -1,7 +1,7 @@
 package gl.objects.items;
 
+import common.RGBColor;
 import gl.canvas.rules.Canvas;
-import gl.common.RGBColor;
 import gl.objects.rules.Item;
 import gl.objects.volumes.Cube;
 import gl.objects.volumes.Pyramid;

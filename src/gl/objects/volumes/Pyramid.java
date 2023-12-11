@@ -1,9 +1,9 @@
 package gl.objects.volumes;
 
 
+import common.DebugMode;
+import common.RGBColor;
 import gl.canvas.rules.Canvas;
-import gl.common.DebugMode;
-import gl.common.RGBColor;
 import gl.objects.rules.GraphicalObject;
 import gl.objects.rules.Shape;
 import gl.objects.rules.Volume;

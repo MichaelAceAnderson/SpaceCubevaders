@@ -1,7 +1,7 @@
 package game.entities;
 
+import common.RGBColor;
 import game.entities.rules.Entity;
-import gl.common.RGBColor;
 import gl.objects.items.Missile;
 import gl.objects.rules.GraphicalObject;
 

@@ -3,8 +3,8 @@ package gl.objects.shapes;
 
 import com.jogamp.opengl.GL2;
 
+import common.RGBColor;
 import gl.canvas.rules.Canvas;
-import gl.common.RGBColor;
 import gl.objects.rules.GraphicalObject;
 import gl.objects.rules.Shape;
 

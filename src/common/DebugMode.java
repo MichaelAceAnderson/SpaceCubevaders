@@ -1,4 +1,4 @@
-package gl.common;
+package common;
 
 import gl.canvas.rules.Canvas;
 import gl.objects.rules.GraphicalObject;
@@ -21,7 +21,7 @@ public final class DebugMode {
 		NONE, SHAPE, VOLUME, ITEM
 	}
 
-	public static final COLLISION_TYPE DRAW_COLLISIONS = COLLISION_TYPE.NONE;
+	public static final COLLISION_TYPE DRAW_COLLISIONS = COLLISION_TYPE.VOLUME;
 
 	public static void printInfo(Canvas canvas) {
 

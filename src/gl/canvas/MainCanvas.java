@@ -9,8 +9,8 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.FPSAnimator;
 
+import common.DebugMode;
 import gl.canvas.rules.Canvas;
-import gl.common.DebugMode;
 import gl.objects.rules.GraphicalObject;
 
 public class MainCanvas extends Canvas {

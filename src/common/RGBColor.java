@@ -1,4 +1,4 @@
-package gl.common;
+package common;
 
 public final class RGBColor {
 	public static final float RED[] = { 1.0f, 0.0f, 0.0f };

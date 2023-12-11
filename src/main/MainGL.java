@@ -1,8 +1,8 @@
 package main;
 
+import common.DebugMode;
 import game.Game;
 import gl.canvas.MainCanvas;
-import gl.common.DebugMode;
 
 public class MainGL {
 	public static void main(String[] args) {

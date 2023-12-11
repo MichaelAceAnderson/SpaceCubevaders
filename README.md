@@ -10,12 +10,13 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 
 - [ ] Corriger la BoundingBox (Notamment via la taille initiale des objets dessinés avant transformation et en dessinant les objets à partir de leur centre)
 - [ ] Corriger la détection des collisions pour prendre en compte les items composés de plusieurs objets graphiques (abstract `isColliding` ?)
-- [ ] Réparer la rotation des missiles
 - [ ] Attacher des labels 3D aux objets graphiques en mode debug
-- [ ] Ajouter la logique de jeu (déplacements, tirs, etc...)
 - [ ] Ajouter un système de score
 - [ ] Ajouter un système de vies
+- [ ] Réparer la rotation des missiles
 - [ ] Mettre à jour la documentation
+- [ ] (Optionnel) Ajouter une icône à la fenêtre du jeu
+- [ ] (Optionnel) Ajouter une abstraction de la classe Game pour permettre de créer des jeux différents (Space Invaders, Pacman, etc...)
 - [ ] (Optionnel) Prendre en compte les rotations dans la BoundingBox et la détection des collisions
 - [ ] (Optionnel) Vérifier si les commentaires sont à jour par rapport au fonctionnement actuel du code
 
@@ -39,13 +40,22 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 Le projet est découpé en plusieurs packages :
 
 - **common** : contient les classes communes à tous les packages, notamment les constantes et les classes utilitaires
+- **game** : contient les classes permettant de gérer le jeu
+  - **entities** : contient les classes permettant de gérer les entités du jeu (Joueur, ennemi, etc...)
+    - **rules** : contient les classes permettant de gérer les règles de construction des entités
 - **gl** : contient les classes permettant de gérer l'affichage du jeu
-  - **frames** : contient les classes permettant de gérer les fenêtres du jeu
+  - **canvas** : contient les classes permettant de gérer les fenêtres du jeu
+    - **rules** : contient les classes permettant de gérer les règles de construction des fenêtres
   - **objects** :
     - **rules** : contient les classes permettant de gérer les règles de construction d'objets graphiques
     - **items** : contient les classes des objets du jeu (vaisseau, ennemis, missiles, bonus, etc.)
     - **shapes** : contient les classes des formes géométriques (carré, cercle, etc.) qui permettront de construire des volumes
     - **volumes** : contient les classes des volumes (cubes, sphères, etc.) qui permettront de construire des objets 3D
+- **main** : contient les classes de lancement du programme
+
+### Mode DEBUG
+
+La classe [/common/DebugMode.java](/src/common/DebugMode.java) contient des constantes à modifier lors du développement pour afficher des informations utiles sur les objets, l'espace, modifier leurs comportements etc...
 
 ### Affichage d'un objet
 

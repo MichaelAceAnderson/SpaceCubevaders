@@ -2,14 +2,15 @@ package game;
 
 import java.util.ArrayList;
 
+import common.DebugMode;
+import common.RGBColor;
+
 import java.awt.event.KeyListener;
 
 import game.entities.Ennemy;
 import game.entities.Player;
 import game.entities.rules.Entity;
 import gl.canvas.rules.Canvas;
-import gl.common.DebugMode;
-import gl.common.RGBColor;
 import gl.objects.rules.GraphicalObject.Boundary;
 import gl.objects.volumes.Cube;
 import gl.objects.volumes.Pyramid;
