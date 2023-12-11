@@ -188,6 +188,7 @@ public class Game {
 	 * 
 	 * @return Informations du jeu
 	 */
+	@Override
 	public String toString() {
 		String gameInfo = "";
 		gameInfo += "Jeu : "

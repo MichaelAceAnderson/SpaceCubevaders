@@ -534,6 +534,11 @@ public abstract class GraphicalObject {
 	public abstract void drawCollisions();
 
 	/**
+	 * Attacher des informations à cet objet graphique
+	 */
+	public abstract void drawInfos();
+
+	/**
 	 * Afficher cet objet graphique dans son contexte courant.
 	 * Note: Les transformations sont appliquées dans l'ordre inverse de leur
 	 * apparition dans le code en raison du fonctionnement des matrices
@@ -559,6 +564,7 @@ public abstract class GraphicalObject {
 			// Dessiner l'objet graphique
 			this.draw();
 			this.drawCollisions();
+			this.drawInfos();
 			if (DebugMode.LINE_MODE) {
 				// Revenir au mode de remplissage normal
 				this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_FILL);
@@ -610,6 +616,20 @@ public abstract class GraphicalObject {
 		this.setAngleX(angleX);
 		this.setAngleY(angleY);
 		this.setAngleZ(angleZ);
+	}
+
+	/**
+	 * Récupérer les informations de l'objet 3D
+	 * 
+	 * @return Les informations de l'objet 3D
+	 */
+	public String get3DInfo() {
+		return "pX: " + this.getPosX() + ", pY: " + this.getPosY() + ", pZ: " + this.getPosZ() + "\n"
+				+ "aX: " + this.getAngleX() + ", aY: " + this.getAngleY() + ", aZ: " + this.getAngleZ() + "\n"
+				+ "sX: " + this.getScaleX() + ", sY: " + this.getScaleY() + ", sZ: " + this.getScaleZ() + "\n"
+				+ "R: " + this.getRed() + ", G: " + this.getGreen() + ", B: " + this.getBlue() + "\n"
+				+ "vX: " + this.getSpeedX() + ", vY: " + this.getSpeedY() + ", vZ: " + this.getSpeedZ() + "\n"
+				+ "rX: " + this.getRotationX() + ", rY: " + this.getRotationY() + ", rZ: " + this.getRotationZ() + "\n";
 	}
 
 	/**

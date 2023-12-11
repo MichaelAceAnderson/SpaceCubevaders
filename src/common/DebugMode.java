@@ -16,22 +16,22 @@ public final class DebugMode {
 	public static final boolean RAINBOW = false;
 	public static final boolean[] MODES = { DRAW_AXIS, DRAW_GRID, VERBOSE, LINE_MODE, RAINBOW };
 
-	// Types de collisions à dessiner
-	public static enum COLLISION_TYPE {
+	public static enum OBJECT_TYPE {
 		NONE, SHAPE, VOLUME, ITEM
 	}
 
-	public static final COLLISION_TYPE DRAW_COLLISIONS = COLLISION_TYPE.VOLUME;
+	public static final OBJECT_TYPE DRAW_COLLISIONS = OBJECT_TYPE.VOLUME;
+	public static final OBJECT_TYPE DRAW_INFO = OBJECT_TYPE.VOLUME;
 
 	public static void printInfo(Canvas canvas) {
 
 		if (DebugMode.VERBOSE) {
 			System.out.println("Mode d'information activé\nConstantes définies:\n");
-			// Pour toute constante dans l'enum DebugMode.Mode
 			for (DebugMode.Mode mode : DebugMode.Mode.values()) {
-				// Afficher la constante et sa valeur
 				System.out.println(mode.toString() + " = " + DebugMode.MODES[mode.ordinal()]);
 			}
+			System.out.println("Mode d'affichage des collisions: " + DebugMode.DRAW_COLLISIONS.toString());
+			System.out.println("Mode d'information 3D: " + DebugMode.DRAW_INFO.toString());
 
 			for (GraphicalObject object : canvas.getObjects()) {
 				// Afficher les propriétés de l'objet
