@@ -182,8 +182,13 @@ public abstract class Canvas extends GLCanvas
 	 * après {@link Canvas#drawGrid()}.
 	 * Par ailleurs, les axes ne sont pas dessinés au point d'origine (0, 0, 0) mais
 	 * à l'intérieur de la scène pour être visibles.
+	 * 
+	 * @param posX Position x de l'origine des axes
+	 * @param posY Position y de l'origine des axes
+	 * @param posZ Position z de l'origine des axes
+	 * 
 	 */
-	public void drawAxis() {
+	public void drawAxis(float posX, float posY, float posZ) {
 		// Récupérer le contexte OpenGL
 		GL2 gl2 = this.getGL().getGL2();
 		// Dessiner les axes de repère
@@ -191,16 +196,16 @@ public abstract class Canvas extends GLCanvas
 		{
 			// Axe des abscisses
 			gl2.glColor3f(RGBColor.RED[0], RGBColor.RED[1], RGBColor.RED[2]);
-			gl2.glVertex3f(-this.getMaxDepth(), -1.0f, -5.0f);
-			gl2.glVertex3f(this.getMaxDepth(), -1.0f, -5.0f);
+			gl2.glVertex3f(-this.getMaxDepth(), posY, posZ);
+			gl2.glVertex3f(this.getMaxDepth(), posY, posZ);
 			// Axe des ordonnées
 			gl2.glColor3f(RGBColor.BLUE[0], RGBColor.BLUE[1], RGBColor.BLUE[2]);
-			gl2.glVertex3f(-2.0f, -this.getMaxDepth(), -5.0f);
-			gl2.glVertex3f(-2.0f, this.getMaxDepth(), -5.0f);
+			gl2.glVertex3f(posX, -this.getMaxDepth(), posZ);
+			gl2.glVertex3f(posX, this.getMaxDepth(), posZ);
 			// Axe des profondeurs
 			gl2.glColor3f(RGBColor.GREEN[0], RGBColor.GREEN[1], RGBColor.GREEN[2]);
-			gl2.glVertex3f(-2.0f, -1.0f, -this.getMaxDepth());
-			gl2.glVertex3f(-2.0f, -1.0f, this.getMaxDepth());
+			gl2.glVertex3f(posX, posY, -this.getMaxDepth());
+			gl2.glVertex3f(posX, posY, this.getMaxDepth());
 		}
 		gl2.glEnd();
 
