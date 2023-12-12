@@ -336,8 +336,5 @@ public abstract class Canvas extends GLCanvas
 		this.setLastRenderTime(currentTime);
 		// Calculer le nombre de FPS
 		this.setFps((int) TimeUnit.SECONDS.toNanos(1) / (int) deltaTime);
-		// Toutes les 60 itérations, changer le titre de la fenêtre pour afficher le
-		// nombre de FPS
-
 	}
 }

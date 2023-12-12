@@ -76,6 +76,9 @@ public class Game {
 					case java.awt.event.KeyEvent.VK_SPACE:
 						Game.this.getPlayer().shoot();
 						break;
+					case java.awt.event.KeyEvent.VK_ESCAPE:
+						Game.this.togglePause();
+						break;
 				}
 			}
 
@@ -180,6 +183,17 @@ public class Game {
 					this.getPlayer().setMissile(null);
 				}
 			}
+		}
+	}
+
+	/**
+	 * Basculer la pause
+	 */
+	public void togglePause() {
+		if (this.getCanvas().getAnimator().isAnimating()) {
+			this.getCanvas().getAnimator().stop();
+		} else {
+			this.getCanvas().getAnimator().start();
 		}
 	}
 
