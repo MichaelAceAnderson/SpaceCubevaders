@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.event.KeyListener;
+
 import common.Debug;
 import common.RGBColor;
 import gl.canvas.MainCanvas;
@@ -15,6 +17,28 @@ public class DebugGL {
 		}
 
 		MainCanvas canvas = new MainCanvas();
+
+		KeyListener keyListener = new KeyListener() {
+			@Override
+			public void keyPressed(java.awt.event.KeyEvent e) {
+				switch (e.getKeyCode()) {
+					case java.awt.event.KeyEvent.VK_ESCAPE:
+						canvas.togglePause();
+						break;
+				}
+			}
+
+			@Override
+			public void keyReleased(java.awt.event.KeyEvent e) {
+			}
+
+			@Override
+			public void keyTyped(java.awt.event.KeyEvent e) {
+			}
+		};
+		canvas.addKeyListener(keyListener);
+		// Demander le focus pour pouvoir utiliser les touches
+		canvas.requestFocus();
 
 		// Attendre que le contexte OpenGL soit initialisé
 		boolean initialized = false;
