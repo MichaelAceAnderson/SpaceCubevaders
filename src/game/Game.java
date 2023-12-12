@@ -2,10 +2,15 @@ package game;
 
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+
 import common.Debug;
 import common.RGBColor;
 import common.Debug.Mode;
 
+import java.awt.BorderLayout;
 import java.awt.event.KeyListener;
 
 import game.entities.Ennemy;
@@ -158,18 +163,44 @@ public class Game {
 	public void update() {
 		if (this.getPlayer().getMissile() != null) {
 			for (Ennemy ennemy : this.getEnnemies()) {
-				// Si le missile est en collision avec un ennemi
 				if (this.getPlayer().getMissile().isColliding(ennemy.getRepresentation())) {
 					if (Debug.getMode(Mode.VERBOSE)) {
 						System.out.println(
 								"Collision entre le missile et l'ennemi " + this.getEnnemies().indexOf(ennemy) + " !");
 					}
-					// Supprimer l'ennemi
+
 					this.getCanvas().getObjects().remove(ennemy.getRepresentation());
 					this.getEnnemies().remove(ennemy);
-					// Supprimer le missile
+
 					this.getCanvas().getObjects().remove(this.getPlayer().getMissile());
 					this.getPlayer().setMissile(null);
+
+					if (this.getEnnemies().isEmpty()) {
+						this.getCanvas().getAnimator().stop();
+						JDialog dialog = new JDialog();
+						dialog.setTitle("Victoire !");
+						dialog.setSize(300, 200);
+						dialog.setLayout(new BorderLayout());
+						dialog.setLocationRelativeTo(null);
+						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						// Fermer la fenêtre du jeu quand le dialog de victoire est fermé
+						dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+							@Override
+							public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+								Game.this.getCanvas().getParentFrame().dispose();
+							}
+						});
+						dialog.setVisible(true);
+						dialog.add(new JLabel("Tous les ennemis ont été détruits !"), BorderLayout.CENTER);
+						JButton button = new JButton("Quitter le jeu");
+						button.addActionListener(new java.awt.event.ActionListener() {
+							@Override
+							public void actionPerformed(java.awt.event.ActionEvent e) {
+								Game.this.getCanvas().getParentFrame().dispose();
+							}
+						});
+						dialog.add(button, BorderLayout.SOUTH);
+					}
 					break;
 				}
 			}
