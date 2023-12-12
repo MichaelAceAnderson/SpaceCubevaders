@@ -34,7 +34,7 @@ public abstract class Canvas extends GLCanvas
 	private float aspect;
 	private float fov;
 	private float nearClip;
-	private float maxDepth;
+	private float drawDistance;
 	// Jeu en cours dans ce canvas
 	private Game game;
 
@@ -148,10 +148,10 @@ public abstract class Canvas extends GLCanvas
 	/**
 	 * Définir la distance de rendu la plus éloignée
 	 * 
-	 * @param maxDepth Distance de rendu la plus éloignée
+	 * @param drawDistance Distance de rendu la plus éloignée
 	 */
-	public void setMaxDepth(float maxDepth) {
-		this.maxDepth = maxDepth;
+	public void setDrawDistance(float drawDistance) {
+		this.drawDistance = drawDistance;
 	}
 
 	/**
@@ -159,8 +159,8 @@ public abstract class Canvas extends GLCanvas
 	 * 
 	 * @return Distance de rendu la plus éloignée
 	 */
-	public float getMaxDepth() {
-		return this.maxDepth;
+	public float getDrawDistance() {
+		return this.drawDistance;
 	}
 
 	/**
@@ -201,16 +201,16 @@ public abstract class Canvas extends GLCanvas
 		{
 			// Axe des abscisses
 			gl2.glColor3f(RGBColor.RED[0], RGBColor.RED[1], RGBColor.RED[2]);
-			gl2.glVertex3f(-this.getMaxDepth(), posY, posZ);
-			gl2.glVertex3f(this.getMaxDepth(), posY, posZ);
+			gl2.glVertex3f(-this.getDrawDistance(), posY, posZ);
+			gl2.glVertex3f(this.getDrawDistance(), posY, posZ);
 			// Axe des ordonnées
 			gl2.glColor3f(RGBColor.BLUE[0], RGBColor.BLUE[1], RGBColor.BLUE[2]);
-			gl2.glVertex3f(posX, -this.getMaxDepth(), posZ);
-			gl2.glVertex3f(posX, this.getMaxDepth(), posZ);
+			gl2.glVertex3f(posX, -this.getDrawDistance(), posZ);
+			gl2.glVertex3f(posX, this.getDrawDistance(), posZ);
 			// Axe des profondeurs
 			gl2.glColor3f(RGBColor.GREEN[0], RGBColor.GREEN[1], RGBColor.GREEN[2]);
-			gl2.glVertex3f(posX, posY, -this.getMaxDepth());
-			gl2.glVertex3f(posX, posY, this.getMaxDepth());
+			gl2.glVertex3f(posX, posY, -this.getDrawDistance());
+			gl2.glVertex3f(posX, posY, this.getDrawDistance());
 		}
 		gl2.glEnd();
 
@@ -227,20 +227,20 @@ public abstract class Canvas extends GLCanvas
 		GL2 gl2 = this.getGL().getGL2();
 		// Dessiner la grille de repère
 		gl2.glColor3f(RGBColor.GRAY[0], RGBColor.GRAY[1], RGBColor.GRAY[2]);
-		for (float i = -this.getMaxDepth(); i <= this.getMaxDepth(); i++) {
+		for (float i = -this.getDrawDistance(); i <= this.getDrawDistance(); i++) {
 			// Dessiner les lignes parallèles à l'axe des X des abscisses
 			gl2.glBegin(GL2.GL_LINES);
 			{
-				gl2.glVertex3f(-this.getMaxDepth(), -1, i);
-				gl2.glVertex3f(this.getMaxDepth(), -1, i);
+				gl2.glVertex3f(-this.getDrawDistance(), -1, i);
+				gl2.glVertex3f(this.getDrawDistance(), -1, i);
 			}
 			gl2.glEnd();
 
 			// Dessiner les lignes parralèles à l'axe Z de profondeur
 			gl2.glBegin(GL2.GL_LINES);
 			{
-				gl2.glVertex3f(i, -1, -this.getMaxDepth());
-				gl2.glVertex3f(i, -1, this.getMaxDepth());
+				gl2.glVertex3f(i, -1, -this.getDrawDistance());
+				gl2.glVertex3f(i, -1, this.getDrawDistance());
 			}
 			gl2.glEnd();
 		}

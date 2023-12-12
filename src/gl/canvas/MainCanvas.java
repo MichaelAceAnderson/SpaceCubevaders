@@ -159,9 +159,9 @@ public class MainCanvas extends Canvas {
 		this.setAspect((float) width / height);
 		this.setFov(45.0f);
 		this.setNearClip(0.1f);
-		this.setMaxDepth(80.0f);
+		this.setDrawDistance(80.0f);
 		glu.gluPerspective(this.getFov(), this.getAspect(),
-				this.getNearClip(), this.getMaxDepth());
+				this.getNearClip(), this.getDrawDistance());
 		// Définir le mode de projection à utiliser)
 		gl2.glMatrixMode(GL2.GL_MODELVIEW);
 	}

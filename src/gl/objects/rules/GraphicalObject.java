@@ -493,27 +493,27 @@ public abstract class GraphicalObject {
 		}
 
 		// Si l'objet est plus loin que la profondeur maximum
-		if (this.getBoundingBox()[Boundary.MIN_Z.ordinal()] < -this.getCanvas().getMaxDepth()) {
+		if (this.getBoundingBox()[Boundary.MIN_Z.ordinal()] < -this.getCanvas().getDrawDistance()) {
 			return false;
 		}
 
 		// Si l'objet est plus à gauche que la limite de gauche
-		if (this.getBoundingBox()[Boundary.MIN_X.ordinal()] < -this.getCanvas().getMaxDepth()) {
+		if (this.getBoundingBox()[Boundary.MIN_X.ordinal()] < -this.getCanvas().getDrawDistance()) {
 			return false;
 		}
 
 		// Si l'objet est plus à droite que la limite de droite
-		if (this.getBoundingBox()[Boundary.MAX_X.ordinal()] > this.getCanvas().getMaxDepth()) {
+		if (this.getBoundingBox()[Boundary.MAX_X.ordinal()] > this.getCanvas().getDrawDistance()) {
 			return false;
 		}
 
 		// Si l'objet est plus haut que la limite haute
-		if (this.getBoundingBox()[Boundary.MAX_Y.ordinal()] > this.getCanvas().getMaxDepth()) {
+		if (this.getBoundingBox()[Boundary.MAX_Y.ordinal()] > this.getCanvas().getDrawDistance()) {
 			return false;
 		}
 
 		// Si l'objet est plus bas que la limite basse
-		if (this.getBoundingBox()[Boundary.MIN_Y.ordinal()] < -this.getCanvas().getMaxDepth()) {
+		if (this.getBoundingBox()[Boundary.MIN_Y.ordinal()] < -this.getCanvas().getDrawDistance()) {
 			return false;
 		}
 
