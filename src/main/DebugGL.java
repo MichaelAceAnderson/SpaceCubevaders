@@ -1,6 +1,6 @@
 package main;
 
-import common.DebugMode;
+import common.Debug;
 import common.RGBColor;
 import gl.canvas.MainCanvas;
 import gl.objects.items.*;
@@ -9,6 +9,11 @@ import gl.objects.volumes.*;
 
 public class DebugGL {
 	public static void main(String[] args) {
+
+		for (Debug.Mode mode : Debug.Mode.values()) {
+			Debug.setMode(mode, true);
+		}
+
 		MainCanvas canvas = new MainCanvas();
 
 		// Attendre que le contexte OpenGL soit initialisé
@@ -62,6 +67,8 @@ public class DebugGL {
 				RGBColor.YELLOW[0], RGBColor.RED[1], RGBColor.RED[2]);
 		canvas.getObjects().add(zTest);
 
-		DebugMode.printInfo(canvas);
+		if (Debug.getMode(Debug.Mode.VERBOSE)) {
+			Debug.printInfo(canvas);
+		}
 	}
 }

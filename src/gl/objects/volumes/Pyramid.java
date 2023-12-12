@@ -1,7 +1,7 @@
 package gl.objects.volumes;
 
 
-import common.DebugMode;
+import common.Debug;
 import common.RGBColor;
 import gl.canvas.rules.Canvas;
 import gl.objects.rules.GraphicalObject;
@@ -40,7 +40,7 @@ public class Pyramid extends Volume {
 				r, g, b);
 
 		// Ajouter la base de la pyramide
-		if (DebugMode.RAINBOW) {
+		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.WHITE[0];
 			g = RGBColor.WHITE[1];
 			b = RGBColor.WHITE[2];
@@ -52,7 +52,7 @@ public class Pyramid extends Volume {
 				0, 0, 0,
 				r, g, b));
 		// Ajouter la face avant
-		if (DebugMode.RAINBOW) {
+		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.RED[0];
 			g = RGBColor.RED[1];
 			b = RGBColor.RED[2];
@@ -64,7 +64,7 @@ public class Pyramid extends Volume {
 				0, 0, 0,
 				r, g, b));
 		// Ajouter la face arrière
-		if (DebugMode.RAINBOW) {
+		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.PURPLE[0];
 			g = RGBColor.PURPLE[1];
 			b = RGBColor.PURPLE[2];
@@ -76,7 +76,7 @@ public class Pyramid extends Volume {
 				0, 0, 0,
 				r, g, b));
 		// Ajouter la face gauche
-		if (DebugMode.RAINBOW) {
+		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.YELLOW[0];
 			g = RGBColor.YELLOW[1];
 			b = RGBColor.YELLOW[2];
@@ -88,7 +88,7 @@ public class Pyramid extends Volume {
 				0, 0, 0,
 				r, g, b));
 		// Ajouter la face droite
-		if (DebugMode.RAINBOW) {
+		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.BLUE[0];
 			g = RGBColor.BLUE[1];
 			b = RGBColor.BLUE[2];

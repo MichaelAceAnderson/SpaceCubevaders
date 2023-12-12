@@ -2,8 +2,9 @@ package game;
 
 import java.util.ArrayList;
 
-import common.DebugMode;
+import common.Debug;
 import common.RGBColor;
+import common.Debug.Mode;
 
 import java.awt.event.KeyListener;
 
@@ -159,9 +160,7 @@ public class Game {
 			for (Ennemy ennemy : this.getEnnemies()) {
 				// Si le missile est en collision avec un ennemi
 				if (this.getPlayer().getMissile().isColliding(ennemy.getRepresentation())) {
-					if (DebugMode.VERBOSE) {
-						// Récupérer l'id de l'ennemi
-
+					if (Debug.getMode(Mode.VERBOSE)) {
 						System.out.println(
 								"Collision entre le missile et l'ennemi " + this.getEnnemies().indexOf(ennemy) + " !");
 					}

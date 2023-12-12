@@ -1,11 +1,18 @@
 package main;
 
-import common.DebugMode;
+import common.Debug;
+import common.Debug.Mode;
 import game.Game;
 import gl.canvas.MainCanvas;
 
 public class MainGL {
 	public static void main(String[] args) {
+
+		for (Debug.Mode mode : Debug.Mode.values()) {
+			Debug.setMode(mode, true);
+		}
+		Debug.setMode(Debug.Mode.RAINBOW, false);
+
 		MainCanvas canvas = new MainCanvas();
 
 		// Attendre que le contexte OpenGL soit initialisé
@@ -22,9 +29,9 @@ public class MainGL {
 		// Créer un jeu
 		Game game = new Game(canvas);
 
-		// Afficher les informations du jeu
-		System.out.println(game);
-
-		DebugMode.printInfo(canvas);
+		if (Debug.getMode(Mode.VERBOSE)) {
+			System.out.println(game);
+			Debug.printInfo(canvas);
+		}
 	}
 }

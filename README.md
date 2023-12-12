@@ -8,15 +8,12 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 
 ### To-do
 
-- [ ] Corriger la BoundingBox (Notamment via la taille initiale des objets dessinés avant transformation et en dessinant les objets à partir de leur centre)
+- [ ] Vérifier la BoundingBox (Notamment via la taille initiale des objets dessinés avant transformation et en dessinant les objets à partir de leur centre)
 - [ ] Corriger la détection des collisions pour prendre en compte les items composés de plusieurs objets graphiques (abstract `isColliding` ?)
-- [ ] Attacher des labels 3D aux objets graphiques en mode debug
 - [ ] Ajouter un système de score
 - [ ] Ajouter un système de vies
 - [ ] Réparer la rotation des missiles
 - [ ] Mettre à jour la documentation
-- [ ] Ajouter un système de pause
-- [ ] (Optionnel) Transformer les constantes du DebugMode en variables statiques modifiables depuis l'extérieur
 - [ ] (Optionnel) Factoriser drawCollisions() et drawInfos() dans GraphicalObject
 - [ ] (Optionnel) Ajouter une icône à la fenêtre du jeu
 - [ ] (Optionnel) Ajouter une abstraction de la classe Game pour permettre de créer des jeux différents (Space Invaders, Pacman, etc...)
@@ -25,8 +22,8 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 
 ### Bugs connus
 
-- Les missiles disparaissent avant d'avoir visuellement dépassé les limites du jeu & se détruisent avant la collision visuelle
-- Les collisions ne sont pas détectées correctement
+- La collision des missiles n'est pas détectée correctement
+- La position/collision des objets graphiques en mouvement/rotation n'est pas détectée correctement
 - Les items ne tournent pas autour d'eux même mais autour d'un point fixe distant de leur centre
 - La détection de la visibilité d'un objet graphique n'est pas calculée à partir de la perspective de la caméra mais à partir de la profondeur d'affichage maximum (Voir `isVisible()` de [GraphicalObject](src/gl/objects/rules/GraphicalObject.java))
 - La boîte de collisions est pour l'instant un cube qui ne prend pas en compte les rotations de l'objet ou la profondeur nulle d'une forme (Voir `getBoundingBox()` de [GraphicalObject](src/gl/objects/rules/GraphicalObject.java))

@@ -9,7 +9,7 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.FPSAnimator;
 
-import common.DebugMode;
+import common.Debug;
 import gl.canvas.rules.Canvas;
 import gl.objects.rules.GraphicalObject;
 
@@ -64,10 +64,10 @@ public class MainCanvas extends Canvas {
 		// Afficher tous les objets
 		gl2.glPushMatrix();
 		{
-			if (DebugMode.DRAW_GRID) {
+			if (Debug.getMode(Debug.Mode.DRAW_AXIS)) {
 				this.drawGrid();
 			}
-			if (DebugMode.DRAW_AXIS) {
+			if (Debug.getMode(Debug.Mode.DRAW_GRID)) {
 				this.drawAxis(-2, -1, -5);
 			}
 			// Pour tous les objets

@@ -1,7 +1,7 @@
 package gl.objects.volumes;
 
 
-import common.DebugMode;
+import common.Debug;
 import common.RGBColor;
 import gl.canvas.rules.Canvas;
 import gl.objects.rules.GraphicalObject;
@@ -40,7 +40,7 @@ public class Cube extends Volume {
 				r, g, b);
 
 		// Ajouter la face supérieure
-		if (DebugMode.RAINBOW) {
+		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.CYAN[0];
 			g = RGBColor.CYAN[1];
 			b = RGBColor.CYAN[2];
@@ -52,7 +52,7 @@ public class Cube extends Volume {
 				0, 0, 0,
 				r, g, b));
 		// Ajouter la face avant
-		if (DebugMode.RAINBOW) {
+		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.RED[0];
 			g = RGBColor.RED[1];
 			b = RGBColor.RED[2];
@@ -64,7 +64,7 @@ public class Cube extends Volume {
 				0, 0, 0,
 				r, g, b));
 		// Ajouter la face arrière
-		if (DebugMode.RAINBOW) {
+		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.GREEN[0];
 			g = RGBColor.GREEN[1];
 			b = RGBColor.GREEN[2];
@@ -76,7 +76,7 @@ public class Cube extends Volume {
 				0, 0, 0,
 				r, g, b));
 		// Ajouter la face gauche
-		if (DebugMode.RAINBOW) {
+		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.YELLOW[0];
 			g = RGBColor.YELLOW[1];
 			b = RGBColor.YELLOW[2];
@@ -88,7 +88,7 @@ public class Cube extends Volume {
 				0, 0, 0,
 				r, g, b));
 		// Ajouter la face droite
-		if (DebugMode.RAINBOW) {
+		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.BLUE[0];
 			g = RGBColor.BLUE[1];
 			b = RGBColor.BLUE[2];
@@ -100,7 +100,7 @@ public class Cube extends Volume {
 				0, 0, 0,
 				r, g, b));
 		// Ajouter la face inférieure
-		if (DebugMode.RAINBOW) {
+		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.MAGENTA[0];
 			g = RGBColor.MAGENTA[1];
 			b = RGBColor.MAGENTA[2];

@@ -3,7 +3,7 @@ package gl.objects.rules;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 
-import common.DebugMode;
+import common.Debug;
 import gl.canvas.rules.Canvas;
 
 public abstract class GraphicalObject {
@@ -557,7 +557,7 @@ public abstract class GraphicalObject {
 			this.getGl2().glRotatef(this.getAngleY(), 0.0f, 1.0f, 0.0f);
 			// Mettre à l'échelle l'objet graphique
 			this.getGl2().glScalef(this.getScaleX(), this.getScaleY(), this.getScaleZ());
-			if (DebugMode.LINE_MODE) {
+			if (Debug.getMode(Debug.Mode.LINE_MODE)) {
 				// Activer le mode contour
 				this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_LINE);
 			}
@@ -565,7 +565,7 @@ public abstract class GraphicalObject {
 			this.draw();
 			this.drawCollisions();
 			this.drawInfos();
-			if (DebugMode.LINE_MODE) {
+			if (Debug.getMode(Debug.Mode.LINE_MODE)) {
 				// Revenir au mode de remplissage normal
 				this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_FILL);
 			}
