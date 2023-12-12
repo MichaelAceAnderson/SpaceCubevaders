@@ -83,7 +83,7 @@ public class Game {
 						Game.this.getPlayer().shoot();
 						break;
 					case java.awt.event.KeyEvent.VK_ESCAPE:
-						Game.this.togglePause();
+						Game.this.getCanvas().togglePause();
 						break;
 				}
 			}
@@ -213,17 +213,6 @@ public class Game {
 					this.getPlayer().setMissile(null);
 				}
 			}
-		}
-	}
-
-	/**
-	 * Basculer la pause
-	 */
-	public void togglePause() {
-		if (this.getCanvas().getAnimator().isAnimating()) {
-			this.getCanvas().getAnimator().stop();
-		} else {
-			this.getCanvas().getAnimator().start();
 		}
 	}
 
