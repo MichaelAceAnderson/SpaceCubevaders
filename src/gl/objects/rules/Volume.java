@@ -2,12 +2,6 @@ package gl.objects.rules;
 
 import java.util.ArrayList;
 
-import com.jogamp.opengl.GL;
-import com.jogamp.opengl.GL2;
-import com.jogamp.opengl.util.gl2.GLUT;
-
-import common.DebugMode;
-import common.RGBColor;
 import gl.canvas.rules.Canvas;
 
 public abstract class Volume extends GraphicalObject {
@@ -78,42 +72,6 @@ public abstract class Volume extends GraphicalObject {
 		// Dessiner ce volume consiste à afficher toutes les formes qui le composent
 		for (Shape shape : this.getShapes()) {
 			shape.display();
-		}
-	}
-
-	/**
-	 * Dessiner les collisions de cette forme
-	 * 
-	 * @see GraphicalObject#drawCollisions()
-	 */
-	@Override
-	public void drawCollisions() {
-		// Dessiner la boîte de collision à partir d'un cube
-		if (DebugMode.DRAW_COLLISIONS == DebugMode.OBJECT_TYPE.VOLUME) {
-			this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_LINE);
-			this.getGl2().glColor3f(1.0f, 1.0f, 1.0f);
-			GLUT glut = new GLUT();
-			glut.glutWireCube(2.0f);
-			this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_FILL);
-		}
-	}
-
-	/**
-	 * Attacher des informations à ce volume
-	 * 
-	 * @see GraphicalObject#drawInfos()
-	 */
-	@Override
-	public void drawInfos() {
-		if (DebugMode.DRAW_INFO == DebugMode.OBJECT_TYPE.VOLUME) {
-			this.getGl2().glColor3f(RGBColor.RED[0], RGBColor.RED[1], RGBColor.RED[2]);
-			this.getGl2().glRasterPos3f(this.getPosX(), this.getPosY(), this.getPosZ());
-			GLUT glut = new GLUT();
-			String[] lines = this.get3DInfo().split("\n");
-			for (int line = 0; line < lines.length; line++) {
-				this.getGl2().glRasterPos3f(this.getPosX(), this.getPosY() - line, this.getPosZ());
-				glut.glutBitmapString(GLUT.BITMAP_HELVETICA_10, lines[line]);
-			}
 		}
 	}
 }

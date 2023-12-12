@@ -2,8 +2,10 @@ package gl.objects.rules;
 
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.util.gl2.GLUT;
 
 import common.Debug;
+import common.RGBColor;
 import gl.canvas.rules.Canvas;
 
 public abstract class GraphicalObject {
@@ -530,13 +532,78 @@ public abstract class GraphicalObject {
 
 	/**
 	 * Dessiner les collisions de cet objet graphique
+	 * 
+	 * @return true si les collisions ont été dessinées, false sinon
 	 */
-	public abstract void drawCollisions();
+	public boolean drawCollisions() {
+		if (!Debug.getMode(Debug.Mode.DRAW_COLLISIONS)) {
+			return false;
+		}
+		if (!this.getCanvas().getObjects().contains(this)) {
+			return false;
+		}
+		this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_LINE);
+		this.getGl2().glColor3f(1.0f, 1.0f, 1.0f);
+		GLUT glut = new GLUT();
+		glut.glutWireCube(2.0f);
+
+		this.getGl2().glBegin(GL2.GL_POINTS);
+		{
+			this.getGl2().glColor3f(RGBColor.RED[0], RGBColor.RED[1], RGBColor.RED[2]);
+			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MIN_X.ordinal()],
+					this.getBoundingBox()[Boundary.MIN_Y.ordinal()],
+					this.getBoundingBox()[Boundary.MIN_Z.ordinal()]);
+			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MAX_X.ordinal()],
+					this.getBoundingBox()[Boundary.MIN_Y.ordinal()],
+					this.getBoundingBox()[Boundary.MIN_Z.ordinal()]);
+			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MIN_X.ordinal()],
+					this.getBoundingBox()[Boundary.MAX_Y.ordinal()],
+					this.getBoundingBox()[Boundary.MIN_Z.ordinal()]);
+			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MAX_X.ordinal()],
+					this.getBoundingBox()[Boundary.MAX_Y.ordinal()],
+					this.getBoundingBox()[Boundary.MIN_Z.ordinal()]);
+			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MIN_X.ordinal()],
+					this.getBoundingBox()[Boundary.MIN_Y.ordinal()],
+					this.getBoundingBox()[Boundary.MAX_Z.ordinal()]);
+			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MAX_X.ordinal()],
+					this.getBoundingBox()[Boundary.MIN_Y.ordinal()],
+					this.getBoundingBox()[Boundary.MAX_Z.ordinal()]);
+			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MIN_X.ordinal()],
+					this.getBoundingBox()[Boundary.MAX_Y.ordinal()],
+					this.getBoundingBox()[Boundary.MAX_Z.ordinal()]);
+			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MAX_X.ordinal()],
+					this.getBoundingBox()[Boundary.MAX_Y.ordinal()],
+					this.getBoundingBox()[Boundary.MAX_Z.ordinal()]);
+
+		}
+		this.getGl2().glEnd();
+		this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_FILL);
+
+		return true;
+	}
 
 	/**
 	 * Attacher des informations à cet objet graphique
+	 * 
+	 * @return true si les informations ont été dessinées, false sinon
 	 */
-	public abstract void drawInfos();
+	public boolean drawInfos() {
+		if (!Debug.getMode(Debug.Mode.DRAW_INFO)) {
+			return false;
+		}
+		if (!this.getCanvas().getObjects().contains(this)) {
+			return false;
+		}
+		this.getGl2().glColor3f(RGBColor.RED[0], RGBColor.RED[1], RGBColor.RED[2]);
+		this.getGl2().glRasterPos3f(this.getPosX(), this.getPosY(), this.getPosZ());
+		GLUT glut = new GLUT();
+		String[] lines = this.get3DInfo().split("\n");
+		for (int line = 0; line < lines.length; line++) {
+			this.getGl2().glRasterPos3f(this.getPosX(), this.getPosY() - line, this.getPosZ());
+			glut.glutBitmapString(GLUT.BITMAP_HELVETICA_10, lines[line]);
+		}
+		return true;
+	}
 
 	/**
 	 * Afficher cet objet graphique dans son contexte courant.

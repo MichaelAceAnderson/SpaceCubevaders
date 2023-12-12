@@ -2,10 +2,6 @@ package gl.objects.rules;
 
 import java.util.ArrayList;
 
-import com.jogamp.opengl.util.gl2.GLUT;
-
-import common.DebugMode;
-import common.RGBColor;
 import gl.canvas.rules.Canvas;
 
 public abstract class Item extends GraphicalObject {
@@ -75,36 +71,6 @@ public abstract class Item extends GraphicalObject {
 		// Dessiner cet item consiste à afficher tous Les objets qui le composent
 		for (GraphicalObject component : this.getComponents()) {
 			component.display();
-		}
-	}
-
-	/**
-	 * Dessiner les collisions de cette forme
-	 * 
-	 * @see GraphicalObject#drawCollisions()
-	 */
-	@Override
-	public void drawCollisions() {
-		// Ne pas dessiner les collisions puisque ce sont les objets qui le composent
-		// qui le font
-	}
-
-	/**
-	 * Attacher des informations à cet item
-	 * 
-	 * @see GraphicalObject#drawInfos()
-	 */
-	@Override
-	public void drawInfos() {
-		if (DebugMode.DRAW_INFO == DebugMode.OBJECT_TYPE.ITEM) {
-			this.getGl2().glColor3f(RGBColor.RED[0], RGBColor.RED[1], RGBColor.RED[2]);
-			this.getGl2().glRasterPos3f(this.getPosX(), this.getPosY(), this.getPosZ());
-			GLUT glut = new GLUT();
-			String[] lines = this.get3DInfo().split("\n");
-			for (int line = 0; line < lines.length; line++) {
-				this.getGl2().glRasterPos3f(this.getPosX(), this.getPosY() - line, this.getPosZ());
-				glut.glutBitmapString(GLUT.BITMAP_HELVETICA_10, lines[line]);
-			}
 		}
 	}
 }
