@@ -2,12 +2,12 @@ package game.entities;
 
 import common.RGBColor;
 import game.entities.rules.Entity;
-import gl.objects.items.Missile;
 import gl.objects.rules.GraphicalObject;
+import gl.objects.volumes.Cube;
 
 public class Player extends Entity {
 	// Missile du joueur
-	private Missile missile;
+	private Cube missile;
 
 	/**
 	 * Créer un joueur
@@ -26,12 +26,12 @@ public class Player extends Entity {
 			float posX = this.getRepresentation().getPosX();
 			float posY = this.getRepresentation().getPosY();
 			float posZ = this.getRepresentation().getPosZ();
-			this.setMissile(new Missile(this.getRepresentation().getCanvas(), posX, posY, posZ,
+			this.setMissile(new Cube(this.getRepresentation().getCanvas(), posX, posY, posZ,
 					0.0f, 0.0f, 0.0f,
-					1.0f, 1.0f, 1.0f,
-					0.0f, 1.0f, 0.0f,
+					0.25f, 2.0f, 0.25f,
+					0.0f, 0.5f, 0.0f,
 					0.0f, 0.0f, 0.0f,
-					RGBColor.WHITE[0], RGBColor.WHITE[1], RGBColor.WHITE[2]));
+					RGBColor.GRAY[0], RGBColor.GRAY[1], RGBColor.GRAY[2]));
 			this.getRepresentation().getCanvas().getObjects().add(this.getMissile());
 		}
 
@@ -42,7 +42,7 @@ public class Player extends Entity {
 	 * 
 	 * @param missile Missile du joueur
 	 */
-	public void setMissile(Missile missile) {
+	public void setMissile(Cube missile) {
 		this.missile = missile;
 	}
 
@@ -51,7 +51,7 @@ public class Player extends Entity {
 	 * 
 	 * @return Missile du joueur
 	 */
-	public Missile getMissile() {
+	public Cube getMissile() {
 		return this.missile;
 	}
 
