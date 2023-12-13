@@ -84,12 +84,16 @@ public class MainCanvas extends Canvas {
 		}
 		gl2.glPopMatrix();
 
+		if (this.getGame() != null) {
+			this.getGame().update();
+			this.getParentFrame()
+					.setTitle(this.getGame().getName() + " - FPS: " + this.getFps() + "/"
+							+ ((FPSAnimator) this.getAnimator()).getFPS()
+							+ " Frame: " + this.getFrameCount());
+		} else {
 		this.getParentFrame()
 				.setTitle("FPS: " + this.getFps() + "/" + ((FPSAnimator) this.getAnimator()).getFPS()
 						+ " Frame: " + this.getFrameCount());
-
-		if (this.getGame() != null) {
-			this.getGame().update();
 		}
 	}
 

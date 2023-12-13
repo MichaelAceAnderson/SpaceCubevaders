@@ -1,4 +1,4 @@
-package games.spaceinvaders;
+package games.spacecubevaders;
 
 import java.util.ArrayList;
 
@@ -11,10 +11,10 @@ import common.Debug;
 import common.RGBColor;
 import common.Debug.Mode;
 import games.rules.Game;
-import games.spaceinvaders.entities.Ennemy;
-import games.spaceinvaders.entities.Player;
-import games.spaceinvaders.entities.rules.Entity;
-import games.spaceinvaders.entities.rules.Entity.Direction;
+import games.spacecubevaders.entities.Ennemy;
+import games.spacecubevaders.entities.Player;
+import games.spacecubevaders.entities.rules.Entity;
+import games.spacecubevaders.entities.rules.Entity.Direction;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -25,7 +25,7 @@ import gl.objects.rules.GraphicalObject.Boundary;
 import gl.objects.volumes.Cube;
 import gl.objects.volumes.Pyramid;
 
-public class SpaceInvaders extends Game {
+public class SpaceCubevaders extends Game {
 	// Canvas sur lequel afficher le jeu
 	private Canvas canvas;
 	// Limites du jeu
@@ -45,7 +45,7 @@ public class SpaceInvaders extends Game {
 	 * 
 	 * @param canvas Canvas sur lequel afficher le jeu
 	 */
-	public SpaceInvaders(Canvas canvas) {
+	public SpaceCubevaders(Canvas canvas) {
 		super(canvas);
 
 		// Créer un joueur au centre bas de l'écran
@@ -75,21 +75,21 @@ public class SpaceInvaders extends Game {
 				switch (e.getKeyCode()) {
 					case java.awt.event.KeyEvent.VK_Q:
 					case java.awt.event.KeyEvent.VK_LEFT:
-						if (SpaceInvaders.this.getPlayer().getRepresentation().getPosX() > SpaceInvaders.MIN_X
+						if (SpaceCubevaders.this.getPlayer().getRepresentation().getPosX() > SpaceCubevaders.MIN_X
 								* SPACING)
-							SpaceInvaders.this.getPlayer().move(Entity.Direction.LEFT);
+							SpaceCubevaders.this.getPlayer().move(Entity.Direction.LEFT);
 						break;
 					case java.awt.event.KeyEvent.VK_D:
 					case java.awt.event.KeyEvent.VK_RIGHT:
-						if (SpaceInvaders.this.getPlayer().getRepresentation().getPosX() < SpaceInvaders.MAX_X
+						if (SpaceCubevaders.this.getPlayer().getRepresentation().getPosX() < SpaceCubevaders.MAX_X
 								* SPACING)
-							SpaceInvaders.this.getPlayer().move(Entity.Direction.RIGHT);
+							SpaceCubevaders.this.getPlayer().move(Entity.Direction.RIGHT);
 						break;
 					case java.awt.event.KeyEvent.VK_SPACE:
-						SpaceInvaders.this.getPlayer().shoot();
+						SpaceCubevaders.this.getPlayer().shoot();
 						break;
 					case java.awt.event.KeyEvent.VK_ESCAPE:
-						SpaceInvaders.this.getCanvas().togglePause();
+						SpaceCubevaders.this.getCanvas().togglePause();
 						break;
 				}
 			}
@@ -168,7 +168,7 @@ public class SpaceInvaders extends Game {
 	 */
 	@Override
 	public String getName() {
-		return "Space Invaders";
+		return "Space Cubevaders";
 	}
 
 	/**
@@ -178,7 +178,7 @@ public class SpaceInvaders extends Game {
 	 */
 	@Override
 	public Image getIcon() {
-		return new ImageIcon(System.getProperty("user.dir") + "/src/games/spaceinvaders/icon.png").getImage();
+		return new ImageIcon(System.getProperty("user.dir") + "/src/games/spacecubevaders/icon.png").getImage();
 	}
 
 	/*
@@ -199,7 +199,7 @@ public class SpaceInvaders extends Game {
 				dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 					@Override
 					public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-						SpaceInvaders.this.getCanvas().getParentFrame().dispose();
+						SpaceCubevaders.this.getCanvas().getParentFrame().dispose();
 					}
 				});
 				dialog.setVisible(true);
@@ -208,7 +208,7 @@ public class SpaceInvaders extends Game {
 				button.addActionListener(new java.awt.event.ActionListener() {
 					@Override
 					public void actionPerformed(java.awt.event.ActionEvent e) {
-						SpaceInvaders.this.getCanvas().getParentFrame().dispose();
+						SpaceCubevaders.this.getCanvas().getParentFrame().dispose();
 					}
 				});
 				dialog.add(button, BorderLayout.SOUTH);
@@ -254,7 +254,7 @@ public class SpaceInvaders extends Game {
 						dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 							@Override
 							public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-								SpaceInvaders.this.getCanvas().getParentFrame().dispose();
+								SpaceCubevaders.this.getCanvas().getParentFrame().dispose();
 							}
 						});
 						dialog.setVisible(true);
@@ -264,7 +264,7 @@ public class SpaceInvaders extends Game {
 						button.addActionListener(new java.awt.event.ActionListener() {
 							@Override
 							public void actionPerformed(java.awt.event.ActionEvent e) {
-								SpaceInvaders.this.getCanvas().getParentFrame().dispose();
+								SpaceCubevaders.this.getCanvas().getParentFrame().dispose();
 							}
 						});
 						dialog.add(button, BorderLayout.SOUTH);

@@ -1,4 +1,4 @@
-package games.spaceinvaders.entities.rules;
+package games.spacecubevaders.entities.rules;
 
 import gl.objects.rules.GraphicalObject;
 

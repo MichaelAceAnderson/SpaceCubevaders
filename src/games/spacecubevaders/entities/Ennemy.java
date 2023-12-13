@@ -1,6 +1,6 @@
-package games.spaceinvaders.entities;
+package games.spacecubevaders.entities;
 
-import games.spaceinvaders.entities.rules.Entity;
+import games.spacecubevaders.entities.rules.Entity;
 import gl.objects.rules.GraphicalObject;
 
 public class Ennemy extends Entity {
