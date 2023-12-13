@@ -18,6 +18,11 @@ import games.spacecubevaders.entities.rules.Entity.Direction;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import gl.canvas.rules.Canvas;
@@ -71,35 +76,35 @@ public class SpaceCubevaders extends Game {
 
 		KeyListener keyListener = new KeyListener() {
 			@Override
-			public void keyPressed(java.awt.event.KeyEvent e) {
+			public void keyPressed(KeyEvent e) {
 				switch (e.getKeyCode()) {
-					case java.awt.event.KeyEvent.VK_Q:
-					case java.awt.event.KeyEvent.VK_LEFT:
+					case KeyEvent.VK_Q:
+					case KeyEvent.VK_LEFT:
 						if (SpaceCubevaders.this.getPlayer().getRepresentation().getPosX() > SpaceCubevaders.MIN_X
 								* SPACING)
 							SpaceCubevaders.this.getPlayer().move(Entity.Direction.LEFT);
 						break;
-					case java.awt.event.KeyEvent.VK_D:
-					case java.awt.event.KeyEvent.VK_RIGHT:
+					case KeyEvent.VK_D:
+					case KeyEvent.VK_RIGHT:
 						if (SpaceCubevaders.this.getPlayer().getRepresentation().getPosX() < SpaceCubevaders.MAX_X
 								* SPACING)
 							SpaceCubevaders.this.getPlayer().move(Entity.Direction.RIGHT);
 						break;
-					case java.awt.event.KeyEvent.VK_SPACE:
+					case KeyEvent.VK_SPACE:
 						SpaceCubevaders.this.getPlayer().shoot();
 						break;
-					case java.awt.event.KeyEvent.VK_ESCAPE:
+					case KeyEvent.VK_ESCAPE:
 						SpaceCubevaders.this.getCanvas().togglePause();
 						break;
 				}
 			}
 
 			@Override
-			public void keyReleased(java.awt.event.KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 			}
 
 			@Override
-			public void keyTyped(java.awt.event.KeyEvent e) {
+			public void keyTyped(KeyEvent e) {
 			}
 		};
 		this.getCanvas().addKeyListener(keyListener);
@@ -196,18 +201,18 @@ public class SpaceCubevaders extends Game {
 				dialog.setLocationRelativeTo(null);
 				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				// Fermer la fenêtre du jeu quand le dialog de victoire est fermé
-				dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+				dialog.addWindowListener(new WindowAdapter() {
 					@Override
-					public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+					public void windowClosed(WindowEvent windowEvent) {
 						SpaceCubevaders.this.getCanvas().getParentFrame().dispose();
 					}
 				});
 				dialog.setVisible(true);
 				dialog.add(new JLabel("Vous avez perdu la partie !"), BorderLayout.CENTER);
 				JButton button = new JButton("Quitter le jeu");
-				button.addActionListener(new java.awt.event.ActionListener() {
+				button.addActionListener(new ActionListener() {
 					@Override
-					public void actionPerformed(java.awt.event.ActionEvent e) {
+					public void actionPerformed(ActionEvent e) {
 						SpaceCubevaders.this.getCanvas().getParentFrame().dispose();
 					}
 				});
@@ -253,9 +258,9 @@ public class SpaceCubevaders extends Game {
 						dialog.setLocationRelativeTo(null);
 						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 						// Fermer la fenêtre du jeu quand le dialog de victoire est fermé
-						dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+						dialog.addWindowListener(new WindowAdapter() {
 							@Override
-							public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+							public void windowClosed(WindowEvent windowEvent) {
 								SpaceCubevaders.this.getCanvas().getParentFrame().dispose();
 							}
 						});
@@ -263,9 +268,9 @@ public class SpaceCubevaders extends Game {
 						dialog.add(new JLabel("Tous les ennemis ont été détruits !", JLabel.CENTER),
 								BorderLayout.CENTER);
 						JButton button = new JButton("Quitter le jeu");
-						button.addActionListener(new java.awt.event.ActionListener() {
+						button.addActionListener(new ActionListener() {
 							@Override
-							public void actionPerformed(java.awt.event.ActionEvent e) {
+							public void actionPerformed(ActionEvent e) {
 								SpaceCubevaders.this.getCanvas().getParentFrame().dispose();
 							}
 						});
