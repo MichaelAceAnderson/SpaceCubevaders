@@ -1,7 +1,7 @@
-package game.entities;
+package games.spaceinvaders.entities;
 
 import common.RGBColor;
-import game.entities.rules.Entity;
+import games.spaceinvaders.entities.rules.Entity;
 import gl.objects.rules.GraphicalObject;
 import gl.objects.volumes.Cube;
 

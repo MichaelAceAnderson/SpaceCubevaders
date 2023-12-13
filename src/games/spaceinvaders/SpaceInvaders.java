@@ -1,4 +1,4 @@
-package game;
+package games.spaceinvaders;
 
 import java.util.ArrayList;
 
@@ -10,20 +10,22 @@ import javax.swing.JLabel;
 import common.Debug;
 import common.RGBColor;
 import common.Debug.Mode;
+import games.rules.Game;
+import games.spaceinvaders.entities.Ennemy;
+import games.spaceinvaders.entities.Player;
+import games.spaceinvaders.entities.rules.Entity;
+import games.spaceinvaders.entities.rules.Entity.Direction;
 
 import java.awt.BorderLayout;
+import java.awt.Image;
 import java.awt.event.KeyListener;
 
-import game.entities.Ennemy;
-import game.entities.Player;
-import game.entities.rules.Entity;
-import game.entities.rules.Entity.Direction;
 import gl.canvas.rules.Canvas;
 import gl.objects.rules.GraphicalObject.Boundary;
 import gl.objects.volumes.Cube;
 import gl.objects.volumes.Pyramid;
 
-public class Game {
+public class SpaceInvaders extends Game {
 	// Canvas sur lequel afficher le jeu
 	private Canvas canvas;
 	// Limites du jeu
@@ -43,11 +45,8 @@ public class Game {
 	 * 
 	 * @param canvas Canvas sur lequel afficher le jeu
 	 */
-	public Game(Canvas canvas) {
-		this.setCanvas(canvas);
-
-		this.getCanvas().getParentFrame().setIconImage(
-				new ImageIcon(System.getProperty("user.dir") + "/src/game/icon.png").getImage());
+	public SpaceInvaders(Canvas canvas) {
+		super(canvas);
 
 		// Créer un joueur au centre bas de l'écran
 		this.setPlayer(new Player(new Pyramid(this.getCanvas(), MIN_X + MAX_X, MIN_Y, -GAME_DISTANCE,
@@ -76,19 +75,21 @@ public class Game {
 				switch (e.getKeyCode()) {
 					case java.awt.event.KeyEvent.VK_Q:
 					case java.awt.event.KeyEvent.VK_LEFT:
-						if (Game.this.getPlayer().getRepresentation().getPosX() > Game.MIN_X * SPACING)
-							Game.this.getPlayer().move(Entity.Direction.LEFT);
+						if (SpaceInvaders.this.getPlayer().getRepresentation().getPosX() > SpaceInvaders.MIN_X
+								* SPACING)
+							SpaceInvaders.this.getPlayer().move(Entity.Direction.LEFT);
 						break;
 					case java.awt.event.KeyEvent.VK_D:
 					case java.awt.event.KeyEvent.VK_RIGHT:
-						if (Game.this.getPlayer().getRepresentation().getPosX() < Game.MAX_X * SPACING)
-							Game.this.getPlayer().move(Entity.Direction.RIGHT);
+						if (SpaceInvaders.this.getPlayer().getRepresentation().getPosX() < SpaceInvaders.MAX_X
+								* SPACING)
+							SpaceInvaders.this.getPlayer().move(Entity.Direction.RIGHT);
 						break;
 					case java.awt.event.KeyEvent.VK_SPACE:
-						Game.this.getPlayer().shoot();
+						SpaceInvaders.this.getPlayer().shoot();
 						break;
 					case java.awt.event.KeyEvent.VK_ESCAPE:
-						Game.this.getCanvas().togglePause();
+						SpaceInvaders.this.getCanvas().togglePause();
 						break;
 				}
 			}
@@ -104,8 +105,6 @@ public class Game {
 		this.getCanvas().addKeyListener(keyListener);
 		// Demander le focus pour pouvoir utiliser les touches
 		this.getCanvas().requestFocus();
-
-		this.getCanvas().setGame(this);
 	}
 
 	/**
@@ -162,9 +161,30 @@ public class Game {
 		this.ennemies = ennemies;
 	}
 
+	/**
+	 * Récupérer le nom du jeu
+	 * 
+	 * @return Nom du jeu
+	 */
+	@Override
+	public String getName() {
+		return "Space Invaders";
+	}
+
+	/**
+	 * Récupérer l'icône du jeu
+	 * 
+	 * @return Icône du jeu
+	 */
+	@Override
+	public Image getIcon() {
+		return new ImageIcon(System.getProperty("user.dir") + "/src/games/spaceinvaders/icon.png").getImage();
+	}
+
 	/*
 	 * Mettre à jour le jeu
 	 */
+	@Override
 	public void update() {
 		for (Ennemy ennemy : this.getEnnemies()) {
 			if (ennemy.getRepresentation().isColliding(this.getPlayer().getRepresentation())) {
@@ -179,7 +199,7 @@ public class Game {
 				dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 					@Override
 					public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-						Game.this.getCanvas().getParentFrame().dispose();
+						SpaceInvaders.this.getCanvas().getParentFrame().dispose();
 					}
 				});
 				dialog.setVisible(true);
@@ -188,7 +208,7 @@ public class Game {
 				button.addActionListener(new java.awt.event.ActionListener() {
 					@Override
 					public void actionPerformed(java.awt.event.ActionEvent e) {
-						Game.this.getCanvas().getParentFrame().dispose();
+						SpaceInvaders.this.getCanvas().getParentFrame().dispose();
 					}
 				});
 				dialog.add(button, BorderLayout.SOUTH);
@@ -234,7 +254,7 @@ public class Game {
 						dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 							@Override
 							public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-								Game.this.getCanvas().getParentFrame().dispose();
+								SpaceInvaders.this.getCanvas().getParentFrame().dispose();
 							}
 						});
 						dialog.setVisible(true);
@@ -244,7 +264,7 @@ public class Game {
 						button.addActionListener(new java.awt.event.ActionListener() {
 							@Override
 							public void actionPerformed(java.awt.event.ActionEvent e) {
-								Game.this.getCanvas().getParentFrame().dispose();
+								SpaceInvaders.this.getCanvas().getParentFrame().dispose();
 							}
 						});
 						dialog.add(button, BorderLayout.SOUTH);
@@ -271,11 +291,9 @@ public class Game {
 	 */
 	@Override
 	public String toString() {
-		String gameInfo = "";
-		gameInfo += "Jeu : "
+		return super.toString()
 				+ "\n\tJoueur : " + this.getPlayer()
 				+ "\n\tEnnemis : " + this.getEnnemies().size();
-		return gameInfo;
 	}
 
 }

@@ -2,7 +2,7 @@ package main;
 
 import common.Debug;
 import common.Debug.Mode;
-import game.Game;
+import games.spaceinvaders.SpaceInvaders;
 import gl.canvas.MainCanvas;
 
 public class MainGL {
@@ -27,7 +27,7 @@ public class MainGL {
 		}
 
 		// Créer un jeu
-		Game game = new Game(canvas);
+		SpaceInvaders game = new SpaceInvaders(canvas);
 
 		if (Debug.getMode(Mode.VERBOSE)) {
 			System.out.println(game);

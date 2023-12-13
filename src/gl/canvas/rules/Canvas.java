@@ -13,7 +13,7 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.FPSAnimator;
 
 import common.RGBColor;
-import game.Game;
+import games.rules.Game;
 import gl.objects.rules.GraphicalObject;
 
 public abstract class Canvas extends GLCanvas

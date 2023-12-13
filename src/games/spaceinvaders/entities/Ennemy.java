@@ -1,12 +1,11 @@
-package game.entities;
+package games.spaceinvaders.entities;
 
-import game.entities.rules.Entity;
+import games.spaceinvaders.entities.rules.Entity;
 import gl.objects.rules.GraphicalObject;
 
 public class Ennemy extends Entity {
 	// Direction de l'ennemi
 	private Direction direction;
-
 
 	/**
 	 * Créer un ennemi

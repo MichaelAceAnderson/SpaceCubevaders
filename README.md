@@ -12,8 +12,6 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 - [ ] Ajouter un système de score
 - [ ] Ajouter un système de vies
 - [ ] Mettre à jour la documentation
-- [ ] (Optionnel) Ajouter une icône à la fenêtre du jeu
-- [ ] (Optionnel) Ajouter une abstraction de la classe Game pour permettre de créer des jeux différents (Space Invaders, Pacman, etc...)
 - [ ] (Optionnel) Prendre en compte les rotations dans la BoundingBox et la détection des collisions
 - [ ] (Optionnel) Vérifier si les commentaires sont à jour par rapport au fonctionnement actuel du code
 
