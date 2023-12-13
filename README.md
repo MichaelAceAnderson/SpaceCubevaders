@@ -19,6 +19,7 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 
 ### Bugs connus
 
+- Les ennemis ne se déplacent pas de façon uniforme (Certains ennemis se déplacent plus vite que d'autres)
 - La collision des items n'est pas détectée correctement
 - La position/collision des objets graphiques en mouvement/rotation n'est pas toujours détectée correctement
 - Les items ne tournent pas autour d'eux même mais autour d'un point fixe distant de leur centre

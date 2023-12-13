@@ -16,6 +16,7 @@ import java.awt.event.KeyListener;
 import game.entities.Ennemy;
 import game.entities.Player;
 import game.entities.rules.Entity;
+import game.entities.rules.Entity.Direction;
 import gl.canvas.rules.Canvas;
 import gl.objects.rules.GraphicalObject.Boundary;
 import gl.objects.volumes.Cube;
@@ -58,7 +59,7 @@ public class Game {
 				this.getEnnemies()
 						.add(new Ennemy(new Cube(this.getCanvas(), col * SPACING, row * SPACING, -GAME_DISTANCE,
 								0.0f, 0.0f, 0.0f,
-								1.0f, 1.0f, 1.0f,
+								0.5f, 0.5f, 0.5f,
 								0.0f, 0.0f, 0.0f,
 								0.0f, 0.0f, 0.0f,
 								RGBColor.GREEN[0], RGBColor.GREEN[1], RGBColor.GREEN[2])));
@@ -161,8 +162,50 @@ public class Game {
 	 * Mettre à jour le jeu
 	 */
 	public void update() {
-		if (this.getPlayer().getMissile() != null) {
-			for (Ennemy ennemy : this.getEnnemies()) {
+		for (Ennemy ennemy : this.getEnnemies()) {
+			if (ennemy.getRepresentation().isColliding(this.getPlayer().getRepresentation())) {
+				this.getCanvas().getAnimator().stop();
+				JDialog dialog = new JDialog();
+				dialog.setTitle("Perdu !");
+				dialog.setSize(300, 200);
+				dialog.setLayout(new BorderLayout());
+				dialog.setLocationRelativeTo(null);
+				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				// Fermer la fenêtre du jeu quand le dialog de victoire est fermé
+				dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+					@Override
+					public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+						Game.this.getCanvas().getParentFrame().dispose();
+					}
+				});
+				dialog.setVisible(true);
+				dialog.add(new JLabel("Vous avez perdu la partie !"), BorderLayout.CENTER);
+				JButton button = new JButton("Quitter le jeu");
+				button.addActionListener(new java.awt.event.ActionListener() {
+					@Override
+					public void actionPerformed(java.awt.event.ActionEvent e) {
+						Game.this.getCanvas().getParentFrame().dispose();
+					}
+				});
+				dialog.add(button, BorderLayout.SOUTH);
+			}
+			if (ennemy.getRepresentation().getPosX() > MAX_X * SPACING + 5) {
+				for (Ennemy ennemyToMove : this.getEnnemies()) {
+					ennemyToMove.move(Direction.DOWN);
+					ennemyToMove.setDirection((Entity.Direction.LEFT));
+					ennemyToMove.setSpeed(ennemy.getSpeed() + 0.005f);
+				}
+			}
+			if (ennemy.getRepresentation().getPosX() < MIN_X * SPACING - 5) {
+				for (Ennemy ennemyToMove : this.getEnnemies()) {
+					ennemyToMove.move(Direction.DOWN);
+					ennemyToMove.setDirection((Entity.Direction.RIGHT));
+					ennemyToMove.setSpeed(ennemy.getSpeed() + 0.005f);
+				}
+			}
+			ennemy.move(ennemy.getDirection());
+
+			if (this.getPlayer().getMissile() != null) {
 				if (this.getPlayer().getMissile().isColliding(ennemy.getRepresentation())) {
 					if (Debug.getMode(Mode.VERBOSE)) {
 						System.out.println(
@@ -191,7 +234,8 @@ public class Game {
 							}
 						});
 						dialog.setVisible(true);
-						dialog.add(new JLabel("Tous les ennemis ont été détruits !"), BorderLayout.CENTER);
+						dialog.add(new JLabel("Tous les ennemis ont été détruits !", JLabel.CENTER),
+								BorderLayout.CENTER);
 						JButton button = new JButton("Quitter le jeu");
 						button.addActionListener(new java.awt.event.ActionListener() {
 							@Override
