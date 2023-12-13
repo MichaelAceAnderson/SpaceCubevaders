@@ -192,7 +192,9 @@ public class SpaceCubevaders extends Game {
 	@Override
 	public void update() {
 		for (Ennemy ennemy : this.getEnnemies()) {
-			if (ennemy.getRepresentation().getPosY() <= this.getPlayer().getRepresentation().getPosY()) {
+			if (ennemy.getRepresentation()
+					.getBoundingBox()[Boundary.MIN_Y.ordinal()] <= this.getPlayer().getRepresentation()
+							.getBoundingBox()[Boundary.MAX_Y.ordinal()]) {
 				this.getCanvas().getAnimator().stop();
 				JDialog dialog = new JDialog();
 				dialog.setTitle("Perdu !");
