@@ -9,8 +9,7 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 ### To-do
 
 - [ ] Régler les bugs connus
-- [ ] Ajouter un système de score
-- [ ] Ajouter un système de vies
+- [ ] Afficher le score du joueur dans la fenêtre
 - [ ] Mettre à jour la documentation
 - [ ] (Optionnel) Prendre en compte les rotations dans la BoundingBox et la détection des collisions
 - [ ] (Optionnel) Vérifier si les commentaires sont à jour par rapport au fonctionnement actuel du code

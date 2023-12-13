@@ -8,6 +8,8 @@ import gl.objects.volumes.Cube;
 public class Player extends Entity {
 	// Missile du joueur
 	private Cube missile;
+	// Score du joueur
+	private int score = 0;
 
 	/**
 	 * Créer un Joueur
@@ -56,4 +58,21 @@ public class Player extends Entity {
 		return this.missile;
 	}
 
+	/**
+	 * Définir le score du joueur
+	 * 
+	 * @param score Score du joueur
+	 */
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	/**
+	 * Récupérer le score du joueur
+	 * 
+	 * @return Score du joueur
+	 */
+	public int getScore() {
+		return this.score;
+	}
 }

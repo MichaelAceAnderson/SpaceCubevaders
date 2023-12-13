@@ -242,6 +242,8 @@ public class SpaceCubevaders extends Game {
 					this.getCanvas().getObjects().remove(this.getPlayer().getMissile());
 					this.getPlayer().setMissile(null);
 
+					this.getPlayer().setScore(this.getPlayer().getScore() + 1);
+
 					if (this.getEnnemies().isEmpty()) {
 						this.getCanvas().getAnimator().stop();
 						JDialog dialog = new JDialog();
@@ -292,8 +294,8 @@ public class SpaceCubevaders extends Game {
 	@Override
 	public String toString() {
 		return super.toString()
-				+ "\n\tJoueur : " + this.getPlayer()
-				+ "\n\tEnnemis : " + this.getEnnemies().size();
+				+ "\n\tJoueur : " + this.getPlayer().getScore() + " points"
+				+ "\n\tEnnemis : " + this.getEnnemies();
 	}
 
 }
