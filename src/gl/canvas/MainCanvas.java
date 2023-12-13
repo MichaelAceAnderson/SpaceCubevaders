@@ -14,7 +14,6 @@ import gl.canvas.rules.Canvas;
 import gl.objects.rules.GraphicalObject;
 
 public class MainCanvas extends Canvas {
-
 	/**
 	 * @see Canvas
 	 */
@@ -50,17 +49,11 @@ public class MainCanvas extends Canvas {
 	public void display(GLAutoDrawable canvas) {
 		super.display(canvas);
 
-		// Récupérer le contexte OpenGL
 		GL2 gl2 = canvas.getGL().getGL2();
-		// Vide le buffer de couleur et de profondeur
-		gl2.glClear(GL2.GL_COLOR_BUFFER_BIT);
-		// Vider le buffer de profondeur
-		gl2.glClear(GL2.GL_DEPTH_BUFFER_BIT);
-		// gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT); // Vider les
-		// deux buffers d'un coup
+		gl2.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
+
 		// Charger la matrice identité afin de repartir de zéro à chaque fois
 		gl2.glLoadIdentity();
-
 		// Afficher tous les objets
 		gl2.glPushMatrix();
 		{
@@ -86,14 +79,18 @@ public class MainCanvas extends Canvas {
 
 		if (this.getGame() != null) {
 			this.getGame().update();
+			this.renderText(this.getGame().toString(), 0,
+					this.getHeight() - this.getTextRenderer().getFont().getSize());
 			this.getParentFrame()
 					.setTitle(this.getGame().getName() + " - FPS: " + this.getFps() + "/"
 							+ ((FPSAnimator) this.getAnimator()).getFPS()
 							+ " Frame: " + this.getFrameCount());
+			this.renderText("FPS: " + this.getFps() + "/" + ((FPSAnimator) this.getAnimator()).getFPS(),
+					this.getWidth() - 125, this.getHeight() - this.getTextRenderer().getFont().getSize());
 		} else {
-		this.getParentFrame()
-				.setTitle("FPS: " + this.getFps() + "/" + ((FPSAnimator) this.getAnimator()).getFPS()
-						+ " Frame: " + this.getFrameCount());
+			this.getParentFrame()
+					.setTitle("FPS: " + this.getFps() + "/" + ((FPSAnimator) this.getAnimator()).getFPS()
+							+ " Frame: " + this.getFrameCount());
 		}
 	}
 
@@ -122,6 +119,8 @@ public class MainCanvas extends Canvas {
 	 */
 	@Override
 	public void init(GLAutoDrawable canvas) {
+		super.init(canvas);
+
 		GL2 gl2 = canvas.getGL().getGL2();
 		// Définir la couleur de fond
 		gl2.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

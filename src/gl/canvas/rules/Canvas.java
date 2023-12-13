@@ -6,11 +6,14 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 
+import java.awt.Font;
+
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.FPSAnimator;
+import com.jogamp.opengl.util.awt.TextRenderer;
 
 import common.RGBColor;
 import games.rules.Game;
@@ -37,6 +40,8 @@ public abstract class Canvas extends GLCanvas
 	private float drawDistance;
 	// Jeu en cours dans ce canvas
 	private Game game;
+	// TextRenderer pour afficher du texte
+	private TextRenderer textRenderer;
 
 	/**
 	 * Créer un GLCanvas où le rendu OpenGL est effectué
@@ -301,6 +306,41 @@ public abstract class Canvas extends GLCanvas
 	}
 
 	/**
+	 * Définir le TextRenderer pour afficher du texte
+	 * 
+	 * @param textRenderer TextRenderer pour afficher du texte
+	 */
+	public void setTextRenderer(TextRenderer textRenderer) {
+		this.textRenderer = textRenderer;
+	}
+
+	/**
+	 * Récupérer le TextRenderer pour afficher du texte
+	 * 
+	 * @return TextRenderer pour afficher du texte
+	 */
+	public TextRenderer getTextRenderer() {
+		return this.textRenderer;
+	}
+
+	/**
+	 * Afficher du texte dans la fenêtre
+	 * 
+	 * @param text Texte à afficher
+	 * @param x    Position x du texte dans la fenêtre
+	 * @param y    Position y du texte dans la fenêtre
+	 */
+	public void renderText(String text, float x, float y) {
+		String[] lines = text.split("\n");
+		this.getTextRenderer().beginRendering(this.getWidth(), this.getHeight());
+		this.getTextRenderer().setColor(RGBColor.WHITE[0], RGBColor.WHITE[1], RGBColor.WHITE[2], 1.0f);
+		for (int i = 0; i < lines.length; i++) {
+			this.getTextRenderer().draw(lines[i], (int) x, (int) y - i * this.getTextRenderer().getFont().getSize());
+		}
+		this.getTextRenderer().endRendering();
+	}
+
+	/**
 	 * Basculer la pause de l'animateur
 	 */
 	public void togglePause() {
@@ -325,6 +365,16 @@ public abstract class Canvas extends GLCanvas
 	}
 
 	/* Implémentation de GLEventListener */
+	/**
+	 * Initialiser le contexte OpenGL
+	 * 
+	 * @param canvas Le canvas OpenGL
+	 */
+	@Override
+	public void init(GLAutoDrawable canvas) {
+		this.setTextRenderer(new TextRenderer(new Font(Font.MONOSPACED, Font.PLAIN, 16)));
+	}
+
 	/**
 	 * Afficher le contenu du canvas OpenGL à chaque itération de la boucle de
 	 * rendu

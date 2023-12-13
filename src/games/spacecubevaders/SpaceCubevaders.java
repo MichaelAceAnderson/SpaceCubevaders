@@ -300,7 +300,7 @@ public class SpaceCubevaders extends Game {
 	public String toString() {
 		return super.toString()
 				+ "\n\tJoueur : " + this.getPlayer().getScore() + " points"
-				+ "\n\tEnnemis : " + this.getEnnemies();
+				+ "\n\tEnnemis restants: " + this.getEnnemies().size();
 	}
 
 }

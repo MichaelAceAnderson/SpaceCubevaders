@@ -9,7 +9,6 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 ### To-do
 
 - [ ] Régler les bugs connus
-- [ ] Afficher le score du joueur dans la fenêtre
 - [ ] Mettre à jour la documentation
 - [ ] (Optionnel) Prendre en compte les rotations dans la BoundingBox et la détection des collisions
 - [ ] (Optionnel) Vérifier si les commentaires sont à jour par rapport au fonctionnement actuel du code
@@ -21,7 +20,7 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 - La position/collision des objets graphiques en mouvement/rotation n'est pas toujours détectée correctement
 - Les items ne tournent pas autour d'eux même mais autour d'un point fixe distant de leur centre
 - La détection de la visibilité d'un objet graphique n'est pas calculée à partir de la perspective de la caméra mais à partir de la profondeur d'affichage maximum (Voir `isVisible()` de [GraphicalObject](src/gl/objects/rules/GraphicalObject.java))
-- La boîte de collisions est pour l'instant un cube qui ne prend pas en compte les rotations de l'objet ou la profondeur nulle d'une forme (Voir `getBoundingBox()` de [GraphicalObject](src/gl/objects/rules/GraphicalObject.java))
+- La boîte de collisions ne prend pas en compte les rotations de l'objet ou la profondeur nulle d'une forme (Voir `getBoundingBox()` de [GraphicalObject](src/gl/objects/rules/GraphicalObject.java))
 
 ### Architecture
 
