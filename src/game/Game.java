@@ -2,6 +2,7 @@ package game;
 
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -44,6 +45,9 @@ public class Game {
 	 */
 	public Game(Canvas canvas) {
 		this.setCanvas(canvas);
+
+		this.getCanvas().getParentFrame().setIconImage(
+				new ImageIcon(System.getProperty("user.dir") + "/src/game/icon.png").getImage());
 
 		// Créer un joueur au centre bas de l'écran
 		this.setPlayer(new Player(new Pyramid(this.getCanvas(), MIN_X + MAX_X, MIN_Y, -GAME_DISTANCE,
