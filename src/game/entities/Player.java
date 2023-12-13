@@ -10,12 +10,13 @@ public class Player extends Entity {
 	private Cube missile;
 
 	/**
-	 * Créer un joueur
+	 * Créer un Joueur
 	 * 
 	 * @param representation Objet graphique représentant le joueur
 	 */
 	public Player(GraphicalObject representation) {
 		super(representation);
+		this.setSpeed(0.5f);
 	}
 
 	/**

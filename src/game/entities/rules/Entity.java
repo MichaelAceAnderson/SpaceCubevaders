@@ -5,6 +5,8 @@ import gl.objects.rules.GraphicalObject;
 public abstract class Entity {
 	// Objet graphique représentant l'entité
 	private GraphicalObject representation;
+	// Vitesse de l'entité
+	private float speed;
 
 	public static enum Direction {
 		LEFT, RIGHT, UP, DOWN
@@ -18,32 +20,6 @@ public abstract class Entity {
 	public Entity(GraphicalObject representation) {
 		this.setRepresentation(representation);
 		representation.getCanvas().getObjects().add(representation);
-	}
-
-	/**
-	 * Déplacer l'entité dans une direction
-	 * 
-	 * @param direction Direction dans laquelle déplacer l'entité
-	 */
-	public void move(Direction direction) {
-		float moveX = 0.0f;
-		float moveY = 0.0f;
-		float moveZ = 0.0f;
-		switch (direction) {
-			case LEFT:
-				moveX = -1.0f;
-				break;
-			case RIGHT:
-				moveX = 1.0f;
-				break;
-			case UP:
-				moveY = 1.0f;
-				break;
-			case DOWN:
-				moveY = -1.0f;
-				break;
-		}
-		this.getRepresentation().move(moveX, moveY, moveZ);
 	}
 
 	/**
@@ -62,6 +38,50 @@ public abstract class Entity {
 	 */
 	public GraphicalObject getRepresentation() {
 		return representation;
+	}
+
+	/**
+	 * Définir la vitesse de l'entité
+	 * 
+	 * @param speed Vitesse de l'entité
+	 */
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+
+	/**
+	 * Récupérer la vitesse de l'entité
+	 * 
+	 * @return Vitesse de l'entité
+	 */
+	public float getSpeed() {
+		return speed;
+	}
+
+	/**
+	 * Déplacer l'entité dans une direction
+	 * 
+	 * @param direction Direction dans laquelle déplacer l'entité
+	 */
+	public void move(Direction direction) {
+		float moveX = 0.0f;
+		float moveY = 0.0f;
+		float moveZ = 0.0f;
+		switch (direction) {
+			case LEFT:
+				moveX = -this.getSpeed();
+				break;
+			case RIGHT:
+				moveX = this.getSpeed();
+				break;
+			case UP:
+				moveY = this.getSpeed();
+				break;
+			case DOWN:
+				moveY = -this.getSpeed();
+				break;
+		}
+		this.getRepresentation().move(moveX, moveY, moveZ);
 	}
 
 	/**
