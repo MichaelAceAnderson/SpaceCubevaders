@@ -26,7 +26,7 @@ public abstract class GraphicalObject {
 
 	// Limites de la boîte de collision
 	public static enum Boundary {
-		MAX_Y, MAX_Z, MIN_Z, MIN_X, MAX_X, MIN_Y
+		MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_Z, MAX_Z
 	}
 
 	/**
@@ -469,12 +469,12 @@ public abstract class GraphicalObject {
 		float[] thisBoundingBox = this.getBoundingBox();
 		float[] objectBoundingBox = object.getBoundingBox();
 
-		boolean isColliding = (thisBoundingBox[Boundary.MAX_Y.ordinal()] > objectBoundingBox[Boundary.MIN_Y.ordinal()]
-				&& thisBoundingBox[Boundary.MIN_Y.ordinal()] < objectBoundingBox[Boundary.MAX_Y.ordinal()]
-				&& thisBoundingBox[Boundary.MAX_Z.ordinal()] > objectBoundingBox[Boundary.MIN_Z.ordinal()]
-				&& thisBoundingBox[Boundary.MIN_Z.ordinal()] < objectBoundingBox[Boundary.MAX_Z.ordinal()]
-				&& thisBoundingBox[Boundary.MIN_X.ordinal()] < objectBoundingBox[Boundary.MAX_X.ordinal()]
-				&& thisBoundingBox[Boundary.MAX_X.ordinal()] > objectBoundingBox[Boundary.MIN_X.ordinal()]);
+		boolean isColliding = (thisBoundingBox[Boundary.MAX_Y.ordinal()] >= objectBoundingBox[Boundary.MIN_Y.ordinal()]
+				&& thisBoundingBox[Boundary.MIN_Y.ordinal()] <= objectBoundingBox[Boundary.MAX_Y.ordinal()]
+				&& thisBoundingBox[Boundary.MAX_Z.ordinal()] >= objectBoundingBox[Boundary.MIN_Z.ordinal()]
+				&& thisBoundingBox[Boundary.MIN_Z.ordinal()] <= objectBoundingBox[Boundary.MAX_Z.ordinal()]
+				&& thisBoundingBox[Boundary.MIN_X.ordinal()] <= objectBoundingBox[Boundary.MAX_X.ordinal()]
+				&& thisBoundingBox[Boundary.MAX_X.ordinal()] >= objectBoundingBox[Boundary.MIN_X.ordinal()]);
 
 		return isColliding;
 	}
@@ -536,45 +536,32 @@ public abstract class GraphicalObject {
 	 * @return true si les collisions ont été dessinées, false sinon
 	 */
 	public boolean drawCollisions() {
-		if (!Debug.getMode(Debug.Mode.DRAW_COLLISIONS)) {
-			return false;
-		}
 		if (!this.getCanvas().getObjects().contains(this)) {
 			return false;
 		}
-		this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_LINE);
-		this.getGl2().glColor3f(1.0f, 1.0f, 1.0f);
-		GLUT glut = new GLUT();
-		glut.glutWireCube(2.0f);
 
-		this.getGl2().glBegin(GL2.GL_POINTS);
+		// Dessiner les lignes de la boîte de collision
+		this.getGl2().glBegin(GL2.GL_LINES);
 		{
-			this.getGl2().glColor3f(RGBColor.RED[0], RGBColor.RED[1], RGBColor.RED[2]);
+			this.getGl2().glColor3f(RGBColor.YELLOW[0], RGBColor.YELLOW[1], RGBColor.YELLOW[2]);
 			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MIN_X.ordinal()],
-					this.getBoundingBox()[Boundary.MIN_Y.ordinal()],
-					this.getBoundingBox()[Boundary.MIN_Z.ordinal()]);
+					this.getPosY(),
+					this.getPosZ());
 			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MAX_X.ordinal()],
+					this.getPosY(),
+					this.getPosZ());
+			this.getGl2().glVertex3f(this.getPosX(),
 					this.getBoundingBox()[Boundary.MIN_Y.ordinal()],
+					this.getPosZ());
+			this.getGl2().glVertex3f(this.getPosX(),
+					this.getBoundingBox()[Boundary.MAX_Y.ordinal()],
+					this.getPosZ());
+			this.getGl2().glVertex3f(this.getPosX(),
+					this.getPosY(),
 					this.getBoundingBox()[Boundary.MIN_Z.ordinal()]);
-			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MIN_X.ordinal()],
-					this.getBoundingBox()[Boundary.MAX_Y.ordinal()],
-					this.getBoundingBox()[Boundary.MIN_Z.ordinal()]);
-			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MAX_X.ordinal()],
-					this.getBoundingBox()[Boundary.MAX_Y.ordinal()],
-					this.getBoundingBox()[Boundary.MIN_Z.ordinal()]);
-			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MIN_X.ordinal()],
-					this.getBoundingBox()[Boundary.MIN_Y.ordinal()],
+			this.getGl2().glVertex3f(this.getPosX(),
+					this.getPosY(),
 					this.getBoundingBox()[Boundary.MAX_Z.ordinal()]);
-			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MAX_X.ordinal()],
-					this.getBoundingBox()[Boundary.MIN_Y.ordinal()],
-					this.getBoundingBox()[Boundary.MAX_Z.ordinal()]);
-			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MIN_X.ordinal()],
-					this.getBoundingBox()[Boundary.MAX_Y.ordinal()],
-					this.getBoundingBox()[Boundary.MAX_Z.ordinal()]);
-			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MAX_X.ordinal()],
-					this.getBoundingBox()[Boundary.MAX_Y.ordinal()],
-					this.getBoundingBox()[Boundary.MAX_Z.ordinal()]);
-
 		}
 		this.getGl2().glEnd();
 		this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_FILL);
@@ -588,9 +575,6 @@ public abstract class GraphicalObject {
 	 * @return true si les informations ont été dessinées, false sinon
 	 */
 	public boolean drawInfos() {
-		if (!Debug.getMode(Debug.Mode.DRAW_INFO)) {
-			return false;
-		}
 		if (!this.getCanvas().getObjects().contains(this)) {
 			return false;
 		}
@@ -613,31 +597,29 @@ public abstract class GraphicalObject {
 	 * @see GL2
 	 */
 	public void display() {
-		// Sauvegarder la matrice actuelle
+		// Faire passer la matrice courante sur la pile
 		this.getGl2().glPushMatrix();
 		{
-			// Déplacer l'objet graphique
 			this.getGl2().glTranslatef(this.getPosX(), this.getPosY(), this.getPosZ());
-			// Tourner l'objet graphique (l'ordre des rotations est important)
 			this.getGl2().glRotatef(this.getAngleX(), 1.0f, 0.0f, 0.0f);
 			this.getGl2().glRotatef(this.getAngleZ(), 0.0f, 0.0f, 1.0f);
 			this.getGl2().glRotatef(this.getAngleY(), 0.0f, 1.0f, 0.0f);
-			// Mettre à l'échelle l'objet graphique
 			this.getGl2().glScalef(this.getScaleX(), this.getScaleY(), this.getScaleZ());
 			if (Debug.getMode(Debug.Mode.LINE_MODE)) {
-				// Activer le mode contour
 				this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_LINE);
 			}
-			// Dessiner l'objet graphique
 			this.draw();
-			this.drawCollisions();
-			this.drawInfos();
+			if (Debug.getMode(Debug.Mode.DRAW_COLLISIONS)) {
+				this.drawCollisions();
+			}
+			if (Debug.getMode(Debug.Mode.DRAW_INFO)) {
+				this.drawInfos();
+			}
 			if (Debug.getMode(Debug.Mode.LINE_MODE)) {
-				// Revenir au mode de remplissage normal
 				this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_FILL);
 			}
 		}
-		// Restaurer la matrice précédente
+		// Passer sauter la matrice courante de la pile
 		this.getGl2().glPopMatrix();
 	}
 

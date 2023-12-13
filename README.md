@@ -61,12 +61,12 @@ Créer un volume revient donc à créer un fichier dans le package **volumes** q
 
 OpenGL fonctionne avec un système de pile. Chaque affichage d'objet doit donc être encadré par un `glPushMatrix()` et un `glPopMatrix()`, dans lesquels on peut effectuer des transformations ([glTranslate](https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml), [glRotate](https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glRotate.xml), [glScale](https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml)).  
 On notera que les transformations s'appliquent dans l'ordre inverse de leur appel en raison du fonctionnement de la pile de matrices.  
-Pour dessiner un objet, il faut donc :
+Pour afficher un objet, il faut donc :
 
-- appeler `glPushMatrix()` pour sauvegarder la matrice de transformation courante
+- appeler `glPushMatrix()` pour sauvegarder la matrice d'états actuelle en haut de la pile
 - effectuer les transformations nécessaires
-- dessiner les objets à partir d'autres dessins `glPushMatrix()`/`glPopMatrix()`
-- appeler `glPopMatrix()` pour restaurer la matrice de transformation précédente
+- dessiner les objets
+- appeler `glPopMatrix()` pour restaurer la matrice d'états précédemment sauvegardée
 - recommencer pour chaque objet à dessiner
 
 Ces opérations sont ici dans la méthode `display()` de [GraphicalObject](src/objects/rules/GraphicalObject.java).
