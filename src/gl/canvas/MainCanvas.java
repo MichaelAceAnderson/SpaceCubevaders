@@ -107,6 +107,7 @@ public class MainCanvas extends Canvas {
 	@Override
 	public void dispose(GLAutoDrawable canvas) {
 		// Libérer les ressources allouées par OpenGL
+		canvas.getAnimator().stop();
 		canvas.getGL().getGL2().glFlush();
 		// Terminer le processus
 		System.exit(0);
