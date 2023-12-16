@@ -11,7 +11,7 @@ import gl.objects.shapes.Square;
 
 public class Cube extends Volume {
 	private enum Face {
-		MAX_Y, MAX_Z, MIN_Z, MIN_X, MAX_X, MIN_Y
+		TOP, BACK, FRONT, LEFT, RIGHT, BOTTOM
 	}
 
 	/**

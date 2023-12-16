@@ -12,7 +12,7 @@ import gl.objects.shapes.Triangle;
 
 public class Pyramid extends Volume {
 	private enum Face {
-		BASE, MAX_Z, MIN_Z, MIN_X, MAX_X
+		BASE, BACK, FRONT, LEFT, RIGHT
 	}
 
 	/**
