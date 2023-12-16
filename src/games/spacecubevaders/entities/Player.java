@@ -31,10 +31,10 @@ public class Player extends Entity {
 			float posZ = this.getRepresentation().getPosZ();
 			this.setMissile(new Cube(this.getRepresentation().getCanvas(), posX, posY, posZ,
 					0.0f, 0.0f, 0.0f,
-					0.25f, 2.0f, 0.25f,
+					0.10f, 1.0f, 0.10f,
 					0.0f, 0.5f, 0.0f,
 					0.0f, 0.0f, 0.0f,
-					RGBColor.GRAY[0], RGBColor.GRAY[1], RGBColor.GRAY[2]));
+					RGBColor.RED[0], RGBColor.RED[1], RGBColor.RED[2]));
 			this.getRepresentation().getCanvas().getObjects().add(this.getMissile());
 		}
 

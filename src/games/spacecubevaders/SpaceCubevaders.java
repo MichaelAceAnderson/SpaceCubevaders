@@ -61,7 +61,7 @@ public class SpaceCubevaders extends Game {
 				1.0f, 1.0f, 1.0f,
 				0.0f, 0.0f, 0.0f,
 				0.0f, 5.0f, 0.0f,
-				RGBColor.WHITE[0], RGBColor.WHITE[1], RGBColor.WHITE[2])));
+				RGBColor.DARK_GRAY[0], RGBColor.DARK_GRAY[1], RGBColor.DARK_GRAY[2])));
 
 		this.setEnnemies(new ArrayList<Ennemy>());
 		float startingRow = this.getPlayer().getRepresentation().getPosY() + ENNEMIES_PLAYER_GAP;
