@@ -597,14 +597,18 @@ public abstract class GraphicalObject {
 	 * @see GL2
 	 */
 	public void display() {
-		// Faire passer la matrice courante sur la pile
+		// Sauvegarder l'état actuel du rendu
 		this.getGl2().glPushMatrix();
 		{
+			// Effectuer des transformations sur l'objet à dessiner
+
 			this.getGl2().glTranslatef(this.getPosX(), this.getPosY(), this.getPosZ());
 			this.getGl2().glRotatef(this.getAngleX(), 1.0f, 0.0f, 0.0f);
 			this.getGl2().glRotatef(this.getAngleZ(), 0.0f, 0.0f, 1.0f);
 			this.getGl2().glRotatef(this.getAngleY(), 0.0f, 1.0f, 0.0f);
 			this.getGl2().glScalef(this.getScaleX(), this.getScaleY(), this.getScaleZ());
+
+			// Dessiner l'objet
 			if (Debug.getMode(Debug.Mode.LINE_MODE)) {
 				this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_LINE);
 			}
@@ -619,7 +623,7 @@ public abstract class GraphicalObject {
 				this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_FILL);
 			}
 		}
-		// Passer sauter la matrice courante de la pile
+		// Restaurer les transformations sauvegardées
 		this.getGl2().glPopMatrix();
 	}
 

@@ -9,7 +9,6 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 ### To-do
 
 - [ ] Régler les bugs connus
-- [ ] Mettre à jour la documentation
 - [ ] (Optionnel) Prendre en compte les rotations dans la BoundingBox et la détection des collisions
 - [ ] (Optionnel) Vérifier si les commentaires sont à jour par rapport au fonctionnement actuel du code
 
@@ -26,8 +25,8 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 
 #### Diagramme de classes
 
-- [Diagramme de classes draw.io](Docs/Doc.drawio)
-- [Diagramme de classes PlantUML](Docs/Doc.plantuml)
+[Diagramme de classes PlantUML](Docs/Doc.plantuml)  
+![Diagramme de classes](Docs/Doc.jpg)
 
 #### Packages
 
@@ -59,7 +58,7 @@ Créer une forme revient à créer un fichier dans le package **shapes** qui imp
 Créer un volume revient donc à créer un fichier dans le package **volumes** qui implémente les méthodes héritées de [Volume](src/objects/rules/Volume.java) et se dessine avec un ensemble de formes géométriques ([Shape](src/objects/rules/Shape.java)).
 
 OpenGL fonctionne avec un système de pile. Chaque affichage d'objet doit donc être encadré par un `glPushMatrix()` et un `glPopMatrix()`, dans lesquels on peut effectuer des transformations ([glTranslate](https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml), [glRotate](https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glRotate.xml), [glScale](https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml)).  
-On notera que les transformations s'appliquent dans l'ordre inverse de leur appel en raison du fonctionnement de la pile de matrices.  
+On notera que les transformations s'appliquent dans l'ordre inverse de leur appel en raison du fonctionnement des transformations qui sont effectuées par multiplication de matrices.
 Pour afficher un objet, il faut donc :
 
 - appeler `glPushMatrix()` pour sauvegarder la matrice d'états actuelle en haut de la pile
