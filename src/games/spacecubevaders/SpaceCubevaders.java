@@ -213,7 +213,7 @@ public class SpaceCubevaders extends Game {
 					}
 				});
 				dialog.setVisible(true);
-				dialog.add(new JLabel("Vous avez perdu la partie !"), BorderLayout.CENTER);
+				dialog.add(new JLabel("Vous avez perdu la partie !"), JLabel.CENTER);
 				JButton button = new JButton("Quitter le jeu");
 				button.addActionListener(new ActionListener() {
 					@Override
