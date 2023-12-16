@@ -9,9 +9,9 @@ public class MainGL {
 	public static void main(String[] args) {
 
 		for (Debug.Mode mode : Debug.Mode.values()) {
-			Debug.setMode(mode, true);
+			Debug.setMode(mode, false);
 		}
-		Debug.setMode(Debug.Mode.RAINBOW, false);
+		Debug.setMode(Mode.LINE_MODE, true);
 
 		MainCanvas canvas = new MainCanvas();
 

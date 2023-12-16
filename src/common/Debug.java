@@ -6,7 +6,7 @@ import gl.objects.rules.GraphicalObject;
 public final class Debug {
 	// Variables booléennes définissant les modes de débogage
 	public static enum Mode {
-		DRAW_AXIS, DRAW_GRID, DRAW_COLLISIONS, DRAW_INFO, VERBOSE, LINE_MODE, RAINBOW
+		DRAW_AXIS, DRAW_GRID, DRAW_COLLISIONS, DRAW_INFO, VERBOSE, RAINBOW, LINE_MODE, CONTOURING
 	}
 
 	public static boolean DRAW_AXIS;
@@ -14,8 +14,9 @@ public final class Debug {
 	public static boolean DRAW_COLLISIONS;
 	public static boolean DRAW_INFO;
 	public static boolean VERBOSE;
-	public static boolean LINE_MODE;
 	public static boolean RAINBOW;
+	public static boolean LINE_MODE;
+	public static boolean CONTOURING;
 
 	public static boolean[] MODE = {
 			Debug.DRAW_AXIS,
@@ -23,8 +24,9 @@ public final class Debug {
 			Debug.DRAW_COLLISIONS,
 			Debug.DRAW_INFO,
 			Debug.VERBOSE,
+			Debug.RAINBOW,
 			Debug.LINE_MODE,
-			Debug.RAINBOW
+			Debug.CONTOURING
 	};
 
 	/**

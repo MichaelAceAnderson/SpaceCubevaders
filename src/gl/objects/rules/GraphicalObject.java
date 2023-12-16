@@ -612,6 +612,21 @@ public abstract class GraphicalObject {
 			if (Debug.getMode(Debug.Mode.LINE_MODE)) {
 				this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_LINE);
 			}
+			float r = this.getRed();
+			float g = this.getGreen();
+			float b = this.getBlue();
+			// Le mode lignes prévaut sur le mode contour
+			if (Debug.getMode(Debug.Mode.CONTOURING) && !Debug.getMode(Debug.Mode.LINE_MODE)) {
+				this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_LINE);
+				this.setRed(RGBColor.GRAY[0]);
+				this.setGreen(RGBColor.GRAY[1]);
+				this.setBlue(RGBColor.GRAY[2]);
+				this.draw();
+				this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_FILL);
+			}
+			this.setRed(r);
+			this.setGreen(g);
+			this.setBlue(b);
 			this.draw();
 			if (Debug.getMode(Debug.Mode.DRAW_COLLISIONS)) {
 				this.drawCollisions();
