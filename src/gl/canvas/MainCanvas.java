@@ -76,19 +76,20 @@ public class MainCanvas extends Canvas {
 		}
 		gl2.glPopMatrix();
 
+		String frameCounterString = "FPS: " + this.getFps() + "/" + Canvas.FPS_LIMIT
+				+ " \nFrame: " + this.getFrameCount();
 		if (this.getGame() != null) {
 			this.getGame().update();
 			this.renderText(this.getGame().toString(), 0,
 					this.getHeight() - this.getTextRenderer().getFont().getSize());
 			this.getParentFrame()
-					.setTitle(this.getGame().getName() + " - FPS: " + this.getFps() + "/"
-							+ Canvas.FPS_LIMIT
-							+ " Frame: " + this.getFrameCount());
+					.setTitle(this.getGame().getName() + " - " + frameCounterString);
 			if (Debug.getMode(Debug.Mode.DRAW_INFO)) {
-				this.renderText("FPS: " + this.getFps() + "/" + Canvas.FPS_LIMIT,
+				this.renderText(frameCounterString,
 					this.getWidth() - 125, this.getHeight() - this.getTextRenderer().getFont().getSize());
-		}
+			}
 		} else {
+			this.getParentFrame().setTitle(frameCounterString);
 			if (Debug.getMode(Debug.Mode.DRAW_INFO)) {
 				this.renderText("FPS: " + this.getFps() + "/" + Canvas.FPS_LIMIT,
 						this.getWidth() - 125, this.getHeight() - this.getTextRenderer().getFont().getSize());
