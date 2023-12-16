@@ -7,7 +7,6 @@ import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
-import com.jogamp.opengl.util.FPSAnimator;
 
 import common.Debug;
 import gl.canvas.rules.Canvas;
@@ -83,14 +82,17 @@ public class MainCanvas extends Canvas {
 					this.getHeight() - this.getTextRenderer().getFont().getSize());
 			this.getParentFrame()
 					.setTitle(this.getGame().getName() + " - FPS: " + this.getFps() + "/"
-							+ ((FPSAnimator) this.getAnimator()).getFPS()
+							+ Canvas.FPS_LIMIT
 							+ " Frame: " + this.getFrameCount());
-			this.renderText("FPS: " + this.getFps() + "/" + ((FPSAnimator) this.getAnimator()).getFPS(),
+			if (Debug.getMode(Debug.Mode.DRAW_INFO)) {
+				this.renderText("FPS: " + this.getFps() + "/" + Canvas.FPS_LIMIT,
 					this.getWidth() - 125, this.getHeight() - this.getTextRenderer().getFont().getSize());
+		}
 		} else {
-			this.getParentFrame()
-					.setTitle("FPS: " + this.getFps() + "/" + ((FPSAnimator) this.getAnimator()).getFPS()
-							+ " Frame: " + this.getFrameCount());
+			if (Debug.getMode(Debug.Mode.DRAW_INFO)) {
+				this.renderText("FPS: " + this.getFps() + "/" + Canvas.FPS_LIMIT,
+						this.getWidth() - 125, this.getHeight() - this.getTextRenderer().getFont().getSize());
+			}
 		}
 	}
 

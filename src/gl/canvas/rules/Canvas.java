@@ -32,7 +32,7 @@ public abstract class Canvas extends GLCanvas
 	// Temps écoulé depuis le dernier rendu
 	private long lastRenderTime;
 	// Limite de FPS
-	private static final int FPS_LIMIT = 60;
+	public static final int FPS_LIMIT = 60;
 	// Perspective
 	private float aspect;
 	private float fov;
