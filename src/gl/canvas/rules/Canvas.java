@@ -344,10 +344,10 @@ public abstract class Canvas extends GLCanvas
 	 * Basculer la pause de l'animateur
 	 */
 	public void togglePause() {
-		if (this.getAnimator().isAnimating()) {
-			this.getAnimator().stop();
+		if (!this.getAnimator().isPaused()) {
+			this.getAnimator().pause();
 		} else {
-			this.getAnimator().start();
+			this.getAnimator().resume();
 		}
 	}
 
