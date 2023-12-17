@@ -335,6 +335,7 @@ public abstract class Canvas extends GLCanvas
 	 * @param y    Position y du texte dans la fenêtre
 	 */
 	public void renderText(String text, float x, float y) {
+		text = text.replaceAll("\t", "  ");
 		String[] lines = text.split("\n");
 		this.getTextRenderer().beginRendering(this.getWidth(), this.getHeight());
 		this.getTextRenderer().setColor(RGBColor.WHITE[0], RGBColor.WHITE[1], RGBColor.WHITE[2], 1.0f);
