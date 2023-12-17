@@ -51,16 +51,20 @@ public abstract class Canvas extends GLCanvas
 	 */
 	public Canvas() {
 		// Ajouter le listener pour les événements OpenGL dans ce canvas
-		this.addGLEventListener(this);
-		this.setFrameCount(0);
-		this.setObjects(new ArrayList<GraphicalObject>());
 		this.setParentFrame(new JFrame());
 		this.getParentFrame().getContentPane().add(this);
 		this.getParentFrame().pack();
 		this.getParentFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getParentFrame().setVisible(true);
+
+		this.setFrameCount(0);
+
+		this.setObjects(new ArrayList<GraphicalObject>());
+
 		this.setAnimator(new FPSAnimator(this, Canvas.FPS_LIMIT));
+		this.addGLEventListener(this);
 		this.getAnimator().start();
+
 	}
 
 	/**
