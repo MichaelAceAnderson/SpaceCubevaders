@@ -65,7 +65,7 @@ public abstract class Game {
 	 */
 	@Override
 	public String toString() {
-		return "Jeu : " + this.getName() + "\n";
+		return "Jeu : " + this.getName();
 	}
 
 }

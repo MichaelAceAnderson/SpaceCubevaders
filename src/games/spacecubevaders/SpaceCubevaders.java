@@ -3,9 +3,6 @@ package games.spacecubevaders;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
 
 import common.Debug;
 import common.RGBColor;
@@ -16,10 +13,7 @@ import games.spacecubevaders.entities.Player;
 import games.spacecubevaders.entities.rules.Entity;
 import games.spacecubevaders.entities.rules.Entity.Direction;
 
-import java.awt.BorderLayout;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.KeyEvent;
@@ -31,21 +25,21 @@ import gl.objects.volumes.Cube;
 import gl.objects.volumes.Pyramid;
 
 public class SpaceCubevaders extends Game {
-	// Canvas sur lequel afficher le jeu
 	private Canvas canvas;
+	private Player player;
+	private int level;
 	// Limites du jeu
 	public final static float MIN_X = -8.0f;
 	public final static float MAX_X = 8.0f;
 	public final static float GAME_DISTANCE = 30.0f;
 	// Caractéristiques des ennemis
+	private ArrayList<Ennemy> ennemies;
 	public final static float SPACING = 2;
-	public final static float ENNEMIES_PLAYER_GAP = 10.0f;
+	// Doit être supérieur à 6 pour éviter que le niveau ne démarre trop proche du
+	// joueur
+	public final static float ENNEMIES_PLAYER_GAP = 12.0f;
 	public final static int ENNEMIES_ROWS = 5;
 	public final static int ENNEMIES_PER_ROW = 11;
-	// Joueur
-	private Player player;
-	// Ennemis
-	private ArrayList<Ennemy> ennemies;
 
 	/**
 	 * Créer un jeu
@@ -54,6 +48,8 @@ public class SpaceCubevaders extends Game {
 	 */
 	public SpaceCubevaders(Canvas canvas) {
 		super(canvas);
+
+		this.setLevel(1);
 
 		// Créer un joueur au centre bas de l'écran
 		this.setPlayer(new Player(new Pyramid(this.getCanvas(), MIN_X + MAX_X, -10, -GAME_DISTANCE,
@@ -64,18 +60,7 @@ public class SpaceCubevaders extends Game {
 				RGBColor.DARK_GRAY[0], RGBColor.DARK_GRAY[1], RGBColor.DARK_GRAY[2])));
 
 		this.setEnnemies(new ArrayList<Ennemy>());
-		float startingRow = this.getPlayer().getRepresentation().getPosY() + ENNEMIES_PLAYER_GAP;
-		for (float row = startingRow; row < startingRow + ENNEMIES_ROWS; row++) {
-			for (int col = -(ENNEMIES_PER_ROW / 2); col < +(ENNEMIES_PER_ROW / 2); col++) {
-				this.getEnnemies()
-						.add(new Ennemy(new Cube(this.getCanvas(), col * SPACING, row * SPACING, -GAME_DISTANCE,
-								0.0f, 0.0f, 0.0f,
-								0.5f, 0.5f, 0.5f,
-								0.0f, 0.0f, 0.0f,
-								0.0f, 0.0f, 0.0f,
-								RGBColor.GREEN[0], RGBColor.GREEN[1], RGBColor.GREEN[2])));
-			}
-		}
+		this.initLevel();
 
 		KeyListener keyListener = new KeyListener() {
 			@Override
@@ -170,6 +155,43 @@ public class SpaceCubevaders extends Game {
 	}
 
 	/**
+	 * Initialiser le niveau du jeu
+	 */
+	public void initLevel() {
+		this.setEnnemies(new ArrayList<Ennemy>());
+		float startingRow = this.getPlayer().getRepresentation().getPosY() + ENNEMIES_PLAYER_GAP - this.getLevel();
+		for (float row = startingRow; row < startingRow + ENNEMIES_ROWS; row++) {
+			for (int col = -(ENNEMIES_PER_ROW / 2); col < +(ENNEMIES_PER_ROW / 2); col++) {
+				this.getEnnemies()
+						.add(new Ennemy(new Cube(this.getCanvas(), col * SPACING, row * SPACING, -GAME_DISTANCE,
+								0.0f, 0.0f, 0.0f,
+								0.5f, 0.5f, 0.5f,
+								0.0f, 0.0f, 0.0f,
+								0.0f, 0.0f, 0.0f,
+								RGBColor.GREEN[0], RGBColor.GREEN[1], RGBColor.GREEN[2])));
+			}
+		}
+	}
+
+	/**
+	 * Définir le niveau du jeu
+	 * 
+	 * @param level Niveau du jeu
+	 */
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	/**
+	 * Récupérer le niveau du jeu
+	 * 
+	 * @return Niveau du jeu
+	 */
+	public int getLevel() {
+		return this.level;
+	}
+
+	/**
 	 * Récupérer le nom du jeu
 	 * 
 	 * @return Nom du jeu
@@ -198,30 +220,16 @@ public class SpaceCubevaders extends Game {
 			if (ennemy.getRepresentation()
 					.getBoundingBox()[Boundary.MIN_Y.ordinal()] <= this.getPlayer().getRepresentation()
 							.getBoundingBox()[Boundary.MAX_Y.ordinal()]) {
+
 				this.getCanvas().getAnimator().stop();
-				JDialog dialog = new JDialog();
-				dialog.setTitle("Perdu !");
-				dialog.setSize(300, 200);
-				dialog.setLayout(new BorderLayout());
-				dialog.setLocationRelativeTo(null);
-				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-				// Fermer la fenêtre du jeu quand le dialog de victoire est fermé
-				dialog.addWindowListener(new WindowAdapter() {
-					@Override
-					public void windowClosed(WindowEvent windowEvent) {
-						SpaceCubevaders.this.getCanvas().getParentFrame().dispose();
-					}
-				});
-				dialog.setVisible(true);
-				dialog.add(new JLabel("Vous avez perdu la partie !"), JLabel.CENTER);
-				JButton button = new JButton("Quitter le jeu");
-				button.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						SpaceCubevaders.this.getCanvas().getParentFrame().dispose();
-					}
-				});
-				dialog.add(button, BorderLayout.SOUTH);
+				this.getCanvas().showMessageDialog("Défaite !", "Vous avez perdu !", "Quitter le jeu",
+						new WindowAdapter() {
+							@Override
+							public void windowClosed(WindowEvent windowEvent) {
+								SpaceCubevaders.this.getCanvas().getParentFrame().dispose();
+							}
+						});
+				break;
 			}
 			if (ennemy.getRepresentation().getPosX() > MAX_X * SPACING) {
 				for (Ennemy ennemyToMove : this.getEnnemies()) {
@@ -255,31 +263,29 @@ public class SpaceCubevaders extends Game {
 					this.getPlayer().setScore(this.getPlayer().getScore() + 1);
 
 					if (this.getEnnemies().isEmpty()) {
-						this.getCanvas().getAnimator().stop();
-						JDialog dialog = new JDialog();
-						dialog.setTitle("Victoire !");
-						dialog.setSize(300, 200);
-						dialog.setLayout(new BorderLayout());
-						dialog.setLocationRelativeTo(null);
-						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-						// Fermer la fenêtre du jeu quand le dialog de victoire est fermé
-						dialog.addWindowListener(new WindowAdapter() {
-							@Override
-							public void windowClosed(WindowEvent windowEvent) {
-								SpaceCubevaders.this.getCanvas().getParentFrame().dispose();
-							}
-						});
-						dialog.setVisible(true);
-						dialog.add(new JLabel("Tous les ennemis ont été détruits !", JLabel.CENTER),
-								BorderLayout.CENTER);
-						JButton button = new JButton("Quitter le jeu");
-						button.addActionListener(new ActionListener() {
-							@Override
-							public void actionPerformed(ActionEvent e) {
-								SpaceCubevaders.this.getCanvas().getParentFrame().dispose();
-							}
-						});
-						dialog.add(button, BorderLayout.SOUTH);
+						if (this.getLevel() >= (int) ENNEMIES_PLAYER_GAP - 6) {
+							this.getCanvas().getAnimator().stop();
+							this.getCanvas().showMessageDialog("Victoire !", "Vous avez gagné !", "Quitter le jeu",
+									new WindowAdapter() {
+										@Override
+										public void windowClosed(WindowEvent windowEvent) {
+											SpaceCubevaders.this.getCanvas().getParentFrame().dispose();
+										}
+									});
+						} else {
+							this.getCanvas().getAnimator().pause();
+							this.getCanvas().showMessageDialog("Niveau " + this.getLevel() + " terminé !",
+									"Vous avez terminé le niveau " + this.getLevel() + " !", "Niveau suivant",
+									new WindowAdapter() {
+										@Override
+										public void windowClosed(WindowEvent windowEvent) {
+											SpaceCubevaders.this.setLevel(SpaceCubevaders.this.getLevel() + 1);
+											SpaceCubevaders.this.initLevel();
+											SpaceCubevaders.this.getCanvas().getAnimator().resume();
+										}
+									});
+
+						}
 					}
 					break;
 				}
@@ -305,8 +311,9 @@ public class SpaceCubevaders extends Game {
 	@Override
 	public String toString() {
 		return super.toString()
-				+ "\n\tJoueur : " + this.getPlayer().getScore() + " points"
-				+ "\n\tEnnemis restants: " + this.getEnnemies().size();
+				+ "\n\tNiveau : " + this.getLevel()
+				+ "\n\tEnnemis restants: " + this.getEnnemies().size()
+				+ "\n" + this.getPlayer().toString();
 	}
 
 }
