@@ -6,9 +6,7 @@ import gl.objects.rules.GraphicalObject;
 import gl.objects.volumes.Cube;
 
 public class Player extends Entity {
-	// Missile du joueur
-	private Cube missile;
-	// Score du joueur
+	private GraphicalObject missile;
 	private int score = 0;
 
 	/**
@@ -45,7 +43,7 @@ public class Player extends Entity {
 	 * 
 	 * @param missile Missile du joueur
 	 */
-	public void setMissile(Cube missile) {
+	public void setMissile(GraphicalObject missile) {
 		this.missile = missile;
 	}
 
@@ -54,7 +52,7 @@ public class Player extends Entity {
 	 * 
 	 * @return Missile du joueur
 	 */
-	public Cube getMissile() {
+	public GraphicalObject getMissile() {
 		return this.missile;
 	}
 
