@@ -9,14 +9,14 @@ public final class Debug {
 		DRAW_AXIS, DRAW_GRID, DRAW_COLLISIONS, DRAW_INFO, VERBOSE, RAINBOW, LINE_MODE, CONTOURING
 	}
 
-	public static boolean DRAW_AXIS;
-	public static boolean DRAW_GRID;
-	public static boolean DRAW_COLLISIONS;
-	public static boolean DRAW_INFO;
-	public static boolean VERBOSE;
-	public static boolean RAINBOW;
-	public static boolean LINE_MODE;
-	public static boolean CONTOURING;
+	public static boolean DRAW_AXIS = false;
+	public static boolean DRAW_GRID = false;
+	public static boolean DRAW_COLLISIONS = false;
+	public static boolean DRAW_INFO = false;
+	public static boolean VERBOSE = false;
+	public static boolean RAINBOW = false;
+	public static boolean LINE_MODE = false;
+	public static boolean CONTOURING = false;
 
 	public static boolean[] MODE = {
 			Debug.DRAW_AXIS,

@@ -6,9 +6,17 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 
 ## Détails techniques
 
+Ce projet a été pensé pour pouvoir être facilement étendu et supporter plusieurs jeux.
+Il a un mode de debug graphique et informationnel dont les paramètres sont disponibles dans la classe [/src/common/DebugMode.java](/src/common/Debug.java).
+Ces modes peuvent être dynamiquement changés et sont définis dans le point d'entrée du programme (MainGL ou DebugGL).
+N'hésitez pas à jouer avec pour comprendre le fonctionnement du rendu.
+
 ### To-do
 
+- [ ] Renommer MainCanvas en GameCanvas, rajouter une classe Frame pour gérer les fenêtres
+- [ ] Mettre à jour la documentation
 - [ ] Régler les bugs connus
+- [ ] (Optionnel) Ajouter des missiles ennemis et des abris
 - [ ] (Optionnel) Prendre en compte les rotations dans la BoundingBox et la détection des collisions
 - [ ] (Optionnel) Vérifier si les commentaires sont à jour par rapport au fonctionnement actuel du code
 
