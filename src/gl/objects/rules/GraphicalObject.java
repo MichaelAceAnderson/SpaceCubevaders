@@ -618,9 +618,9 @@ public abstract class GraphicalObject {
 			// Le mode lignes prévaut sur le mode contour
 			if (Debug.getMode(Debug.Mode.CONTOURING) && !Debug.getMode(Debug.Mode.LINE_MODE)) {
 				this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_LINE);
-				this.setRed(RGBColor.GRAY[0]);
-				this.setGreen(RGBColor.GRAY[1]);
-				this.setBlue(RGBColor.GRAY[2]);
+				this.setRed(RGBColor.BLACK[0]);
+				this.setGreen(RGBColor.BLACK[1]);
+				this.setBlue(RGBColor.BLACK[2]);
 				this.draw();
 				this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_FILL);
 			}
