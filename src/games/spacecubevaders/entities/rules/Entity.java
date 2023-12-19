@@ -85,9 +85,9 @@ public abstract class Entity {
 	}
 
 	/**
-	 * Récupérer les informations du joueur
+	 * Récupérer les informations de l'entité
 	 * 
-	 * @return Informations du joueur
+	 * @return Informations de l'entité
 	 */
 	@Override
 	public String toString() {

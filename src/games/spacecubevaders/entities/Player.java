@@ -73,4 +73,16 @@ public class Player extends Entity {
 	public int getScore() {
 		return this.score;
 	}
+
+	/**
+	 * Afficher les informations du joueur
+	 * 
+	 * @return Informations du joueur
+	 */
+	@Override
+	public String toString() {
+		return "Joueur:"
+				+ "\n\tScore: " + this.getScore() + "\n";
+	}
+
 }
