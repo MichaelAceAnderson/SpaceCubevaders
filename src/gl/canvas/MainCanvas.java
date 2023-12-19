@@ -10,14 +10,18 @@ import com.jogamp.opengl.glu.GLU;
 
 import common.Debug;
 import gl.canvas.rules.Canvas;
+import gl.frames.rules.Frame;
 import gl.objects.rules.GraphicalObject;
 
 public class MainCanvas extends Canvas {
 	/**
 	 * @see Canvas
 	 */
-	public MainCanvas() {
-		super();
+	public MainCanvas(Frame parentFrame) {
+		super(parentFrame);
+		this.getParentFrame().getContentPane().add(this);
+		this.getParentFrame().pack();
+		this.getParentFrame().setVisible(true);
 	}
 
 	/**

@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import java.awt.Font;
@@ -24,6 +23,7 @@ import com.jogamp.opengl.util.awt.TextRenderer;
 
 import common.RGBColor;
 import games.rules.Game;
+import gl.frames.rules.Frame;
 import gl.objects.rules.GraphicalObject;
 
 public abstract class Canvas extends GLCanvas
@@ -31,7 +31,7 @@ public abstract class Canvas extends GLCanvas
 	// Nombre d'itérations d'affichage
 	private int frameCount;
 	// Fenêtre de rendu
-	private JFrame frame;
+	private Frame parentFrame;
 	// Objets à afficher
 	private ArrayList<GraphicalObject> objects;
 	// Nombre de FPS actuel
@@ -53,16 +53,13 @@ public abstract class Canvas extends GLCanvas
 	/**
 	 * Créer un GLCanvas où le rendu OpenGL est effectué
 	 * 
+	 * @param parentFrame Fenêtre parente où sera affiché le canvas
+	 * 
 	 * @see GLCanvas
 	 * @see GLEventListener
 	 */
-	public Canvas() {
-		// Ajouter le listener pour les événements OpenGL dans ce canvas
-		this.setParentFrame(new JFrame());
-		this.getParentFrame().getContentPane().add(this);
-		this.getParentFrame().pack();
-		this.getParentFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.getParentFrame().setVisible(true);
+	public Canvas(Frame parentFrame) {
+		this.setParentFrame(parentFrame);
 
 		this.setFrameCount(0);
 
@@ -97,8 +94,8 @@ public abstract class Canvas extends GLCanvas
 	 * 
 	 * @return Fenêtre de rendu
 	 */
-	public JFrame getParentFrame() {
-		return this.frame;
+	public Frame getParentFrame() {
+		return this.parentFrame;
 	}
 
 	/**
@@ -106,10 +103,10 @@ public abstract class Canvas extends GLCanvas
 	 * 
 	 * @param frame Fenêtre de rendu
 	 * 
-	 * @see JFrame
+	 * @see Frame
 	 */
-	public void setParentFrame(JFrame frame) {
-		this.frame = frame;
+	public void setParentFrame(Frame frame) {
+		this.parentFrame = frame;
 	}
 
 	/**
