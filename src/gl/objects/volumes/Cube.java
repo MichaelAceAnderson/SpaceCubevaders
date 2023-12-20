@@ -45,9 +45,9 @@ public class Cube extends Volume {
 			g = RGBColor.CYAN[1];
 			b = RGBColor.CYAN[2];
 		}
-		this.getShapes().add(new Square(canvas, 0, 1, 0,
+		this.getShapes().add(new Square(canvas, 0, 0.5f, 0,
 				90, 0, 0,
-				1, 1, 1,
+				0.5f, 0.5f, 0.5f,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
@@ -57,9 +57,9 @@ public class Cube extends Volume {
 			g = RGBColor.RED[1];
 			b = RGBColor.RED[2];
 		}
-		this.getShapes().add(new Square(canvas, 0, 0, 1,
+		this.getShapes().add(new Square(canvas, 0, 0, 0.5f,
 				0, 0, 0,
-				1, 1, 1,
+				0.5f, 0.5f, 0.5f,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
@@ -69,9 +69,9 @@ public class Cube extends Volume {
 			g = RGBColor.GREEN[1];
 			b = RGBColor.GREEN[2];
 		}
-		this.getShapes().add(new Square(canvas, 0, 0, -1,
+		this.getShapes().add(new Square(canvas, 0, 0, -0.5f,
 				0, 0, 0,
-				1, 1, 1,
+				0.5f, 0.5f, 0.5f,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
@@ -81,9 +81,9 @@ public class Cube extends Volume {
 			g = RGBColor.YELLOW[1];
 			b = RGBColor.YELLOW[2];
 		}
-		this.getShapes().add(new Square(canvas, -1, 0, 0,
+		this.getShapes().add(new Square(canvas, -0.5f, 0, 0,
 				0, -90, 0,
-				1, 1, 1,
+				0.5f, 0.5f, 0.5f,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
@@ -93,9 +93,9 @@ public class Cube extends Volume {
 			g = RGBColor.BLUE[1];
 			b = RGBColor.BLUE[2];
 		}
-		this.getShapes().add(new Square(canvas, 1, 0, 0,
+		this.getShapes().add(new Square(canvas, 0.5f, 0, 0,
 				0, 90, 0,
-				1, 1, 1,
+				0.5f, 0.5f, 0.5f,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
@@ -105,9 +105,9 @@ public class Cube extends Volume {
 			g = RGBColor.MAGENTA[1];
 			b = RGBColor.MAGENTA[2];
 		}
-		this.getShapes().add(new Square(canvas, 0, -1, 0,
+		this.getShapes().add(new Square(canvas, 0, -0.5f, 0,
 				90, 0, 0,
-				1, 1, 1,
+				0.5f, 0.5f, 0.5f,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));

@@ -165,7 +165,7 @@ public class SpaceCubevaders extends Game {
 				this.getEnnemies()
 						.add(new Ennemy(new Cube(this.getCanvas(), col * SPACING, row * SPACING, -GAME_DISTANCE,
 								0.0f, 0.0f, 0.0f,
-								0.5f, 0.5f, 0.5f,
+								1, 1, 1,
 								0.0f, 0.0f, 0.0f,
 								0.0f, 0.0f, 0.0f,
 								RGBColor.GREEN[0], RGBColor.GREEN[1], RGBColor.GREEN[2])));
