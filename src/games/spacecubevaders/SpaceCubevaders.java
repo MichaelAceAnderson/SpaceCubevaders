@@ -12,6 +12,7 @@ import games.spacecubevaders.entities.Ennemy;
 import games.spacecubevaders.entities.Player;
 import games.spacecubevaders.entities.rules.Entity;
 import games.spacecubevaders.entities.rules.Entity.Direction;
+import games.spacecubevaders.structures.Shelter;
 
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
@@ -34,6 +35,7 @@ public class SpaceCubevaders extends Game {
 	public final static float GAME_DISTANCE = 30.0f;
 	// Caractéristiques des ennemis
 	private ArrayList<Ennemy> ennemies;
+	private ArrayList<Shelter> shelters;
 	public final static float SPACING = 2;
 	// Doit être supérieur à 6 pour éviter que le niveau ne démarre trop proche du
 	// joueur
@@ -59,7 +61,19 @@ public class SpaceCubevaders extends Game {
 				0.0f, 5.0f, 0.0f,
 				RGBColor.DARK_GRAY[0], RGBColor.DARK_GRAY[1], RGBColor.DARK_GRAY[2])));
 
-		this.setEnnemies(new ArrayList<Ennemy>());
+		this.setShelters(new ArrayList<Shelter>());
+		// Créer 3 abris répartis entre les limites du jeu
+		for (float i = MIN_X; i <= MAX_X; i += (MAX_X - MIN_X) / 2) {
+			this.getShelters()
+					.add(new Shelter(this.getCanvas(), i, this.getPlayer().getRepresentation().getPosY() + 2,
+							-GAME_DISTANCE,
+							0.0f, 0.0f, 0.0f,
+							1.0f, 1.0f, 1.0f,
+							0.0f, 0.0f, 0.0f,
+							0.0f, 0.0f, 0.0f,
+							RGBColor.DARK_GRAY[0], RGBColor.DARK_GRAY[1], RGBColor.DARK_GRAY[2]));
+		}
+
 		this.initLevel();
 
 		KeyListener keyListener = new KeyListener() {
@@ -106,7 +120,7 @@ public class SpaceCubevaders extends Game {
 	 * @return Canvas sur lequel afficher le jeu
 	 */
 	public Canvas getCanvas() {
-		return canvas;
+		return this.canvas;
 	}
 
 	/**
@@ -124,7 +138,7 @@ public class SpaceCubevaders extends Game {
 	 * @return Joueur
 	 */
 	public Player getPlayer() {
-		return player;
+		return this.player;
 	}
 
 	/**
@@ -142,7 +156,25 @@ public class SpaceCubevaders extends Game {
 	 * @return Tableau des ennemis
 	 */
 	public ArrayList<Ennemy> getEnnemies() {
-		return ennemies;
+		return this.ennemies;
+	}
+
+	/**
+	 * Définir les abris
+	 * 
+	 * @param shelters Tableau des abris
+	 */
+	public void setShelters(ArrayList<Shelter> shelters) {
+		this.shelters = shelters;
+	}
+
+	/**
+	 * Récupérer les abris
+	 * 
+	 * @return Tableau des abris
+	 */
+	public ArrayList<Shelter> getShelters() {
+		return this.shelters;
 	}
 
 	/**
@@ -220,19 +252,37 @@ public class SpaceCubevaders extends Game {
 	 */
 	@Override
 	public void update() {
+		for (Shelter shelter : this.getShelters()) {
+			for (Cube shelterComponent : shelter.getBlocks()) {
+				// Pour éviter une ConcurrentModificationException, on ne retire pas les
+				// composants de l'abri en cas de destruction, on les retire seulement du canvas
+				// et on vérifie qu'ils y sont toujours avant de les traiter
+				if (!this.getCanvas().getObjects().contains(shelterComponent)) {
+					continue;
+				}
+				if (this.getPlayer().getMissile() != null) {
+					if (this.getPlayer().getMissile().isColliding(shelterComponent)) {
+						if (Debug.getMode(Mode.VERBOSE)) {
+							System.out.println(
+									"Collision entre le missile et le block "
+											+ shelter.getBlocks().indexOf(shelterComponent) + " d'un abri !");
+						}
+						this.getCanvas().getObjects().remove(shelterComponent);
+
+						this.getCanvas().getObjects().remove(this.getPlayer().getMissile());
+						this.getPlayer().setMissile(null);
+					}
+				}
+			}
+		}
+
 		for (Ennemy ennemy : this.getEnnemies()) {
 			if (ennemy.getRepresentation()
 					.getBoundingBox()[Boundary.MIN_Y.ordinal()] <= this.getPlayer().getRepresentation()
 							.getBoundingBox()[Boundary.MAX_Y.ordinal()]) {
 
 				this.getCanvas().getAnimator().stop();
-				this.getCanvas().getParentFrame().showMessageDialog("Défaite !", "Vous avez perdu !", "Quitter le jeu",
-						new WindowAdapter() {
-							@Override
-							public void windowClosed(WindowEvent windowEvent) {
-								SpaceCubevaders.this.getCanvas().getParentFrame().dispose();
-							}
-						});
+				this.getCanvas().getParentFrame().showMessageDialog("Défaite !", "Vous avez perdu !", "Quitter le jeu");
 				break;
 			}
 			if (ennemy.getRepresentation().getPosX() > MAX_X * SPACING) {
