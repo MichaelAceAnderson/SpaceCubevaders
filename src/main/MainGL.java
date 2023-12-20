@@ -3,7 +3,7 @@ package main;
 import common.Debug;
 import common.Debug.Mode;
 import games.spacecubevaders.SpaceCubevaders;
-import gl.canvas.MainCanvas;
+import gl.canvas.GameCanvas;
 import gl.frames.GLFrame;
 
 public class MainGL {
@@ -15,7 +15,7 @@ public class MainGL {
 		Debug.setMode(Mode.LINE_MODE, true);
 
 		GLFrame gameFrame = new GLFrame();
-		MainCanvas gameCanvas = new MainCanvas(gameFrame);
+		GameCanvas gameCanvas = new GameCanvas(gameFrame);
 
 		// Attendre que le contexte OpenGL soit initialisé
 		boolean initialized = false;

@@ -1,18 +1,10 @@
 package gl.canvas.rules;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
 
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
@@ -28,26 +20,17 @@ import gl.objects.rules.GraphicalObject;
 
 public abstract class Canvas extends GLCanvas
 		implements GLEventListener {
-	// Nombre d'itérations d'affichage
 	private int frameCount;
-	// Fenêtre de rendu
 	private Frame parentFrame;
-	// Objets à afficher
 	private ArrayList<GraphicalObject> objects;
-	// Nombre de FPS actuel
 	private int fps;
-	// Temps écoulé depuis le dernier rendu
 	private long lastRenderTime;
-	// Limite de FPS
 	public static final int FPS_LIMIT = 60;
-	// Perspective
 	private float aspect;
 	private float fov;
 	private float nearClip;
 	private float drawDistance;
-	// Jeu en cours dans ce canvas
 	private Game game;
-	// TextRenderer pour afficher du texte
 	private TextRenderer textRenderer;
 
 	/**
@@ -60,6 +43,9 @@ public abstract class Canvas extends GLCanvas
 	 */
 	public Canvas(Frame parentFrame) {
 		this.setParentFrame(parentFrame);
+		this.getParentFrame().getContentPane().add(this);
+		this.getParentFrame().pack();
+		this.getParentFrame().setVisible(true);
 
 		this.setFrameCount(0);
 
@@ -207,9 +193,8 @@ public abstract class Canvas extends GLCanvas
 	 * 
 	 */
 	public void drawAxis(float posX, float posY, float posZ) {
-		// Récupérer le contexte OpenGL
 		GL2 gl2 = this.getGL().getGL2();
-		// Dessiner les axes de repère
+
 		gl2.glBegin(GL2.GL_LINES);
 		{
 			// Axe des abscisses
@@ -259,35 +244,6 @@ public abstract class Canvas extends GLCanvas
 		}
 	}
 
-	/**
-	 * Montrer un dialog avec un message et un bouton
-	 * 
-	 * @param title         Titre du dialog
-	 * @param message       Message à afficher
-	 * @param buttonMessage Message du bouton
-	 * @param closeAction   Action du bouton
-	 */
-	public void showMessageDialog(String title, String message, String buttonMessage, WindowAdapter closeAction) {
-
-		JDialog dialog = new JDialog();
-		dialog.setTitle(title);
-		dialog.setSize(300, 200);
-		dialog.setLayout(new BorderLayout());
-		dialog.setLocationRelativeTo(null);
-		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-
-		dialog.addWindowListener(closeAction);
-		dialog.setVisible(true);
-		dialog.add(new JLabel(message, JLabel.CENTER), BorderLayout.CENTER);
-		JButton button = new JButton(buttonMessage);
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dialog.dispose();
-			}
-		});
-		dialog.add(button, BorderLayout.SOUTH);
-	}
 	/**
 	 * Stocker le nombre de FPS actuel
 	 * 

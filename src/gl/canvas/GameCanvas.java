@@ -1,11 +1,8 @@
 package gl.canvas;
 
-import java.awt.Dimension;
-
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
-import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 
 import common.Debug;
@@ -13,28 +10,12 @@ import gl.canvas.rules.Canvas;
 import gl.frames.rules.Frame;
 import gl.objects.rules.GraphicalObject;
 
-public class MainCanvas extends Canvas {
+public class GameCanvas extends Canvas {
 	/**
 	 * @see Canvas
 	 */
-	public MainCanvas(Frame parentFrame) {
+	public GameCanvas(Frame parentFrame) {
 		super(parentFrame);
-		this.getParentFrame().getContentPane().add(this);
-		this.getParentFrame().pack();
-		this.getParentFrame().setVisible(true);
-	}
-
-	/**
-	 * Récupérer la taille préférée de la fenêtre de rendu
-	 * 
-	 * @return Taille préférée de la fenêtre de rendu
-	 * 
-	 * @see GLCanvas#getPreferredSize()
-	 * 
-	 */
-	@Override
-	public Dimension getPreferredSize() {
-		return new Dimension(800, 600);
 	}
 
 	/* Implémentation de GLEventListener */
@@ -46,7 +27,7 @@ public class MainCanvas extends Canvas {
 	 * 
 	 * @param canvas Le canvas OpenGL
 	 * 
-	 * @see GLEventListener#display(com.jogamp.opengl.GLAutoDrawable)
+	 * @see GLEventListener#display(GLAutoDrawable)
 	 */
 	@Override
 	public void display(GLAutoDrawable canvas) {
@@ -57,7 +38,7 @@ public class MainCanvas extends Canvas {
 
 		// Charger la matrice identité afin de repartir de zéro à chaque fois
 		gl2.glLoadIdentity();
-		// Afficher tous les objets
+
 		gl2.glPushMatrix();
 		{
 			if (Debug.getMode(Debug.Mode.DRAW_AXIS)) {
@@ -66,14 +47,10 @@ public class MainCanvas extends Canvas {
 			if (Debug.getMode(Debug.Mode.DRAW_GRID)) {
 				this.drawAxis(-2, -1, -5);
 			}
-			// Pour tous les objets
 			for (GraphicalObject object : this.getObjects()) {
 				if (object.isVisible()) {
-					// Dessiner l'objet dans le contexte OpenGL courant
 					object.display();
-					// Déplacer l'objet en fonction de sa vitesse
 					object.move(object.getSpeedX(), object.getSpeedY(), object.getSpeedZ());
-					// Tourner l'objet en fonction de sa rotation
 					object.rotate(object.getRotationX(), object.getRotationY(), object.getRotationZ());
 				}
 			}
@@ -82,6 +59,7 @@ public class MainCanvas extends Canvas {
 
 		String frameCounterString = "FPS: " + this.getFps() + "/" + Canvas.FPS_LIMIT
 				+ " \nFrame: " + this.getFrameCount();
+
 		if (this.getGame() != null) {
 			this.getGame().update();
 			this.renderText(this.getGame().toString(), 0,
@@ -90,7 +68,7 @@ public class MainCanvas extends Canvas {
 					.setTitle(this.getGame().getName() + " - " + frameCounterString);
 			if (Debug.getMode(Debug.Mode.DRAW_INFO)) {
 				this.renderText(frameCounterString,
-					this.getWidth() - 125, this.getHeight() - this.getTextRenderer().getFont().getSize());
+						this.getWidth() - 125, this.getHeight() - this.getTextRenderer().getFont().getSize());
 			}
 		} else {
 			this.getParentFrame().setTitle(frameCounterString);
@@ -102,18 +80,18 @@ public class MainCanvas extends Canvas {
 	}
 
 	/**
-	 * Libérer les ressources allouées par OpenGL lors de la fermeture de la fenêtre
+	 * Action à effectuer lors de la fermeture de la fenêtre
 	 * 
 	 * @param canvas Le canvas OpenGL
 	 * 
-	 * @see GLEventListener#dispose(com.jogamp.opengl.GLAutoDrawable)
+	 * @see GLEventListener#dispose(GLAutoDrawable)
 	 */
 	@Override
 	public void dispose(GLAutoDrawable canvas) {
 		// Libérer les ressources allouées par OpenGL
 		canvas.getAnimator().stop();
 		canvas.getGL().getGL2().glFlush();
-		// Terminer le processus
+
 		System.exit(0);
 	}
 
@@ -122,7 +100,7 @@ public class MainCanvas extends Canvas {
 	 * 
 	 * @param drawable Le drawable OpenGL
 	 * 
-	 * @see GLEventListener#init(com.jogamp.opengl.GLAutoDrawable)
+	 * @see GLEventListener#init(GLAutoDrawable)
 	 */
 	@Override
 	public void init(GLAutoDrawable canvas) {
@@ -150,7 +128,7 @@ public class MainCanvas extends Canvas {
 	 * @param y        Position y de la fenêtre
 	 * @param width    Largeur de la fenêtre
 	 * 
-	 * @see GLEventListener#reshape(com.jogamp.opengl.GLAutoDrawable, int, int, int,
+	 * @see GLEventListener#reshape(GLAutoDrawable, int, int, int,
 	 *      int)
 	 */
 	@Override

@@ -13,11 +13,10 @@ N'hésitez pas à jouer avec pour comprendre le fonctionnement du rendu.
 
 ### To-do
 
-- [ ] Renommer MainCanvas en GameCanvas, rajouter une classe Frame pour gérer les fenêtres
 - [ ] Mettre à jour la documentation
 - [ ] Régler les bugs connus
 - [ ] (Optionnel) Ajouter un menu d'accueil
-- [ ] (Optionnel) Ajouter Espace pour jouer au début de la partie
+- [ ] (Optionnel) Remplacer les Dialogs par des menus d'information qui écoutent une touche pour passer à l'écran suivant
 - [ ] (Optionnel) Ajouter des missiles ennemis et des abris avec un système de vies
 - [ ] (Optionnel) Prendre en compte les rotations dans la BoundingBox et la détection des collisions
 - [ ] (Optionnel) Vérifier si les commentaires sont à jour par rapport au fonctionnement actuel du code

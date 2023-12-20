@@ -4,7 +4,7 @@ import java.awt.event.KeyListener;
 
 import common.Debug;
 import common.RGBColor;
-import gl.canvas.MainCanvas;
+import gl.canvas.GameCanvas;
 import gl.frames.GLFrame;
 import gl.objects.items.*;
 import gl.objects.shapes.*;
@@ -18,7 +18,7 @@ public class DebugGL {
 		}
 
 		GLFrame debugFrame = new GLFrame();
-		MainCanvas debugCanvas = new MainCanvas(debugFrame);
+		GameCanvas debugCanvas = new GameCanvas(debugFrame);
 
 		KeyListener keyListener = new KeyListener() {
 			@Override

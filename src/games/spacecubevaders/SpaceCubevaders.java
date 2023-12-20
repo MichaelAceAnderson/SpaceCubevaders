@@ -222,7 +222,7 @@ public class SpaceCubevaders extends Game {
 							.getBoundingBox()[Boundary.MAX_Y.ordinal()]) {
 
 				this.getCanvas().getAnimator().stop();
-				this.getCanvas().showMessageDialog("Défaite !", "Vous avez perdu !", "Quitter le jeu",
+				this.getCanvas().getParentFrame().showMessageDialog("Défaite !", "Vous avez perdu !", "Quitter le jeu",
 						new WindowAdapter() {
 							@Override
 							public void windowClosed(WindowEvent windowEvent) {
@@ -265,16 +265,12 @@ public class SpaceCubevaders extends Game {
 					if (this.getEnnemies().isEmpty()) {
 						if (this.getLevel() >= (int) ENNEMIES_PLAYER_GAP - 6) {
 							this.getCanvas().getAnimator().stop();
-							this.getCanvas().showMessageDialog("Victoire !", "Vous avez gagné !", "Quitter le jeu",
-									new WindowAdapter() {
-										@Override
-										public void windowClosed(WindowEvent windowEvent) {
-											SpaceCubevaders.this.getCanvas().getParentFrame().dispose();
-										}
-									});
+							this.getCanvas().getParentFrame().showMessageDialog("Victoire !", "Vous avez gagné !",
+									"Quitter le jeu");
 						} else {
 							this.getCanvas().getAnimator().pause();
-							this.getCanvas().showMessageDialog("Niveau " + this.getLevel() + " terminé !",
+							this.getCanvas().getParentFrame().showMessageDialog(
+									"Niveau " + this.getLevel() + " terminé !",
 									"Vous avez terminé le niveau " + this.getLevel() + " !", "Niveau suivant",
 									new WindowAdapter() {
 										@Override
