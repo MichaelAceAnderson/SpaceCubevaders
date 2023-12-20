@@ -221,24 +221,24 @@ public abstract class Canvas extends GLCanvas
 	 * visible.
 	 */
 	public void drawGrid() {
-		// Récupérer le contexte OpenGL
+		float yOffset = -1;
 		GL2 gl2 = this.getGL().getGL2();
-		// Dessiner la grille de repère
+
 		gl2.glColor3f(RGBColor.GRAY[0], RGBColor.GRAY[1], RGBColor.GRAY[2]);
 		for (float i = -this.getDrawDistance(); i <= this.getDrawDistance(); i++) {
 			// Dessiner les lignes parallèles à l'axe des X des abscisses
 			gl2.glBegin(GL2.GL_LINES);
 			{
-				gl2.glVertex3f(-this.getDrawDistance(), -1, i);
-				gl2.glVertex3f(this.getDrawDistance(), -1, i);
+				gl2.glVertex3f(-this.getDrawDistance(), yOffset, i);
+				gl2.glVertex3f(this.getDrawDistance(), yOffset, i);
 			}
 			gl2.glEnd();
 
 			// Dessiner les lignes parralèles à l'axe Z de profondeur
 			gl2.glBegin(GL2.GL_LINES);
 			{
-				gl2.glVertex3f(i, -1, -this.getDrawDistance());
-				gl2.glVertex3f(i, -1, this.getDrawDistance());
+				gl2.glVertex3f(i, yOffset, -this.getDrawDistance());
+				gl2.glVertex3f(i, yOffset, this.getDrawDistance());
 			}
 			gl2.glEnd();
 		}
