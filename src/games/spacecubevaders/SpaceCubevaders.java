@@ -158,6 +158,8 @@ public class SpaceCubevaders extends Game {
 	 * Initialiser le niveau du jeu
 	 */
 	public void initLevel() {
+		this.getCanvas().getAnimator().pause();
+
 		this.setEnnemies(new ArrayList<Ennemy>());
 		float startingRow = this.getPlayer().getRepresentation().getPosY() + ENNEMIES_PLAYER_GAP - this.getLevel();
 		for (float row = startingRow; row < startingRow + ENNEMIES_ROWS; row++) {
@@ -171,6 +173,8 @@ public class SpaceCubevaders extends Game {
 								RGBColor.GREEN[0], RGBColor.GREEN[1], RGBColor.GREEN[2])));
 			}
 		}
+
+		this.getCanvas().getAnimator().resume();
 	}
 
 	/**
