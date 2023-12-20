@@ -6,7 +6,6 @@ import common.Debug;
 import common.RGBColor;
 import gl.canvas.GameCanvas;
 import gl.frames.GLFrame;
-import gl.objects.items.*;
 import gl.objects.shapes.*;
 import gl.objects.volumes.*;
 

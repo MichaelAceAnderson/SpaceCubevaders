@@ -1,16 +1,16 @@
-package gl.objects.items;
+package games.spacecubevaders.items;
 
 import common.RGBColor;
 import gl.canvas.rules.Canvas;
-import gl.objects.rules.Item;
+import gl.objects.rules.Composite;
 import gl.objects.volumes.Cube;
 import gl.objects.volumes.Pyramid;
 
-public class Missile extends Item {
+public class Missile extends Composite {
 	/**
-	 * Créer un cube
+	 * Créer un Missile
 	 * 
-	 * @see Item#Item(Canvas, float, float, float,
+	 * @see Composite#Composite(Canvas, float, float, float,
 	 *      float, float, float,
 	 *      float, float, float,
 	 *      float, float, float,
@@ -45,9 +45,9 @@ public class Missile extends Item {
 	}
 
 	/**
-	 * Créer un cube par défaut
+	 * Créer un Missile par défaut
 	 * 
-	 * @see Cube#Cube(Canvas, float, float, float,
+	 * @see Missile#Missile(Canvas, float, float, float,
 	 *      float, float, float,
 	 *      float, float, float,
 	 *      float, float, float,

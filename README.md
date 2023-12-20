@@ -24,9 +24,9 @@ N'hésitez pas à jouer avec pour comprendre le fonctionnement du rendu.
 ### Bugs connus
 
 - Les ennemis ne se déplacent pas de façon uniforme (Certains ennemis se déplacent plus vite que d'autres)
-- La collision des items n'est pas détectée correctement
+- La collision des composites n'est pas détectée correctement
 - La position/collision des objets graphiques en mouvement/rotation n'est pas toujours détectée correctement
-- Les items ne tournent pas autour d'eux même mais autour d'un point fixe distant de leur centre
+- Les composites ne tournent pas autour d'eux même mais autour d'un point fixe distant de leur centre
 - La détection de la visibilité d'un objet graphique n'est pas calculée à partir de la perspective de la caméra mais à partir de la profondeur d'affichage maximum (Voir `isVisible()` de [GraphicalObject](src/gl/objects/rules/GraphicalObject.java))
 - La boîte de collisions ne prend pas en compte les rotations de l'objet ou la profondeur nulle d'une forme (Voir `getBoundingBox()` de [GraphicalObject](src/gl/objects/rules/GraphicalObject.java))
 
@@ -50,9 +50,8 @@ Le projet est découpé en plusieurs packages :
     - **rules** : contient les classes permettant de gérer les règles de construction des fenêtres
   - **objects** :
     - **rules** : contient les classes permettant de gérer les règles de construction d'objets graphiques
-    - **items** : contient les classes des objets du jeu (vaisseau, ennemis, missiles, bonus, etc.)
-    - **shapes** : contient les classes des formes géométriques (carré, cercle, etc.) qui permettront de construire des volumes
-    - **volumes** : contient les classes des volumes (cubes, sphères, etc.) qui permettront de construire des objets 3D
+    - **shapes** : contient les classes des formes géométriques (carré, triangle, etc...) qui permettront de construire des volumes
+    - **volumes** : contient les classes des volumes (cubes, pyramides, etc...) qui permettront de construire des objets 3D
 - **main** : contient les classes de lancement du programme
 
 ### Mode DEBUG
