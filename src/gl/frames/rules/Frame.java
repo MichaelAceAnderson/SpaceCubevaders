@@ -16,6 +16,7 @@ public abstract class Frame extends JFrame {
 	 */
 	public Frame() {
 		super();
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	/**
