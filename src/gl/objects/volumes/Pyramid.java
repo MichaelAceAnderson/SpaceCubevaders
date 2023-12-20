@@ -1,6 +1,5 @@
 package gl.objects.volumes;
 
-
 import common.Debug;
 import common.RGBColor;
 import gl.canvas.rules.Canvas;
@@ -31,7 +30,6 @@ public class Pyramid extends Volume {
 			float speedX, float speedY, float speedZ,
 			float rotationX, float rotationY, float rotationZ,
 			float r, float g, float b) {
-		// Appeler le constructeur de la classe mère pour instancier l'objet graphique
 		super(canvas, posX, posY, posZ,
 				angleX, angleY, angleZ,
 				scaleX, scaleY, scaleZ,
@@ -39,61 +37,56 @@ public class Pyramid extends Volume {
 				rotationX, rotationY, rotationZ,
 				r, g, b);
 
-		// Ajouter la base de la pyramide
 		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.WHITE[0];
 			g = RGBColor.WHITE[1];
 			b = RGBColor.WHITE[2];
 		}
-		this.getShapes().add(new Square(canvas, 0, 0, 0,
+		this.getShapes().add(Face.BASE.ordinal(), new Square(canvas, 0, 0, 0,
 				90, 0, 0,
 				1, 1, 1,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
-		// Ajouter la face avant
-		if (Debug.getMode(Debug.Mode.RAINBOW)) {
-			r = RGBColor.RED[0];
-			g = RGBColor.RED[1];
-			b = RGBColor.RED[2];
-		}
-		this.getShapes().add(new Triangle(canvas, 0, 0, 1,
-				-45, 0, 0,
-				1, 1.5f, 1,
-				0, 0, 0,
-				0, 0, 0,
-				r, g, b));
-		// Ajouter la face arrière
 		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.PURPLE[0];
 			g = RGBColor.PURPLE[1];
 			b = RGBColor.PURPLE[2];
 		}
-		this.getShapes().add(new Triangle(canvas, 0, 0, -1,
+		this.getShapes().add(Face.BACK.ordinal(), new Triangle(canvas, 0, 0, -1,
 				45, 0, 0,
 				1, 1.5f, 1,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
-		// Ajouter la face gauche
+		if (Debug.getMode(Debug.Mode.RAINBOW)) {
+			r = RGBColor.RED[0];
+			g = RGBColor.RED[1];
+			b = RGBColor.RED[2];
+		}
+		this.getShapes().add(Face.FRONT.ordinal(), new Triangle(canvas, 0, 0, 1,
+				-45, 0, 0,
+				1, 1.5f, 1,
+				0, 0, 0,
+				0, 0, 0,
+				r, g, b));
 		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.YELLOW[0];
 			g = RGBColor.YELLOW[1];
 			b = RGBColor.YELLOW[2];
 		}
-		this.getShapes().add(new Triangle(canvas, -1, 0, 0,
+		this.getShapes().add(Face.LEFT.ordinal(), new Triangle(canvas, -1, 0, 0,
 				0, -90, -45,
 				1, 1.5f, 1,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
-		// Ajouter la face droite
 		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.BLUE[0];
 			g = RGBColor.BLUE[1];
 			b = RGBColor.BLUE[2];
 		}
-		this.getShapes().add(new Triangle(canvas, 1, 0, 0,
+		this.getShapes().add(Face.RIGHT.ordinal(), new Triangle(canvas, 1, 0, 0,
 				0, 90, 45,
 				1, 1.5f, 1,
 				0, 0, 0,

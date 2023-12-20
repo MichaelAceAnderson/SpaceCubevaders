@@ -1,6 +1,5 @@
 package gl.objects.volumes;
 
-
 import common.Debug;
 import common.RGBColor;
 import gl.canvas.rules.Canvas;
@@ -31,7 +30,6 @@ public class Cube extends Volume {
 			float speedX, float speedY, float speedZ,
 			float rotationX, float rotationY, float rotationZ,
 			float r, float g, float b) {
-		// Appeler le constructeur de la classe mère pour instancier l'objet graphique
 		super(canvas, posX, posY, posZ,
 				angleX, angleY, angleZ,
 				scaleX, scaleY, scaleZ,
@@ -39,73 +37,67 @@ public class Cube extends Volume {
 				rotationX, rotationY, rotationZ,
 				r, g, b);
 
-		// Ajouter la face supérieure
 		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.CYAN[0];
 			g = RGBColor.CYAN[1];
 			b = RGBColor.CYAN[2];
 		}
-		this.getShapes().add(new Square(canvas, 0, 0.5f, 0,
+		this.getShapes().add(Face.TOP.ordinal(), new Square(canvas, 0, 0.5f, 0,
 				90, 0, 0,
 				0.5f, 0.5f, 0.5f,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
-		// Ajouter la face avant
 		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.RED[0];
 			g = RGBColor.RED[1];
 			b = RGBColor.RED[2];
 		}
-		this.getShapes().add(new Square(canvas, 0, 0, 0.5f,
-				0, 0, 0,
-				0.5f, 0.5f, 0.5f,
-				0, 0, 0,
-				0, 0, 0,
-				r, g, b));
-		// Ajouter la face arrière
 		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.GREEN[0];
 			g = RGBColor.GREEN[1];
 			b = RGBColor.GREEN[2];
 		}
-		this.getShapes().add(new Square(canvas, 0, 0, -0.5f,
+		this.getShapes().add(Face.BACK.ordinal(), new Square(canvas, 0, 0, -0.5f,
 				0, 0, 0,
 				0.5f, 0.5f, 0.5f,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
-		// Ajouter la face gauche
+		this.getShapes().add(Face.FRONT.ordinal(), new Square(canvas, 0, 0, 0.5f,
+				0, 0, 0,
+				0.5f, 0.5f, 0.5f,
+				0, 0, 0,
+				0, 0, 0,
+				r, g, b));
 		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.YELLOW[0];
 			g = RGBColor.YELLOW[1];
 			b = RGBColor.YELLOW[2];
 		}
-		this.getShapes().add(new Square(canvas, -0.5f, 0, 0,
+		this.getShapes().add(Face.LEFT.ordinal(), new Square(canvas, -0.5f, 0, 0,
 				0, -90, 0,
 				0.5f, 0.5f, 0.5f,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
-		// Ajouter la face droite
 		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.BLUE[0];
 			g = RGBColor.BLUE[1];
 			b = RGBColor.BLUE[2];
 		}
-		this.getShapes().add(new Square(canvas, 0.5f, 0, 0,
+		this.getShapes().add(Face.RIGHT.ordinal(), new Square(canvas, 0.5f, 0, 0,
 				0, 90, 0,
 				0.5f, 0.5f, 0.5f,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
-		// Ajouter la face inférieure
 		if (Debug.getMode(Debug.Mode.RAINBOW)) {
 			r = RGBColor.MAGENTA[0];
 			g = RGBColor.MAGENTA[1];
 			b = RGBColor.MAGENTA[2];
 		}
-		this.getShapes().add(new Square(canvas, 0, -0.5f, 0,
+		this.getShapes().add(Face.BOTTOM.ordinal(), new Square(canvas, 0, -0.5f, 0,
 				90, 0, 0,
 				0.5f, 0.5f, 0.5f,
 				0, 0, 0,
