@@ -4,11 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.awt.BorderLayout;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import common.Debug;
+import common.Debug.Mode;
 
 public abstract class Frame extends JFrame {
 	/**
@@ -65,5 +73,29 @@ public abstract class Frame extends JFrame {
 				Frame.this.dispose();
 			}
 		});
+	}
+
+	/**
+	 * Jouer un son
+	 * 
+	 * @param soundPath Chemin du son
+	 */
+	public void playSound(final String soundPath) {
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					Clip clip = AudioSystem.getClip();
+					File f = new File(soundPath);
+					AudioInputStream audioInput = AudioSystem.getAudioInputStream(f.toURI().toURL());
+					clip.open(audioInput);
+					clip.start();
+				} catch (Exception e) {
+					if (Debug.getMode(Mode.VERBOSE)) {
+						System.err.println("Erreur lors de la lecture de " + soundPath + ":");
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
 	}
 }

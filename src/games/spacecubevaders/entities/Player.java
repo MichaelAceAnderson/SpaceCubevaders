@@ -41,6 +41,8 @@ public class Player extends Entity {
 	 */
 	public void shoot() {
 		if (this.getMissile() == null) {
+			this.getRepresentation().getCanvas().getParentFrame().playSound(System.getProperty("user.dir")
+					+ "/src/games/spacecubevaders/assets/sounds/shoot.wav");
 			float posX = this.getRepresentation().getPosX();
 			float posY = this.getRepresentation().getPosY();
 			float posZ = this.getRepresentation().getPosZ();
@@ -58,6 +60,8 @@ public class Player extends Entity {
 	 * Perdre le jeu
 	 */
 	public void lose() {
+		this.getRepresentation().getCanvas().getParentFrame().playSound(System.getProperty("user.dir")
+				+ "/src/games/spacecubevaders/assets/sounds/explosion.wav");
 		this.getRepresentation().getCanvas().getParentFrame().showMessageDialog("Défaite !",
 				"Vous avez perdu !",
 				"Quitter le jeu");
@@ -67,6 +71,8 @@ public class Player extends Entity {
 	 * Gagner le jeu
 	 */
 	public void win() {
+		this.getRepresentation().getCanvas().getParentFrame().playSound(System.getProperty("user.dir")
+				+ "/src/games/spacecubevaders/assets/sounds/tada.wav");
 		this.getRepresentation().getCanvas().getParentFrame().showMessageDialog("Victoire !", "Vous avez gagné !",
 				"Quitter le jeu");
 	}

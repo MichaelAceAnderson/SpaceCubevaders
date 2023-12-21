@@ -15,7 +15,6 @@ N'hésitez pas à jouer avec pour comprendre le fonctionnement du rendu.
 
 - [ ] Régler les bugs connus
 - [ ] Mettre à jour la documentation
-- [ ] Rajouter des sons
 - [ ] (Optionnel) Ajouter des menus
   - [ ] (Optionnel) Ajouter un menu d'accueil
   - [ ] (Optionnel) Ajouter un menu de pause

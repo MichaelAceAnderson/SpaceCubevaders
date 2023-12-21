@@ -19,6 +19,8 @@ public class DebugGL {
 		GLFrame debugFrame = new GLFrame();
 		GameCanvas debugCanvas = new GameCanvas(debugFrame);
 
+		debugFrame.playSound(System.getProperty("user.dir") + "\\src\\gl\\frames\\tada.wav");
+
 		KeyListener keyListener = new KeyListener() {
 			@Override
 			public void keyPressed(java.awt.event.KeyEvent e) {
