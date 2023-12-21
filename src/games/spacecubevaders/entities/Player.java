@@ -55,6 +55,23 @@ public class Player extends Entity {
 	}
 
 	/**
+	 * Perdre le jeu
+	 */
+	public void lose() {
+		this.getRepresentation().getCanvas().getParentFrame().showMessageDialog("Défaite !",
+				"Vous avez perdu !",
+				"Quitter le jeu");
+	}
+
+	/**
+	 * Gagner le jeu
+	 */
+	public void win() {
+		this.getRepresentation().getCanvas().getParentFrame().showMessageDialog("Victoire !", "Vous avez gagné !",
+				"Quitter le jeu");
+	}
+
+	/**
 	 * Afficher les informations du joueur
 	 * 
 	 * @return Informations du joueur

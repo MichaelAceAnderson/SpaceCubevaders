@@ -32,14 +32,13 @@ public class SpaceCubevaders extends Game {
 	// Limites du jeu
 	public final static float MIN_X = -8.0f;
 	public final static float MAX_X = 8.0f;
+	public final static float ENDING_DISTANCE_FROM_PLAYER = 5.0f;
 	public final static float GAME_DISTANCE = 30.0f;
 	// Caractéristiques des ennemis
 	private ArrayList<Ennemy> ennemies;
 	private ArrayList<Shelter> shelters;
-	public final static float SPACING = 2;
-	// Doit être supérieur à 6 pour éviter que le niveau ne démarre trop proche du
-	// joueur
-	public final static float ENNEMIES_PLAYER_GAP = 12.0f;
+	public final static float SPACING = 2.0f;
+	public final static float ENNEMIES_INITIAL_DISTANCE = 12.0f;
 	public final static int ENNEMIES_ROWS = 5;
 	public final static int ENNEMIES_PER_ROW = 11;
 
@@ -61,11 +60,13 @@ public class SpaceCubevaders extends Game {
 				0.0f, 5.0f, 0.0f,
 				RGBColor.DARK_GRAY[0], RGBColor.DARK_GRAY[1], RGBColor.DARK_GRAY[2])));
 
-		this.setShelters(new ArrayList<Shelter>());
+
 		// Créer 3 abris répartis entre les limites du jeu
+		this.setShelters(new ArrayList<Shelter>());
 		for (float i = MIN_X; i <= MAX_X; i += (MAX_X - MIN_X) / 2) {
 			this.getShelters()
-					.add(new Shelter(this.getCanvas(), i, this.getPlayer().getRepresentation().getPosY() + 2,
+					.add(new Shelter(this.getCanvas(), i, this.getPlayer().getRepresentation()
+							.getBoundingBox()[Boundary.MAX_Y.ordinal()] + 2,
 							-GAME_DISTANCE,
 							0.0f, 0.0f, 0.0f,
 							1.0f, 1.0f, 1.0f,
@@ -193,9 +194,12 @@ public class SpaceCubevaders extends Game {
 		this.getCanvas().getAnimator().pause();
 
 		this.setEnnemies(new ArrayList<Ennemy>());
-		float startingRow = this.getPlayer().getRepresentation().getPosY() + ENNEMIES_PLAYER_GAP - this.getLevel();
-		for (float row = startingRow; row < startingRow + ENNEMIES_ROWS; row++) {
-			for (int col = -(ENNEMIES_PER_ROW / 2); col < +(ENNEMIES_PER_ROW / 2); col++) {
+		float startingHeight = this.getPlayer().getRepresentation().getPosY() + ENNEMIES_INITIAL_DISTANCE
+				- this.getLevel();
+		// Faire apparaître les ennemis à partir de la hauteur initiale
+		for (float row = startingHeight; row < startingHeight + ENNEMIES_ROWS; row++) {
+			// Répartir les colonnes depuis le centre
+			for (float col = -(ENNEMIES_PER_ROW / 2); col < +(ENNEMIES_PER_ROW / 2); col++) {
 				this.getEnnemies()
 						.add(new Ennemy(new Cube(this.getCanvas(), col * SPACING, row * SPACING, -GAME_DISTANCE,
 								0.0f, 0.0f, 0.0f,
@@ -252,75 +256,136 @@ public class SpaceCubevaders extends Game {
 	 */
 	@Override
 	public void update() {
+		this.updateShelters();
+		this.updateEnnemies();
+		this.updatePlayer();
+	}
+
+	/**
+	 * Mettre à jour les abris
+	 */
+	public void updateShelters() {
 		for (Shelter shelter : this.getShelters()) {
 			for (Cube shelterComponent : shelter.getBlocks()) {
 				// Pour éviter une ConcurrentModificationException, on ne retire pas les
 				// composants de l'abri en cas de destruction, on les retire seulement du canvas
-				// et on vérifie qu'ils y sont toujours avant de les traiter
+				// et on ne traite que ceux qui y sont toujours
 				if (!this.getCanvas().getObjects().contains(shelterComponent)) {
 					continue;
 				}
+
 				if (this.getPlayer().getMissile() != null) {
 					if (this.getPlayer().getMissile().isColliding(shelterComponent)) {
 						if (Debug.getMode(Mode.VERBOSE)) {
 							System.out.println(
 									"Collision entre le missile et le block "
-											+ shelter.getBlocks().indexOf(shelterComponent) + " d'un abri !");
+											+ shelter.getBlocks().indexOf(shelterComponent)
+											+ " de l'abri " + this.getShelters().indexOf(shelter) + " !");
 						}
 						this.getCanvas().getObjects().remove(shelterComponent);
 
-						this.getCanvas().getObjects().remove(this.getPlayer().getMissile());
-						this.getPlayer().setMissile(null);
+						this.removeMissile(this.getPlayer());
+					}
+				}
+
+				for (Ennemy ennemy : this.getEnnemies()) {
+					if (ennemy.getMissile() != null) {
+						if (ennemy.getMissile().isColliding(shelterComponent)) {
+							if (Debug.getMode(Mode.VERBOSE)) {
+								System.out.println(
+										"Collision entre le missile et le block "
+												+ shelter.getBlocks().indexOf(shelterComponent)
+												+ " de l'abri " + this.getShelters().indexOf(shelter) + " !");
+							}
+							this.getCanvas().getObjects().remove(shelterComponent);
+
+							this.removeMissile(ennemy);
+						}
 					}
 				}
 			}
 		}
+	}
 
+	/**
+	 * Mettre à jour les ennemis
+	 */
+	public void updateEnnemies() {
 		for (Ennemy ennemy : this.getEnnemies()) {
-			if (ennemy.getRepresentation()
-					.getBoundingBox()[Boundary.MIN_Y.ordinal()] <= this.getPlayer().getRepresentation()
-							.getBoundingBox()[Boundary.MAX_Y.ordinal()]) {
-
-				this.getCanvas().getAnimator().stop();
-				this.getCanvas().getParentFrame().showMessageDialog("Défaite !", "Vous avez perdu !", "Quitter le jeu");
-				break;
-			}
-			if (ennemy.getRepresentation().getPosX() > MAX_X * SPACING) {
-				for (Ennemy ennemyToMove : this.getEnnemies()) {
-					ennemyToMove.move(Direction.DOWN);
-					ennemyToMove.setDirection((Entity.Direction.LEFT));
-					ennemyToMove.setSpeed(ennemy.getSpeed() + 0.005f);
-				}
-			}
-			if (ennemy.getRepresentation().getPosX() < MIN_X * SPACING) {
-				for (Ennemy ennemyToMove : this.getEnnemies()) {
-					ennemyToMove.move(Direction.DOWN);
-					ennemyToMove.setDirection((Entity.Direction.RIGHT));
-					ennemyToMove.setSpeed(ennemy.getSpeed() + 0.005f);
-				}
+			float shootProbability = (this.getLevel() * 0.0001f);
+			if (Math.random() < shootProbability) {
+				ennemy.shoot();
 			}
 			ennemy.move(ennemy.getDirection());
+
+			if (ennemy.getRepresentation().getPosX() > MAX_X * SPACING) {
+				reverseEnnemies(Direction.LEFT);
+				break;
+			} else if (ennemy.getRepresentation().getPosX() < MIN_X * SPACING) {
+				reverseEnnemies(Direction.RIGHT);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Inverser la direction des ennemies
+	 * 
+	 * @param direction Direction à inverser
+	 */
+	public void reverseEnnemies(Direction direction) {
+		for (Ennemy ennemyToReverse : this.getEnnemies()) {
+			ennemyToReverse.move(Direction.DOWN);
+			ennemyToReverse.setDirection(direction);
+			ennemyToReverse.setSpeed(ennemyToReverse.getSpeed() + 0.005f);
+		}
+	}
+
+	/**
+	 * Mettre à jour le joueur
+	 */
+	public void updatePlayer() {
+		for (Ennemy ennemy : this.getEnnemies()) {
+			if (ennemy.getRepresentation().getPosY() <= this.getPlayer().getRepresentation().getPosY()
+					+ ENDING_DISTANCE_FROM_PLAYER) {
+
+				this.getCanvas().getAnimator().stop();
+				this.getPlayer().lose();
+				break;
+			}
+			if (ennemy.getMissile() != null) {
+				if (ennemy.getMissile().isColliding(this.getPlayer().getRepresentation())) {
+					this.getCanvas().getAnimator().stop();
+					this.getPlayer().lose();
+					break;
+				}
+			}
 
 			if (this.getPlayer().getMissile() != null) {
 				if (this.getPlayer().getMissile().isColliding(ennemy.getRepresentation())) {
 					if (Debug.getMode(Mode.VERBOSE)) {
 						System.out.println(
-								"Collision entre le missile et l'ennemi " + this.getEnnemies().indexOf(ennemy) + " !");
+								"Collision entre le missile du joueur et l'ennemi " + this.getEnnemies().indexOf(ennemy)
+										+ " !");
 					}
-
 					this.getCanvas().getObjects().remove(ennemy.getRepresentation());
 					this.getEnnemies().remove(ennemy);
 
-					this.getCanvas().getObjects().remove(this.getPlayer().getMissile());
-					this.getPlayer().setMissile(null);
-
+					this.removeMissile(this.getPlayer());
 					this.getPlayer().setScore(this.getPlayer().getScore() + 1);
 
 					if (this.getEnnemies().isEmpty()) {
-						if (this.getLevel() >= (int) ENNEMIES_PLAYER_GAP - 6) {
+						float nextLevelEnnemiesHeight = (this.getPlayer().getRepresentation().getPosY()
+								+ ENNEMIES_INITIAL_DISTANCE
+								- (this.getLevel() + 1)) * SPACING;
+						float endingHeight = this.getPlayer().getRepresentation().getPosY()
+								+ ENDING_DISTANCE_FROM_PLAYER;
+						System.out.println(nextLevelEnnemiesHeight + " " + endingHeight);
+						// Si le prochain niveau commence sur/sous la distance de fin de jeu, le joueur
+						// gagne
+						if (nextLevelEnnemiesHeight <= endingHeight) {
 							this.getCanvas().getAnimator().stop();
-							this.getCanvas().getParentFrame().showMessageDialog("Victoire !", "Vous avez gagné !",
-									"Quitter le jeu");
+							this.getPlayer().win();
 						} else {
 							this.getCanvas().getAnimator().pause();
 							this.getCanvas().getParentFrame().showMessageDialog(
@@ -340,18 +405,29 @@ public class SpaceCubevaders extends Game {
 					break;
 				}
 			}
+		}
 
-			// Si le missile n'a pas été supprimé par une collision
-			if (this.getPlayer().getMissile() != null) {
-				// Supprimer le missile s'il dépasse les limites du jeu
-				if (this.getPlayer().getMissile().getBoundingBox()[Boundary.MIN_Y.ordinal()] > ENNEMIES_ROWS
-						* SPACING + ENNEMIES_PLAYER_GAP) {
-					this.getCanvas().getObjects().remove(this.getPlayer().getMissile());
-					this.getPlayer().setMissile(null);
-				}
+		if (this.getPlayer().getMissile() != null) {
+			// Supprimer le missile s'il dépasse les limites du jeu
+			float ennemyZoneHeight = ENNEMIES_INITIAL_DISTANCE + ENNEMIES_ROWS * SPACING;
+			if (this.getPlayer().getMissile().getBoundingBox()[Boundary.MIN_Y.ordinal()] > this.getPlayer()
+					.getRepresentation().getPosY()
+					+ ennemyZoneHeight) {
+				this.removeMissile(this.getPlayer());
 			}
 		}
 	}
+
+	/**
+	 * Retirer le missile d'une entité du jeu
+	 *
+	 * @param entity Entité à qui appartient le missile
+	 */
+	public void removeMissile(Entity entity) {
+		this.getCanvas().getObjects().remove(entity.getMissile());
+		entity.setMissile(null);
+	}
+
 
 	/**
 	 * Récupérer les informations du jeu

@@ -13,17 +13,21 @@ N'hésitez pas à jouer avec pour comprendre le fonctionnement du rendu.
 
 ### To-do
 
-- [ ] Mettre à jour la documentation
 - [ ] Régler les bugs connus
-- [ ] (Optionnel) Ajouter un menu d'accueil
-- [ ] (Optionnel) Remplacer les Dialogs par des menus d'information qui écoutent une touche pour passer à l'écran suivant
-- [ ] (Optionnel) Ajouter des missiles ennemis et des abris avec un système de vies
+- [ ] Mettre à jour la documentation
+- [ ] Rajouter des sons
+- [ ] (Optionnel) Ajouter des menus
+  - [ ] (Optionnel) Ajouter un menu d'accueil
+  - [ ] (Optionnel) Ajouter un menu de pause
+  - [ ] (Optionnel) Remplacer les Dialogs par des menus d'information qui écoutent une touche pour passer à l'écran suivant
+- [ ] (Optionnel) Refactoriser les codes de positions et de collisions
+  - [ ] Faire une méthode getBoundary pour utiliser proprement l'enum Boundary éviter getBoundingBox
 - [ ] (Optionnel) Prendre en compte les rotations dans la BoundingBox et la détection des collisions
 - [ ] (Optionnel) Vérifier si les commentaires sont à jour par rapport au fonctionnement actuel du code
 
 ### Bugs connus
 
-- Les ennemis ne se déplacent pas de façon uniforme (Certains ennemis se déplacent plus vite que d'autres)
+- Les ennemis ne se déplacent pas toujours de façon uniforme (Certains ennemis se déplacent plus vite que d'autres)
 - La collision des composites n'est pas détectée correctement
 - La position/collision des objets graphiques en mouvement/rotation n'est pas toujours détectée correctement
 - Les composites ne tournent pas autour d'eux même mais autour d'un point fixe distant de leur centre
