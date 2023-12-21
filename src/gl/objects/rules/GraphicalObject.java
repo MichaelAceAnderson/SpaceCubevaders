@@ -447,12 +447,12 @@ public abstract class GraphicalObject {
 
 		float[] boundaryBox = new float[Boundary.values().length];
 
-		boundaryBox[Boundary.MAX_Y.ordinal()] = centerPosition[1] + size[1];
-		boundaryBox[Boundary.MIN_Y.ordinal()] = centerPosition[1] - size[1];
-		boundaryBox[Boundary.MAX_Z.ordinal()] = centerPosition[2] + size[2];
-		boundaryBox[Boundary.MIN_Z.ordinal()] = centerPosition[2] - size[2];
-		boundaryBox[Boundary.MIN_X.ordinal()] = centerPosition[0] - size[0];
-		boundaryBox[Boundary.MAX_X.ordinal()] = centerPosition[0] + size[0];
+		boundaryBox[Boundary.MAX_Y.ordinal()] = centerPosition[1] + size[1] / 2;
+		boundaryBox[Boundary.MIN_Y.ordinal()] = centerPosition[1] - size[1] / 2;
+		boundaryBox[Boundary.MAX_Z.ordinal()] = centerPosition[2] + size[2] / 2;
+		boundaryBox[Boundary.MIN_Z.ordinal()] = centerPosition[2] - size[2] / 2;
+		boundaryBox[Boundary.MIN_X.ordinal()] = centerPosition[0] - size[0] / 2;
+		boundaryBox[Boundary.MAX_X.ordinal()] = centerPosition[0] + size[0] / 2;
 
 		return boundaryBox;
 	}
@@ -469,11 +469,17 @@ public abstract class GraphicalObject {
 		float[] thisBoundingBox = this.getBoundingBox();
 		float[] objectBoundingBox = object.getBoundingBox();
 
+		// Si le dessus de cet objet est plus haut que le dessous de l'autre objet
 		boolean isColliding = (thisBoundingBox[Boundary.MAX_Y.ordinal()] >= objectBoundingBox[Boundary.MIN_Y.ordinal()]
+				// Si le dessous de cet objet est plus bas que le dessus de l'autre objet
 				&& thisBoundingBox[Boundary.MIN_Y.ordinal()] <= objectBoundingBox[Boundary.MAX_Y.ordinal()]
+				// Si l'arrière de cet objet est plus loin que l'avant de l'autre objet
 				&& thisBoundingBox[Boundary.MAX_Z.ordinal()] >= objectBoundingBox[Boundary.MIN_Z.ordinal()]
+				// Si l'avant de cet objet est plus proche que l'arrière de l'autre objet
 				&& thisBoundingBox[Boundary.MIN_Z.ordinal()] <= objectBoundingBox[Boundary.MAX_Z.ordinal()]
+				// Si la gauche de cet objet est plus à gauche que la droite de l'autre objet
 				&& thisBoundingBox[Boundary.MIN_X.ordinal()] <= objectBoundingBox[Boundary.MAX_X.ordinal()]
+				// Si la droite de cet objet est plus à droite que la gauche de l'autre objet
 				&& thisBoundingBox[Boundary.MAX_X.ordinal()] >= objectBoundingBox[Boundary.MIN_X.ordinal()]);
 
 		return isColliding;

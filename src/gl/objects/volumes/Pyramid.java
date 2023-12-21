@@ -42,9 +42,9 @@ public class Pyramid extends Volume {
 			g = RGBColor.WHITE[1];
 			b = RGBColor.WHITE[2];
 		}
-		this.getShapes().add(Face.BASE.ordinal(), new Square(canvas, 0, 0, 0,
+		this.getShapes().add(Face.BASE.ordinal(), new Square(canvas, 0, -0.5f, 0,
 				90, 0, 0,
-				1, 1, 1,
+				0.5f, 0.5f, 0.5f,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
@@ -53,9 +53,9 @@ public class Pyramid extends Volume {
 			g = RGBColor.PURPLE[1];
 			b = RGBColor.PURPLE[2];
 		}
-		this.getShapes().add(Face.BACK.ordinal(), new Triangle(canvas, 0, 0, -1,
+		this.getShapes().add(Face.BACK.ordinal(), new Triangle(canvas, 0, -0.5f, -0.5f,
 				45, 0, 0,
-				1, 1.5f, 1,
+				0.5f, 0.75f, 0.5f,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
@@ -64,9 +64,9 @@ public class Pyramid extends Volume {
 			g = RGBColor.RED[1];
 			b = RGBColor.RED[2];
 		}
-		this.getShapes().add(Face.FRONT.ordinal(), new Triangle(canvas, 0, 0, 1,
+		this.getShapes().add(Face.FRONT.ordinal(), new Triangle(canvas, 0, -0.5f, 0.5f,
 				-45, 0, 0,
-				1, 1.5f, 1,
+				0.5f, 0.75f, 0.5f,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
@@ -75,9 +75,9 @@ public class Pyramid extends Volume {
 			g = RGBColor.YELLOW[1];
 			b = RGBColor.YELLOW[2];
 		}
-		this.getShapes().add(Face.LEFT.ordinal(), new Triangle(canvas, -1, 0, 0,
+		this.getShapes().add(Face.LEFT.ordinal(), new Triangle(canvas, -0.5f, -0.5f, 0,
 				0, -90, -45,
-				1, 1.5f, 1,
+				0.5f, 0.75f, 0.5f,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
@@ -86,9 +86,9 @@ public class Pyramid extends Volume {
 			g = RGBColor.BLUE[1];
 			b = RGBColor.BLUE[2];
 		}
-		this.getShapes().add(Face.RIGHT.ordinal(), new Triangle(canvas, 1, 0, 0,
+		this.getShapes().add(Face.RIGHT.ordinal(), new Triangle(canvas, 0.5f, -0.5f, 0,
 				0, 90, 45,
-				1, 1.5f, 1,
+				0.5f, 0.75f, 0.5f,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
