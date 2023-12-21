@@ -3,10 +3,9 @@ package games.spacecubevaders.entities.rules;
 import gl.objects.rules.GraphicalObject;
 
 public abstract class Entity {
-	// Objet graphique représentant l'entité
 	private GraphicalObject representation;
-	// Vitesse de l'entité
 	private float speed;
+	private GraphicalObject missile;
 
 	public static enum Direction {
 		LEFT, RIGHT, UP, DOWN
@@ -83,6 +82,29 @@ public abstract class Entity {
 		}
 		this.getRepresentation().move(moveX, moveY, moveZ);
 	}
+
+	/**
+	 * Définir le missile de l'entité
+	 * 
+	 * @param missile Missile de l'entité
+	 */
+	public void setMissile(GraphicalObject missile) {
+		this.missile = missile;
+	}
+
+	/**
+	 * Récupérer le missile de l'entité
+	 * 
+	 * @return Missile de l'entité
+	 */
+	public GraphicalObject getMissile() {
+		return this.missile;
+	}
+
+	/**
+	 * Tirer un missile
+	 */
+	public abstract void shoot();
 
 	/**
 	 * Récupérer les informations de l'entité
