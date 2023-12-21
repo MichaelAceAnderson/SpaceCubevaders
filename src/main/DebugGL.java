@@ -52,13 +52,29 @@ public class DebugGL {
 			}
 		}
 
+		Square square = new Square(debugCanvas, 3.0f, 0, -10.0f,
+				0, 0, 0,
+				1.0f, 1.0f, 1.0f,
+				0, 0, 0,
+				0, 0, 0,
+				RGBColor.BLUE[0], RGBColor.BLUE[1], RGBColor.BLUE[2]);
+		debugCanvas.getObjects().add(square);
+
 		Cube cube = new Cube(debugCanvas, 0, 0, -10.0f,
-				0, 45.0f, 0,
+				0, 20.0f, 0,
 				1.0f, 1.0f, 1.0f,
 				0, 0, 0,
 				0, 0, 0,
 				RGBColor.GREEN[0], RGBColor.GREEN[1], RGBColor.GREEN[2]);
 		debugCanvas.getObjects().add(cube);
+
+		Pyramid pyramid = new Pyramid(debugCanvas, 0, 0, -10.0f,
+				0, -20.0f, 0,
+				1.0f, 1.0f, 1.0f,
+				0, 0, 0,
+				0, 0, 0,
+				RGBColor.RED[0], RGBColor.RED[1], RGBColor.RED[2]);
+		debugCanvas.getObjects().add(pyramid);
 
 		if (Debug.getMode(Debug.Mode.VERBOSE)) {
 			Debug.printInfo(debugCanvas);
