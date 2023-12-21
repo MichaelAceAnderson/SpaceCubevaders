@@ -248,7 +248,7 @@ public class SpaceCubevaders extends Game {
 	 */
 	@Override
 	public Image getIcon() {
-		return new ImageIcon(System.getProperty("user.dir") + "/src/games/spacecubevaders/icon.png").getImage();
+		return new ImageIcon(System.getProperty("user.dir") + "/src/games/spacecubevaders/assets/icon.png").getImage();
 	}
 
 	/*
@@ -368,6 +368,8 @@ public class SpaceCubevaders extends Game {
 								"Collision entre le missile du joueur et l'ennemi " + this.getEnnemies().indexOf(ennemy)
 										+ " !");
 					}
+					this.getCanvas().getParentFrame().playSound(System.getProperty("user.dir")
+							+ "/src/games/spacecubevaders/assets/sounds/kill.wav");
 					this.getCanvas().getObjects().remove(ennemy.getRepresentation());
 					this.getEnnemies().remove(ennemy);
 
