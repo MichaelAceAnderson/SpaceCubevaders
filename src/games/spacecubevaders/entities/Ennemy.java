@@ -17,7 +17,7 @@ public class Ennemy extends Entity {
 	public Ennemy(GraphicalObject representation) {
 		super(representation);
 		this.setDirection(Direction.RIGHT);
-		this.setSpeed(0.01f);
+		this.setSpeed(0.02f);
 	}
 
 	/**
