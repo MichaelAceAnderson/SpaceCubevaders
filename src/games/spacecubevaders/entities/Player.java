@@ -63,7 +63,13 @@ public class Player extends Entity {
 		this.getRepresentation().getCanvas().getParentFrame().playSound(System.getProperty("user.dir")
 				+ "/src/games/spacecubevaders/assets/sounds/explosion.wav");
 		this.getRepresentation().getCanvas().getParentFrame().showMessageDialog("Défaite !",
-				"Vous avez perdu !",
+				this.getRepresentation().getCanvas().getParentFrame()
+						.textToHTML("Vous avez perdu !"
+								+ "\nScore: " + this
+										.getScore()
+								+ "\n\"Parfois, la meilleure façon de gagner, c'est de ne pas jouer.\"\n - Wargames (1983)/Tron: L'Héritage (2010)"
+								+ "\n<img src=\"file:" + System.getProperty("user.dir")
+								+ "/src/games/spacecubevaders/assets/images/lose.gif\">"),
 				"Quitter le jeu");
 	}
 
@@ -73,7 +79,15 @@ public class Player extends Entity {
 	public void win() {
 		this.getRepresentation().getCanvas().getParentFrame().playSound(System.getProperty("user.dir")
 				+ "/src/games/spacecubevaders/assets/sounds/tada.wav");
-		this.getRepresentation().getCanvas().getParentFrame().showMessageDialog("Victoire !", "Vous avez gagné !",
+		this.getRepresentation().getCanvas().getParentFrame().showMessageDialog("Victoire !",
+				this.getRepresentation().getCanvas().getParentFrame()
+						.textToHTML("Vous avez gagné !"
+								+ "\nScore: " + this
+										.getScore()
+								+ "\"Tout est dans le jeu du poignet.\" - Tron (1982)"
+								+ "\n<img src=\"file:" + System.getProperty(
+										"user.dir")
+								+ "/src/games/spacecubevaders/assets/images/win.gif\">"),
 				"Quitter le jeu");
 	}
 

@@ -28,6 +28,20 @@ public abstract class Frame extends JFrame {
 	}
 
 	/**
+	 * Convertir un texte console en texte HTML pour l'afficher dans une fenêtre
+	 * 
+	 * @param text Le texte à convertir
+	 * 
+	 * @return Le texte converti en HTML
+	 */
+	public String textToHTML(String text) {
+		// Remplacer les retours à la ligne par des balises HTML
+		String textWithHtmlBreaks = "<html>" + text.replace("\n", "<br>") + "</html>";
+		// Retourner le texte converti en HTML
+		return textWithHtmlBreaks;
+	}
+
+	/**
 	 * Montrer un dialog avec un message et un bouton
 	 * 
 	 * @param title         Titre du dialog
@@ -40,9 +54,7 @@ public abstract class Frame extends JFrame {
 
 		JDialog dialog = new JDialog();
 		dialog.setTitle(title);
-		dialog.setSize(300, 200);
 		dialog.setLayout(new BorderLayout());
-		dialog.setLocationRelativeTo(null);
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
 		dialog.addWindowListener(closeAction);
@@ -56,6 +68,8 @@ public abstract class Frame extends JFrame {
 			}
 		});
 		dialog.add(button, BorderLayout.SOUTH);
+		dialog.pack();
+		dialog.setLocationRelativeTo(null);
 	}
 
 	/**
