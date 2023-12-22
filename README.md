@@ -25,6 +25,7 @@ N'hésitez pas à jouer avec pour comprendre le fonctionnement du rendu.
 ### To-do
 
 - [ ] Régler les bugs connus
+- [ ] Rendre les limites du jeu dépendantes du nombre d'ennemies par ligne
 - [ ] (Optionnel) Ajouter des menus
   - [ ] (Optionnel) Ajouter un menu d'accueil
   - [ ] (Optionnel) Ajouter un menu de pause
@@ -36,6 +37,7 @@ N'hésitez pas à jouer avec pour comprendre le fonctionnement du rendu.
 
 ### Bugs connus
 
+- Selon la vitesse d'exécution, le programme génère parfois des ConcurrentModificationException lors de l'affichage d'objets
 - Les ennemis ne se déplacent pas toujours de façon uniforme (Certains ennemis se déplacent plus vite que d'autres)
 - La collision des composites n'est pas détectée correctement
 - La position/collision des objets graphiques en mouvement/rotation n'est pas toujours détectée correctement
@@ -47,7 +49,7 @@ N'hésitez pas à jouer avec pour comprendre le fonctionnement du rendu.
 
 #### Diagramme de classes
 
-Note: Le diagramme ne contient ici pas les méthodes pour des raisons de lisibilité.
+Note: Le diagramme ne contient ici pas les méthodes pour des raisons de lisibilité.  
 [Diagramme de classes PlantUML](Docs/Doc.plantuml)  
 ![Diagramme de classes](Docs/Doc.jpg)
 
@@ -56,6 +58,7 @@ Note: Le diagramme ne contient ici pas les méthodes pour des raisons de lisibil
 Le projet est découpé en plusieurs packages :
 
 - **common** : contient les classes communes à tous les packages, notamment les constantes et les classes utilitaires
+- **games** : contient les classes permettant de gérer les règles de construction des jeux
   - **rules** : contient les classes permettant de gérer les règles de construction des jeux
   - **spacecubevaders** : contient les classes permettant de gérer le jeu Space Cubevaders
     - **assets** : contient les assets du jeu (images, sons, etc...)

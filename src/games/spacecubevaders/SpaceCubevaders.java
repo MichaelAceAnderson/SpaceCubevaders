@@ -27,20 +27,18 @@ import gl.objects.volumes.Pyramid;
 
 public class SpaceCubevaders extends Game {
 	private Canvas canvas;
-	private Player player;
 	private int level;
-	// Limites du jeu
+	private Player player;
+	private ArrayList<Shelter> shelters;
+	private ArrayList<Ennemy> ennemies;
+	public final static float ENNEMIES_SPACING = 2.0f;
+	public final static float ENNEMIES_INITIAL_DISTANCE = 12.0f;
+	public final static int ENNEMIES_ROWS = 5;
+	public final static int ENNEMIES_PER_ROW = 11;
 	public final static float MIN_X = -8.0f;
 	public final static float MAX_X = 8.0f;
 	public final static float ENDING_DISTANCE_FROM_PLAYER = 5.0f;
 	public final static float GAME_DISTANCE = 30.0f;
-	// Caractéristiques des ennemis
-	private ArrayList<Ennemy> ennemies;
-	private ArrayList<Shelter> shelters;
-	public final static float SPACING = 2.0f;
-	public final static float ENNEMIES_INITIAL_DISTANCE = 12.0f;
-	public final static int ENNEMIES_ROWS = 5;
-	public final static int ENNEMIES_PER_ROW = 11;
 
 	/**
 	 * Créer un jeu
@@ -85,13 +83,13 @@ public class SpaceCubevaders extends Game {
 					case KeyEvent.VK_Q:
 					case KeyEvent.VK_LEFT:
 						if (SpaceCubevaders.this.getPlayer().getRepresentation().getPosX() > SpaceCubevaders.MIN_X
-								* SPACING)
+								* ENNEMIES_SPACING)
 							SpaceCubevaders.this.getPlayer().move(Entity.Direction.LEFT);
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
 						if (SpaceCubevaders.this.getPlayer().getRepresentation().getPosX() < SpaceCubevaders.MAX_X
-								* SPACING)
+								* ENNEMIES_SPACING)
 							SpaceCubevaders.this.getPlayer().move(Entity.Direction.RIGHT);
 						break;
 					case KeyEvent.VK_SPACE:
@@ -195,14 +193,16 @@ public class SpaceCubevaders extends Game {
 		this.getCanvas().getAnimator().pause();
 
 		this.setEnnemies(new ArrayList<Ennemy>());
-		float startingHeight = this.getPlayer().getRepresentation().getPosY() + ENNEMIES_INITIAL_DISTANCE
+		float startingX = -(ENNEMIES_PER_ROW / 2);
+		float startingY = this.getPlayer().getRepresentation().getPosY() + ENNEMIES_INITIAL_DISTANCE
 				- this.getLevel();
-		// Faire apparaître les ennemis à partir de la hauteur initiale
-		for (float row = startingHeight; row < startingHeight + ENNEMIES_ROWS; row++) {
-			// Répartir les colonnes depuis le centre
-			for (float col = -(ENNEMIES_PER_ROW / 2); col < +(ENNEMIES_PER_ROW / 2); col++) {
+		for (float row = 0; row < ENNEMIES_ROWS; row++) {
+			for (float col = 0; col < ENNEMIES_PER_ROW; col++) {
 				this.getEnnemies()
-						.add(new Ennemy(new Cube(this.getCanvas(), col * SPACING, row * SPACING, -GAME_DISTANCE,
+						.add(new Ennemy(
+								new Cube(this.getCanvas(), startingX + col * ENNEMIES_SPACING,
+										startingY + row * ENNEMIES_SPACING,
+										-GAME_DISTANCE,
 								0.0f, 0.0f, 0.0f,
 								1, 1, 1,
 								0.0f, 0.0f, 0.0f,
@@ -258,9 +258,9 @@ public class SpaceCubevaders extends Game {
 	 */
 	@Override
 	public void update() {
-		this.updateShelters();
-		this.updateEnnemies();
-		this.updatePlayer();
+				this.updateShelters();
+				this.updateEnnemies();
+			this.updatePlayer();
 	}
 
 	/**
@@ -320,10 +320,10 @@ public class SpaceCubevaders extends Game {
 			}
 			ennemy.move(ennemy.getDirection());
 
-			if (ennemy.getRepresentation().getPosX() > MAX_X * SPACING) {
+			if (ennemy.getRepresentation().getPosX() > MAX_X * ENNEMIES_SPACING) {
 				reverseEnnemies(Direction.LEFT);
 				break;
-			} else if (ennemy.getRepresentation().getPosX() < MIN_X * SPACING) {
+			} else if (ennemy.getRepresentation().getPosX() < MIN_X * ENNEMIES_SPACING) {
 				reverseEnnemies(Direction.RIGHT);
 				break;
 			}
@@ -381,12 +381,9 @@ public class SpaceCubevaders extends Game {
 					if (this.getEnnemies().isEmpty()) {
 						float nextLevelEnnemiesHeight = (this.getPlayer().getRepresentation().getPosY()
 								+ ENNEMIES_INITIAL_DISTANCE
-								- (this.getLevel() + 1)) * SPACING;
+								- (this.getLevel() + 1)) * ENNEMIES_SPACING;
 						float endingHeight = this.getPlayer().getRepresentation().getPosY()
 								+ ENDING_DISTANCE_FROM_PLAYER;
-						System.out.println(nextLevelEnnemiesHeight + " " + endingHeight);
-						// Si le prochain niveau commence sur/sous la distance de fin de jeu, le joueur
-						// gagne
 						if (nextLevelEnnemiesHeight <= endingHeight) {
 							this.getCanvas().getAnimator().stop();
 							this.getPlayer().win();
@@ -413,7 +410,7 @@ public class SpaceCubevaders extends Game {
 
 		if (this.getPlayer().getMissile() != null) {
 			// Supprimer le missile s'il dépasse les limites du jeu
-			float ennemyZoneHeight = ENNEMIES_INITIAL_DISTANCE + ENNEMIES_ROWS * SPACING;
+			float ennemyZoneHeight = ENNEMIES_INITIAL_DISTANCE + ENNEMIES_ROWS * ENNEMIES_SPACING;
 			if (this.getPlayer().getMissile().getBoundingBox()[Boundary.MIN_Y.ordinal()] > this.getPlayer()
 					.getRepresentation().getPosY()
 					+ ennemyZoneHeight) {
@@ -444,6 +441,6 @@ public class SpaceCubevaders extends Game {
 				+ "\n\tNiveau : " + this.getLevel()
 				+ "\n\tEnnemis restants: " + this.getEnnemies().size()
 				+ "\n" + this.getPlayer().toString();
-	}
+		}
 
 }
