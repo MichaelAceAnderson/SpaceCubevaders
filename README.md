@@ -1,5 +1,16 @@
 # Space Cubevaders
 
+- [Space Cubevaders](#space-cubevaders)
+  - [Description](#description)
+  - [Détails techniques](#détails-techniques)
+    - [To-do](#to-do)
+    - [Bugs connus](#bugs-connus)
+    - [Architecture](#architecture)
+      - [Diagramme de classes](#diagramme-de-classes)
+      - [Packages](#packages)
+    - [Mode DEBUG](#mode-debug)
+    - [Affichage d'un objet](#affichage-dun-objet)
+
 ## Description
 
 Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie JOGL (Java OpenGL).
@@ -14,7 +25,6 @@ N'hésitez pas à jouer avec pour comprendre le fonctionnement du rendu.
 ### To-do
 
 - [ ] Régler les bugs connus
-- [ ] Mettre à jour la documentation
 - [ ] (Optionnel) Ajouter des menus
   - [ ] (Optionnel) Ajouter un menu d'accueil
   - [ ] (Optionnel) Ajouter un menu de pause
@@ -37,6 +47,7 @@ N'hésitez pas à jouer avec pour comprendre le fonctionnement du rendu.
 
 #### Diagramme de classes
 
+Note: Le diagramme ne contient ici pas les méthodes pour des raisons de lisibilité.
 [Diagramme de classes PlantUML](Docs/Doc.plantuml)  
 ![Diagramme de classes](Docs/Doc.jpg)
 
@@ -45,12 +56,18 @@ N'hésitez pas à jouer avec pour comprendre le fonctionnement du rendu.
 Le projet est découpé en plusieurs packages :
 
 - **common** : contient les classes communes à tous les packages, notamment les constantes et les classes utilitaires
-- **game** : contient les classes permettant de gérer le jeu
-  - **entities** : contient les classes permettant de gérer les entités du jeu (Joueur, ennemi, etc...)
-    - **rules** : contient les classes permettant de gérer les règles de construction des entités
+  - **rules** : contient les classes permettant de gérer les règles de construction des jeux
+  - **spacecubevaders** : contient les classes permettant de gérer le jeu Space Cubevaders
+    - **assets** : contient les assets du jeu (images, sons, etc...)
+    - **entities** : contient les classes permettant de gérer les entités du jeu (Joueur, ennemi, etc...)
+      - **rules** : contient les classes permettant de gérer les règles de construction des entités
+    - **items** : contient les classes permettant de gérer les objets du jeu (missile, etc...)
+    - **structures** : contient les classes permettant de gérer les structures du jeu (abris, etc...)
 - **gl** : contient les classes permettant de gérer l'affichage du jeu
-  - **canvas** : contient les classes permettant de gérer les fenêtres du jeu
+  - **frames** : contient les classes permettant de gérer les fenêtres
     - **rules** : contient les classes permettant de gérer les règles de construction des fenêtres
+  - **canvas** : contient les classes permettant de gérer les cadres de rendu du jeu
+    - **rules** : contient les classes permettant de gérer les règles de construction des cadres de rendu du jeu
   - **objects** :
     - **rules** : contient les classes permettant de gérer les règles de construction d'objets graphiques
     - **shapes** : contient les classes des formes géométriques (carré, triangle, etc...) qui permettront de construire des volumes
@@ -76,7 +93,7 @@ Pour afficher un objet, il faut donc :
 - effectuer les transformations nécessaires
 - dessiner les objets
 - appeler `glPopMatrix()` pour restaurer la matrice d'états précédemment sauvegardée
-- recommencer pour chaque objet à dessiner
+- recommencer pour chaque objet avec des transformations propres
 
 Ces opérations sont ici dans la méthode `display()` de [GraphicalObject](src/objects/rules/GraphicalObject.java).
 

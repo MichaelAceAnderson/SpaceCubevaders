@@ -1,221 +1,74 @@
 @startuml Space Cubevaders
 class MainGL {
-  +{static} void main(String[])
 }
 
 abstract class Canvas {
-  + {static} FPS_LIMIT: int
-  - frameCount: int
-  - frame: JFrame
-  - objects: ArrayList<GraphicalObject>
-  - fps: int
-  - lastRenderTime: long
-  - aspect: float
-  - fov: float
-  - nearClip: float
-  - drawDistance: float
-  - game: Game
-  - textRenderer: TextRenderer
-
-  + Canvas()
-  + getFrameCount(): int
-  + setFrameCount(renderedFrame: int)
-  + getParentFrame(): JFrame
-  + setParentFrame(frame: JFrame)
-  + getObjects(): ArrayList<GraphicalObject>
-  + setObjects(objects: ArrayList<GraphicalObject>)
-  + setAspect(aspect: float)
-  + getAspect(): float
-  + setNearClip(nearClip: float)
-  + getNearClip(): float
-  + setDrawDistance(drawDistance: float)
-  + getDrawDistance(): float
-  + setFov(fov: float)
-  + getFov(): float
-  + drawAxis(posX: float, posY: float, posZ: float)
-  + drawGrid()
-  + setFps(fps: int)
-  + getFps(): int
-  + setLastRenderTime(lastRenderTime: long)
-  + getLastRenderTime(): long
-  + setGame(game: Game)
-  + getGame(): Game
-  + setTextRenderer(textRenderer: TextRenderer)
-  + getTextRenderer(): TextRenderer
-  + renderText(text: String, x: float, y: float)
-  + togglePause()
-  + getPreferredSize(): Dimension
-  + init(canvas: GLAutoDrawable)
-  + display(canvas: GLAutoDrawable)
 }
 
-MainGL "1" -- "1" MainCanvas
+abstract class Frame { 
+}
+
+class GLFrame extends Frame{
+}
+MainGL "1" -- "1" GLFrame
+GLFrame "1" -- "1..*" Canvas
 Canvas -up-|> GLCanvas
 Canvas .up.|> GLEventListener
 
-class MainCanvas extends Canvas{
-  + MainCanvas()
-  + getPreferredSize(): Dimension
-  + display(canvas: GLAutoDrawable)
-  + dispose(canvas: GLAutoDrawable)
-  + init(canvas: GLAutoDrawable)
-  + reshape(drawable: GLAutoDrawable, x: int, y: int, width: int, height: int)
+class GameCanvas extends Canvas{
 }
 
 abstract class Game {
-  - canvas: Canvas
-  + Game(canvas: Canvas)
-  + getCanvas(): Canvas
-  + setCanvas(canvas: Canvas)
-  + abstract getName(): String
-  + abstract getIcon(): Image
-  + abstract update(): void
-  + toString(): String
 }
-Canvas "1" -- "1" Game
+GameCanvas "1" -- "1" Game
 
 class SpaceCubevaders extends Game {
-  - canvas: Canvas
-  - player: Player
-  - ennemies: ArrayList<Ennemy>
-  + SpaceCubevaders(canvas: Canvas)
-  + getCanvas(): Canvas
-  + setCanvas(canvas: Canvas)
-  + getPlayer(): Player
-  + setPlayer(player: Player)
-  + getEnnemies(): ArrayList<Ennemy>
-  + setEnnemies(ennemies: ArrayList<Ennemy>)
-  + getName(): String
-  + getIcon(): Image
-  + update(): void
-  + toString(): String
 }
 
 abstract class Entity {
-  - representation: GraphicalObject
-  - speed: float
-  + enum Direction { LEFT, RIGHT, UP, DOWN }
-  + Entity(representation: GraphicalObject)
-  + setRepresentation(representation: GraphicalObject)
-  + getRepresentation(): GraphicalObject
-  + setSpeed(speed: float)
-  + getSpeed(): float
-  + move(direction: Direction)
-  + toString(): String
 }
 
 class Player extends Entity{
-  - missile: Cube
-  - score: int
-  + Player(representation: GraphicalObject)
-  + shoot(): void
-  + setMissile(missile: Cube)
-  + getMissile(): Cube
-  + setScore(score: int)
-  + getScore(): int
 }
-
 SpaceCubevaders "1" -- "1" Player
 
 class Ennemy extends Entity{
-  - direction: Direction
-  + Ennemy(representation: GraphicalObject)
-  + setDirection(direction: Direction)
-  + getDirection(): Direction
 }
-
 SpaceCubevaders "1" -- "0..*" Ennemy
 
-MainCanvas "1" -- "0..*" GraphicalObject
-
 abstract class GraphicalObject {
-  - posX: float
-  - posY: float
-  - posZ: float
-  - angleX: float
-  - angleY: float
-  - angleZ: float
-  - scaleX: float
-  - scaleY: float
-  - scaleZ: float
-  - red: float
-  - green: float
-  - blue: float
-  - speedX: float
-  - speedY: float
-  - speedZ: float
-  - rotationX: float
-  - rotationY: float
-  - rotationZ: float
-  - canvas: Canvas
-  + enum Boundary { MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_Z, MAX_Z }
-  + getBoundingBox(): float[]
-  + isColliding(object: GraphicalObject): boolean
-  + isVisible(): boolean
-  + {abstract} draw(): void
-  + drawCollisions(): boolean
-  + drawInfos(): boolean
-  + display(): void
-  + move(x: float, y: float, z: float): void
-  + rotate(angleX: float, angleY: float, angleZ: float): void
-  + setRotation(angleX: float, angleY: float, angleZ: float): void
-  + get3DInfo(): String
-  + toString(): String
 }
+GameCanvas "1" -- "0..*" GraphicalObject
 
 abstract class Shape extends GraphicalObject{
-  + Shape(canvas: Canvas, posX: float, posY: float, posZ: float, \n angleX: float, angleY: float, angleZ: float, \n scaleX: float, scaleY: float, scaleZ: float, \n speedX: float, speedY: float, speedZ: float, \n rotationX: float, rotationY: float, rotationZ: float, \n r: float, g: float, b: float)
-  + {abstract} draw(): void
 }
 
 class Volume extends GraphicalObject{
-  - shapes: ArrayList<Shape>
-  + Volume(canvas: Canvas, posX: float, posY: float, posZ: float, \n angleX: float, angleY: float, angleZ: float, \n scaleX: float, scaleY: float, scaleZ: float, \n speedX: float, speedY: float, speedZ: float, \n rotationX: float, rotationY: float, rotationZ: float, \n r: float, g: float, b: float)
-  + setShapes(shapes: ArrayList<Shape>)
-  + getShapes(): ArrayList<Shape>
-  + getShape(index: int): Shape
-  + draw(): void
 }
 Volume "1" *- "1..*" Shape
 
-abstract class Item extends GraphicalObject{
-  + components: ArrayList<GraphicalObject>
-  + Item(canvas: Canvas, posX: float, posY: float, posZ: float, \n angleX: float, angleY: float, angleZ: float, \n scaleX: float, scaleY: float, scaleZ: float, \n speedX: float, speedY: float, speedZ: float, \n rotationX: float, rotationY: float, rotationZ: float, \n r: float, g: float, b: float)
-  + setComponents(components: ArrayList<GraphicalObject>)
-  + getComponents(): ArrayList<GraphicalObject>
-  + getComponent(index: int): GraphicalObject
-  + draw(): void
+abstract class Composite extends GraphicalObject{
 }
-Item "1" *- "1..*" GraphicalObject
+Composite "1" *- "1..*" GraphicalObject
 
 class Triangle extends Shape{
-  + Triangle(canvas: Canvas, posX: float, posY: float, posZ: float, \n angleX: float, angleY: float, angleZ: float, \n scaleX: float, scaleY: float, scaleZ: float, \n speedX: float, speedY: float, speedZ: float, \n rotationX: float, rotationY: float, rotationZ: float, \n r: float, g: float, b: float)
-  + Triangle(canvas: Canvas)
-  + draw(): void
 }
 
 class Square extends Shape{
-  + Square(canvas: Canvas, posX: float, posY: float, posZ: float, \n angleX: float, angleY: float, angleZ: float, \n scaleX: float, scaleY: float, scaleZ: float, \n speedX: float, speedY: float, speedZ: float, \n rotationX: float, rotationY: float, rotationZ: float, \n r: float, g: float, b: float)
-  + Square(canvas: Canvas)
-  + draw(): void
 }
 
 class Cube extends Volume{
-  - Face: enum
-  + Cube(canvas: Canvas, posX: float, posY: float, posZ: float, \n angleX: float, angleY: float, angleZ: float, \n scaleX: float, scaleY: float, scaleZ: float, \n speedX: float, speedY: float, speedZ: float, \n rotationX: float, rotationY: float, rotationZ: float, \n r: float, g: float, b: float)
-  + Cube(canvas: Canvas)
-  + getFace(face: Face): Shape
 }
 
 class Pyramid extends Volume{
-  - Face: enum
-  + Pyramid(canvas: Canvas, posX: float, posY: float, posZ: float, \n angleX: float, angleY: float, angleZ: float, \n scaleX: float, scaleY: float, scaleZ: float, \n speedX: float, speedY: float, speedZ: float, \n rotationX: float, rotationY: float, rotationZ: float, \n r: float, g: float, b: float)
-  + Pyramid(canvas: Canvas)
-  + getFace(face: Face): Shape
 }
 
-class Missile extends Item{
-  + Missile(canvas: Canvas, posX: float, posY: float, posZ: float, \n angleX: float, angleY: float, angleZ: float, \n scaleX: float, scaleY: float, scaleZ: float, \n speedX: float, speedY: float, speedZ: float, \n rotationX: float, rotationY: float, rotationZ: float, \n r: float, g: float, b: float)
-  + Missile(canvas: Canvas)
+class Missile extends Composite{
 }
+Entity "1" -- "0..*" Missile
+note right of Missile : Ne fonctionne pas, \nremplacé par un cube\ndans le code
+
+class Shelter {
+}
+SpaceCubevaders "1" -- "0..*" Shelter
 @enduml
