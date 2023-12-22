@@ -49,6 +49,8 @@ public class SpaceCubevaders extends Game {
 	 */
 	public SpaceCubevaders(Canvas canvas) {
 		super(canvas);
+		this.getCanvas().getParentFrame().playSound(System.getProperty("user.dir")
+				+ "/src/games/spacecubevaders/assets/sounds/flynnsarcade.wav");
 
 		this.setLevel(1);
 

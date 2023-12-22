@@ -18,8 +18,7 @@ public class DebugGL {
 
 		GLFrame debugFrame = new GLFrame();
 		GameCanvas debugCanvas = new GameCanvas(debugFrame);
-
-		debugFrame.playSound(System.getProperty("user.dir") + "\\src\\gl\\frames\\tada.wav");
+		debugFrame.playSound(System.getProperty("user.dir") + "/src/games/spacecubevaders/assets/sounds/tada.wav");
 
 		KeyListener keyListener = new KeyListener() {
 			@Override
