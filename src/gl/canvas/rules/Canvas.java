@@ -31,7 +31,7 @@ public abstract class Canvas extends GLCanvas
 	private float nearClip;
 	private float drawDistance;
 	private Game game;
-	private TextRenderer textRenderer;
+	private TextRenderer defaultTextRenderer;
 
 	/**
 	 * Créer un GLCanvas où le rendu OpenGL est effectué
@@ -299,21 +299,41 @@ public abstract class Canvas extends GLCanvas
 	}
 
 	/**
-	 * Définir le TextRenderer pour afficher du texte
+	 * Définir le TextRenderer par défaut pour afficher du texte
 	 * 
 	 * @param textRenderer TextRenderer pour afficher du texte
 	 */
-	public void setTextRenderer(TextRenderer textRenderer) {
-		this.textRenderer = textRenderer;
+	public void setDefaultTextRenderer(TextRenderer textRenderer) {
+		this.defaultTextRenderer = textRenderer;
 	}
 
 	/**
-	 * Récupérer le TextRenderer pour afficher du texte
+	 * Récupérer le TextRenderer par défaut pour afficher du texte
 	 * 
 	 * @return TextRenderer pour afficher du texte
 	 */
-	public TextRenderer getTextRenderer() {
-		return this.textRenderer;
+	public TextRenderer getDefaultTextRenderer() {
+		return this.defaultTextRenderer;
+	}
+
+	/**
+	 * Afficher du texte dans la fenêtre
+	 * 
+	 * @param text Texte à afficher
+	 * @param x    Position x du texte dans la fenêtre
+	 * @param y    Position y du texte dans la fenêtre
+	 * @param font La police d'écriture à utiliser
+	 */
+	public void renderText(String text, float x, float y, Font font) {
+		TextRenderer textRenderer = new TextRenderer(font);
+		text = text.replaceAll("\t", "  ");
+		String[] lines = text.split("\n");
+		textRenderer.beginRendering(this.getWidth(), this.getHeight());
+		textRenderer.setColor(RGBColor.WHITE[0], RGBColor.WHITE[1], RGBColor.WHITE[2], 1.0f);
+		for (int i = 0; i < lines.length; i++) {
+			textRenderer.draw(lines[i], (int) x, (int) y - i * textRenderer.getFont().getSize());
+		}
+		textRenderer.endRendering();
 	}
 
 	/**
@@ -324,14 +344,7 @@ public abstract class Canvas extends GLCanvas
 	 * @param y    Position y du texte dans la fenêtre
 	 */
 	public void renderText(String text, float x, float y) {
-		text = text.replaceAll("\t", "  ");
-		String[] lines = text.split("\n");
-		this.getTextRenderer().beginRendering(this.getWidth(), this.getHeight());
-		this.getTextRenderer().setColor(RGBColor.WHITE[0], RGBColor.WHITE[1], RGBColor.WHITE[2], 1.0f);
-		for (int i = 0; i < lines.length; i++) {
-			this.getTextRenderer().draw(lines[i], (int) x, (int) y - i * this.getTextRenderer().getFont().getSize());
-		}
-		this.getTextRenderer().endRendering();
+		this.renderText(text, x, y, this.getDefaultTextRenderer().getFont());
 	}
 
 	/**
@@ -366,7 +379,7 @@ public abstract class Canvas extends GLCanvas
 	 */
 	@Override
 	public void init(GLAutoDrawable canvas) {
-		this.setTextRenderer(new TextRenderer(new Font(Font.MONOSPACED, Font.PLAIN, 16)));
+		this.setDefaultTextRenderer(new TextRenderer(new Font(Font.MONOSPACED, Font.PLAIN, 16)));
 	}
 
 	/**
