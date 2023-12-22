@@ -250,7 +250,8 @@ public class SpaceCubevaders extends Game {
 	 */
 	@Override
 	public Image getIcon() {
-		return new ImageIcon(System.getProperty("user.dir") + "/src/games/spacecubevaders/assets/icon.png").getImage();
+		return new ImageIcon(System.getProperty("user.dir") + "/src/games/spacecubevaders/assets/images/icon.png")
+				.getImage();
 	}
 
 	/*
