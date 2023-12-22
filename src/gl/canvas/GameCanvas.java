@@ -69,13 +69,13 @@ public class GameCanvas extends Canvas {
 					.setTitle(this.getGame().getName() + " - " + frameCounterString);
 			if (Debug.getMode(Debug.Mode.DRAW_INFO)) {
 				this.renderText(frameCounterString,
-						this.getWidth() - 125, this.getHeight() - this.getDefaultTextRenderer().getFont().getSize());
+						this.getWidth() - 150, this.getHeight() - this.getDefaultTextRenderer().getFont().getSize());
 			}
 		} else {
 			this.getParentFrame().setTitle(frameCounterString);
 			if (Debug.getMode(Debug.Mode.DRAW_INFO)) {
 				this.renderText("FPS: " + this.getFps() + "/" + Canvas.FPS_LIMIT,
-						this.getWidth() - 125, this.getHeight() - this.getDefaultTextRenderer().getFont().getSize());
+						this.getWidth() - 150, this.getHeight() - this.getDefaultTextRenderer().getFont().getSize());
 			}
 		}
 	}
