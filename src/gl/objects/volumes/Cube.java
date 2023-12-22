@@ -53,17 +53,17 @@ public class Cube extends Volume {
 			g = RGBColor.RED[1];
 			b = RGBColor.RED[2];
 		}
-		if (Debug.getMode(Debug.Mode.RAINBOW)) {
-			r = RGBColor.GREEN[0];
-			g = RGBColor.GREEN[1];
-			b = RGBColor.GREEN[2];
-		}
 		this.getShapes().add(Face.BACK.ordinal(), new Square(canvas, 0, 0, -0.5f,
 				0, 0, 0,
 				0.5f, 0.5f, 0.5f,
 				0, 0, 0,
 				0, 0, 0,
 				r, g, b));
+		if (Debug.getMode(Debug.Mode.RAINBOW)) {
+			r = RGBColor.GREEN[0];
+			g = RGBColor.GREEN[1];
+			b = RGBColor.GREEN[2];
+		}
 		this.getShapes().add(Face.FRONT.ordinal(), new Square(canvas, 0, 0, 0.5f,
 				0, 0, 0,
 				0.5f, 0.5f, 0.5f,
