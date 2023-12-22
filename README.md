@@ -18,7 +18,7 @@ Ce projet est un jeu de type Space Invaders, réalisé en Java avec la librairie
 ## Détails techniques
 
 Ce projet a été pensé pour pouvoir être facilement étendu et supporter plusieurs jeux.
-Il a un mode de debug graphique et informationnel dont les paramètres sont disponibles dans la classe [/src/common/DebugMode.java](/src/common/Debug.java).
+Il a un mode de debug graphique et informationnel dont les paramètres sont disponibles dans la classe [/src/common/DebugMode.java](src/common/Debug.java).
 Ces modes peuvent être dynamiquement changés et sont définis dans le point d'entrée du programme (MainGL ou DebugGL).
 N'hésitez pas à jouer avec pour comprendre le fonctionnement du rendu.
 
@@ -35,10 +35,11 @@ N'hésitez pas à jouer avec pour comprendre le fonctionnement du rendu.
 - [ ] (Optionnel) Prendre en compte les rotations dans la BoundingBox et la détection des collisions
 - [ ] (Optionnel) Encapsuler correctement les méthodes & attributs
 - [ ] (Optionnel) Ajouter des constantes de messages pour un éventuel système de langues
+- [ ] (Optionnel) Implémenter des méthodes à l'écoute d'évènements (Ex: `onPlayerDeath()`, `OnEnemySpawn()`, `OnEnnemyTakeDamage` etc...)
 
 ### Bugs connus
 
-- Selon la vitesse d'exécution, le programme génère parfois des ConcurrentModificationException lors de l'affichage d'objets
+- Selon la vitesse d'exécution, le programme génère parfois des ConcurrentModificationException lors de la création de Shelters (voir [SpaceCubevadersGame](src/games/spacecubevaders/SpaceCubevaders.java))
 - Les ennemis ne se déplacent pas toujours de façon uniforme (Certains ennemis se déplacent plus vite que d'autres)
 - La collision des composites n'est pas détectée correctement
 - La position/collision des objets graphiques en mouvement/rotation n'est pas toujours détectée correctement
@@ -80,7 +81,7 @@ Le projet est découpé en plusieurs packages :
 
 ### Mode DEBUG
 
-La classe [/common/DebugMode.java](/src/common/DebugMode.java) contient des constantes à modifier lors du développement pour afficher des informations utiles sur les objets, l'espace, modifier leurs comportements etc...
+La classe [/common/DebugMode.java](src/common/DebugMode.java) contient des constantes à modifier lors du développement pour afficher des informations utiles sur les objets, l'espace, modifier leurs comportements etc...
 
 ### Affichage d'un objet
 

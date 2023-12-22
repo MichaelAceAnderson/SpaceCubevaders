@@ -174,7 +174,7 @@ public class SpaceCubevaders extends Game {
 				2.0f, 2.0f, 2.0f,
 				0.0f, 0.0f, 0.0f,
 				0.0f, 5.0f, 0.0f,
-				RGBColor.DARK_GRAY[0], RGBColor.DARK_GRAY[1], RGBColor.DARK_GRAY[2])));
+				RGBColor.WHITE[0], RGBColor.WHITE[1], RGBColor.WHITE[2])));
 	}
 
 	/**
