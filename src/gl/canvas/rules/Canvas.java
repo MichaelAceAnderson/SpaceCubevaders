@@ -225,20 +225,20 @@ public abstract class Canvas extends GLCanvas
 		GL2 gl2 = this.getGL().getGL2();
 
 		gl2.glColor3f(RGBColor.GRAY[0], RGBColor.GRAY[1], RGBColor.GRAY[2]);
-		for (float i = -this.getDrawDistance(); i <= this.getDrawDistance(); i++) {
+		for (float lineIndex = -this.getDrawDistance(); lineIndex <= this.getDrawDistance(); lineIndex++) {
 			// Dessiner les lignes parallèles à l'axe des X des abscisses
 			gl2.glBegin(GL2.GL_LINES);
 			{
-				gl2.glVertex3f(-this.getDrawDistance(), yOffset, i);
-				gl2.glVertex3f(this.getDrawDistance(), yOffset, i);
+				gl2.glVertex3f(-this.getDrawDistance(), yOffset, lineIndex);
+				gl2.glVertex3f(this.getDrawDistance(), yOffset, lineIndex);
 			}
 			gl2.glEnd();
 
 			// Dessiner les lignes parralèles à l'axe Z de profondeur
 			gl2.glBegin(GL2.GL_LINES);
 			{
-				gl2.glVertex3f(i, yOffset, -this.getDrawDistance());
-				gl2.glVertex3f(i, yOffset, this.getDrawDistance());
+				gl2.glVertex3f(lineIndex, yOffset, -this.getDrawDistance());
+				gl2.glVertex3f(lineIndex, yOffset, this.getDrawDistance());
 			}
 			gl2.glEnd();
 		}

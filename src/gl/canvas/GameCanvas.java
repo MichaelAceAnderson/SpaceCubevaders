@@ -6,6 +6,7 @@ import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.glu.GLU;
 
 import common.Debug;
+import common.RGBColor;
 import gl.canvas.rules.Canvas;
 import gl.frames.rules.Frame;
 import gl.objects.rules.GraphicalObject;
@@ -106,7 +107,7 @@ public class GameCanvas extends Canvas {
 
 		GL2 gl2 = canvas.getGL().getGL2();
 		// Définir la couleur de fond
-		gl2.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		gl2.glClearColor(RGBColor.BLACK[0], RGBColor.BLACK[1], RGBColor.BLACK[2], 0.0f);
 		// Vider le buffer de profondeur
 		gl2.glClearDepth(1.0);
 		// Mettre en place le test de profondeur

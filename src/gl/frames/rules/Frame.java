@@ -103,7 +103,7 @@ public abstract class Frame extends JFrame {
 					clip.start();
 				} catch (Exception e) {
 					if (Debug.getMode(Mode.VERBOSE)) {
-						System.err.println("Erreur lors de la lecture de " + soundPath + ":");
+						System.err.println("Erreur lors de la lecture du son" + soundPath + ":");
 						e.printStackTrace();
 					}
 				}

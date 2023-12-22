@@ -84,7 +84,7 @@ public class Player extends Entity {
 						.textToHTML("Vous avez gagné !"
 								+ "\nScore: " + this
 										.getScore()
-								+ "\"Tout est dans le jeu du poignet.\" - Tron (1982)"
+								+ "\"Tout est dans le jeu des poignets.\" - Tron (1982)"
 								+ "\n<img src=\"file:" + System.getProperty(
 										"user.dir")
 								+ "/src/games/spacecubevaders/assets/images/win.gif\">"),
