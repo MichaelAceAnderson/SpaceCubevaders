@@ -32,12 +32,13 @@ public class SpaceCubevaders extends Game {
 	private ArrayList<Shelter> shelters;
 	private ArrayList<Ennemy> ennemies;
 	public final static float ENNEMIES_SPACING = 2.0f;
-	public final static float ENNEMIES_INITIAL_DISTANCE = 12.0f;
+	public final static float ENNEMIES_INITIAL_Y_FROM_PLAYER = 15.0f;
 	public final static int ENNEMIES_ROWS = 5;
 	public final static int ENNEMIES_PER_ROW = 11;
-	public final static float MIN_X = -8.0f;
-	public final static float MAX_X = 8.0f;
-	public final static float ENDING_DISTANCE_FROM_PLAYER = 5.0f;
+	public final static int MAX_SHELTERS = 3;
+	public final static float MIN_X = -16.0f;
+	public final static float MAX_X = 16.0f;
+	public final static float ENDING_Y_FROM_PLAYER = 3.0f;
 	public final static float GAME_DISTANCE = 30.0f;
 
 	/**
@@ -52,28 +53,8 @@ public class SpaceCubevaders extends Game {
 
 		this.setLevel(1);
 
-		this.setPlayer(new Player(new Pyramid(this.getCanvas(), MIN_X + MAX_X, -10, -GAME_DISTANCE,
-				0.0f, 0.0f, 0.0f,
-				2.0f, 2.0f, 2.0f,
-				0.0f, 0.0f, 0.0f,
-				0.0f, 5.0f, 0.0f,
-				RGBColor.DARK_GRAY[0], RGBColor.DARK_GRAY[1], RGBColor.DARK_GRAY[2])));
-
-
-		// Créer 3 abris répartis entre les limites du jeu
-		this.setShelters(new ArrayList<Shelter>());
-		for (float i = MIN_X; i <= MAX_X; i += (MAX_X - MIN_X) / 2) {
-			this.getShelters()
-					.add(new Shelter(this.getCanvas(), i, this.getPlayer().getRepresentation()
-							.getBoundingBox()[Boundary.MAX_Y.ordinal()] + 2,
-							-GAME_DISTANCE,
-							0.0f, 0.0f, 0.0f,
-							1.0f, 1.0f, 1.0f,
-							0.0f, 0.0f, 0.0f,
-							0.0f, 0.0f, 0.0f,
-							RGBColor.DARK_GRAY[0], RGBColor.DARK_GRAY[1], RGBColor.DARK_GRAY[2]));
-		}
-
+		this.spawnPlayer();
+		this.spawnShelters();
 		this.initLevel();
 
 		KeyListener keyListener = new KeyListener() {
@@ -82,14 +63,12 @@ public class SpaceCubevaders extends Game {
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_Q:
 					case KeyEvent.VK_LEFT:
-						if (SpaceCubevaders.this.getPlayer().getRepresentation().getPosX() > SpaceCubevaders.MIN_X
-								* ENNEMIES_SPACING)
+						if (SpaceCubevaders.this.getPlayer().getRepresentation().getPosX() > SpaceCubevaders.MIN_X)
 							SpaceCubevaders.this.getPlayer().move(Entity.Direction.LEFT);
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
-						if (SpaceCubevaders.this.getPlayer().getRepresentation().getPosX() < SpaceCubevaders.MAX_X
-								* ENNEMIES_SPACING)
+						if (SpaceCubevaders.this.getPlayer().getRepresentation().getPosX() < SpaceCubevaders.MAX_X)
 							SpaceCubevaders.this.getPlayer().move(Entity.Direction.RIGHT);
 						break;
 					case KeyEvent.VK_SPACE:
@@ -187,14 +166,47 @@ public class SpaceCubevaders extends Game {
 	}
 
 	/**
+	 * Faire apparaître le joueur
+	 */
+	private void spawnPlayer() {
+		this.setPlayer(new Player(new Pyramid(this.getCanvas(), MIN_X + MAX_X, -10, -GAME_DISTANCE,
+				0.0f, 0.0f, 0.0f,
+				2.0f, 2.0f, 2.0f,
+				0.0f, 0.0f, 0.0f,
+				0.0f, 5.0f, 0.0f,
+				RGBColor.DARK_GRAY[0], RGBColor.DARK_GRAY[1], RGBColor.DARK_GRAY[2])));
+	}
+
+	/**
+	 * Faire apparaître les abris
+	 */
+	private void spawnShelters() {
+		this.setShelters(new ArrayList<Shelter>());
+		float shelterScale = 1.0f;
+		float minShelterX = MIN_X + shelterScale;
+		float maxShelterX = MAX_X - shelterScale;
+		for (float i = minShelterX; i <= maxShelterX; i += (maxShelterX - minShelterX) / (MAX_SHELTERS - 1.0f)) {
+			this.getShelters()
+					.add(new Shelter(this.getCanvas(), i, this.getPlayer().getRepresentation()
+							.getPosY() + ENDING_Y_FROM_PLAYER - shelterScale,
+							-GAME_DISTANCE,
+							0.0f, 0.0f, 0.0f,
+							shelterScale, shelterScale, shelterScale,
+							0.0f, 0.0f, 0.0f,
+							0.0f, 0.0f, 0.0f,
+							RGBColor.DARK_GRAY[0], RGBColor.DARK_GRAY[1], RGBColor.DARK_GRAY[2]));
+		}
+	}
+
+	/**
 	 * Initialiser le niveau du jeu
 	 */
-	public void initLevel() {
+	private void initLevel() {
 		this.getCanvas().getAnimator().pause();
 
 		this.setEnnemies(new ArrayList<Ennemy>());
-		float startingX = -(ENNEMIES_PER_ROW / 2);
-		float startingY = this.getPlayer().getRepresentation().getPosY() + ENNEMIES_INITIAL_DISTANCE
+		float startingX = MIN_X;
+		float startingY = this.getPlayer().getRepresentation().getPosY() + ENNEMIES_INITIAL_Y_FROM_PLAYER
 				- this.getLevel();
 		for (float row = 0; row < ENNEMIES_ROWS; row++) {
 			for (float col = 0; col < ENNEMIES_PER_ROW; col++) {
@@ -330,10 +342,10 @@ public class SpaceCubevaders extends Game {
 			}
 			ennemy.move(ennemy.getDirection());
 
-			if (ennemy.getRepresentation().getPosX() > MAX_X * ENNEMIES_SPACING) {
+			if (ennemy.getRepresentation().getPosX() > MAX_X) {
 				reverseEnnemies(Direction.LEFT);
 				break;
-			} else if (ennemy.getRepresentation().getPosX() < MIN_X * ENNEMIES_SPACING) {
+			} else if (ennemy.getRepresentation().getPosX() < MIN_X) {
 				reverseEnnemies(Direction.RIGHT);
 				break;
 			}
@@ -347,9 +359,12 @@ public class SpaceCubevaders extends Game {
 	 */
 	public void reverseEnnemies(Direction direction) {
 		for (Ennemy ennemyToReverse : this.getEnnemies()) {
+			float currentSpeed = ennemyToReverse.getSpeed();
+			ennemyToReverse.setSpeed(0.5f);
 			ennemyToReverse.move(Direction.DOWN);
+			ennemyToReverse.setSpeed(currentSpeed);
 			ennemyToReverse.setDirection(direction);
-			ennemyToReverse.setSpeed(ennemyToReverse.getSpeed() + 0.005f);
+			ennemyToReverse.setSpeed(currentSpeed + 0.005f);
 		}
 	}
 
@@ -359,7 +374,7 @@ public class SpaceCubevaders extends Game {
 	public void updatePlayer() {
 		for (Ennemy ennemy : this.getEnnemies()) {
 			if (ennemy.getRepresentation().getPosY() <= this.getPlayer().getRepresentation().getPosY()
-					+ ENDING_DISTANCE_FROM_PLAYER) {
+					+ ENDING_Y_FROM_PLAYER) {
 
 				this.getCanvas().getAnimator().stop();
 				this.getPlayer().lose();
@@ -390,10 +405,10 @@ public class SpaceCubevaders extends Game {
 
 					if (this.getEnnemies().isEmpty()) {
 						float nextLevelEnnemiesHeight = (this.getPlayer().getRepresentation().getPosY()
-								+ ENNEMIES_INITIAL_DISTANCE
-								- (this.getLevel() + 1)) * ENNEMIES_SPACING;
+								+ ENNEMIES_INITIAL_Y_FROM_PLAYER
+								- (this.getLevel() + 1));
 						float endingHeight = this.getPlayer().getRepresentation().getPosY()
-								+ ENDING_DISTANCE_FROM_PLAYER;
+								+ ENDING_Y_FROM_PLAYER;
 						if (nextLevelEnnemiesHeight <= endingHeight) {
 							this.getCanvas().getAnimator().stop();
 							this.getPlayer().win();
@@ -420,7 +435,7 @@ public class SpaceCubevaders extends Game {
 
 		if (this.getPlayer().getMissile() != null) {
 			// Supprimer le missile s'il dépasse les limites du jeu
-			float ennemyZoneHeight = ENNEMIES_INITIAL_DISTANCE + ENNEMIES_ROWS * ENNEMIES_SPACING;
+			float ennemyZoneHeight = ENNEMIES_INITIAL_Y_FROM_PLAYER + ENNEMIES_ROWS * ENNEMIES_SPACING;
 			if (this.getPlayer().getMissile().getBoundingBox()[Boundary.MIN_Y.ordinal()] > this.getPlayer()
 					.getRepresentation().getPosY()
 					+ ennemyZoneHeight) {

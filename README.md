@@ -29,11 +29,14 @@ N'hésitez pas à jouer avec pour comprendre le fonctionnement du rendu.
 - [ ] (Optionnel) Ajouter des menus
   - [ ] (Optionnel) Ajouter un menu d'accueil
   - [ ] (Optionnel) Ajouter un menu de pause
-  - [ ] (Optionnel) Remplacer les Dialogs par des menus d'information qui écoutent une touche pour passer à l'écran suivant
+  - [ ] (Optionnel) Ajouter un menu de fin de partie
+  - [ ] (Optionnel) Ajouter un menu de sélection de jeu
+  - [ ] (Optionnel) Ajouter un menu de paramètres (son, musique, etc...)
 - [ ] (Optionnel) Refactoriser les codes de positions et de collisions
   - [ ] Faire une méthode getBoundary pour utiliser proprement l'enum Boundary éviter getBoundingBox
 - [ ] (Optionnel) Prendre en compte les rotations dans la BoundingBox et la détection des collisions
-- [ ] (Optionnel) Vérifier si les commentaires sont à jour par rapport au fonctionnement actuel du code
+- [ ] (Optionnel) Encapsuler correctement les méthodes & attributs
+- [ ] (Optionnel) Ajouter des constantes de messages pour un éventuel système de langues
 
 ### Bugs connus
 
