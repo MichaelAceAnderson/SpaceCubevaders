@@ -258,9 +258,19 @@ public class SpaceCubevaders extends Game {
 	 */
 	@Override
 	public void update() {
+		if (this.getShelters() != null) {
+			if (this.getShelters().size() > 0) {
 				this.updateShelters();
+			}
+		}
+		if (this.getEnnemies() != null) {
+			if (this.getEnnemies().size() > 0) {
 				this.updateEnnemies();
+			}
+		}
+		if (this.getPlayer() != null) {
 			this.updatePlayer();
+		}
 	}
 
 	/**
@@ -437,10 +447,15 @@ public class SpaceCubevaders extends Game {
 	 */
 	@Override
 	public String toString() {
-		return super.toString()
-				+ "\n\tNiveau : " + this.getLevel()
-				+ "\n\tEnnemis restants: " + this.getEnnemies().size()
-				+ "\n" + this.getPlayer().toString();
+		String infos = super.toString()
+				+ "\n\tNiveau : " + this.getLevel();
+		if (this.getEnnemies() != null) {
+			infos += "\n\tEnnemis restants: " + this.getEnnemies().size();
+		}
+		if (this.getPlayer() != null) {
+			infos += "\n" + this.getPlayer().toString();
 		}
 
+		return infos;
+	}
 }
