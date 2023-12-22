@@ -54,7 +54,6 @@ public class SpaceCubevaders extends Game {
 
 		this.setLevel(1);
 
-		// Créer un joueur au centre bas de l'écran
 		this.setPlayer(new Player(new Pyramid(this.getCanvas(), MIN_X + MAX_X, -10, -GAME_DISTANCE,
 				0.0f, 0.0f, 0.0f,
 				2.0f, 2.0f, 2.0f,

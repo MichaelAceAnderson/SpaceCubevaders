@@ -60,13 +60,10 @@ public class Triangle extends Shape {
 	 */
 	@Override
 	public void draw() {
-		// Commencer à dessiner le triangle
 		this.getGl2().glBegin(GL2.GL_TRIANGLES);
 		{
-			// Définir la couleur pour toutes les opérations à venir
 			this.getGl2().glColor3f(this.getRed(), this.getGreen(), this.getBlue());
 
-			// Dessiner chaque point qui compose le triangle sur le plan XYZ
 			// Point de gauche
 			this.getGl2().glVertex3f(-1.0f, 0.0f, 0.0f);
 			// Point à droite
@@ -74,7 +71,6 @@ public class Triangle extends Shape {
 			// Point du haut
 			this.getGl2().glVertex3f(0.0f, 1.0f, 0.0f);
 		}
-		// Finir de dessiner les triangles
 		this.getGl2().glEnd();
 	}
 }

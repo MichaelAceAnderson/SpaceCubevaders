@@ -35,10 +35,8 @@ public abstract class Frame extends JFrame {
 	 * @return Le texte converti en HTML
 	 */
 	public String textToHTML(String text) {
-		// Remplacer les retours à la ligne par des balises HTML
-		String textWithHtmlBreaks = "<html>" + text.replace("\n", "<br>") + "</html>";
-		// Retourner le texte converti en HTML
-		return textWithHtmlBreaks;
+		String convertedText = "<html>" + text.replace("\n", "<br>") + "</html>";
+		return convertedText;
 	}
 
 	/**

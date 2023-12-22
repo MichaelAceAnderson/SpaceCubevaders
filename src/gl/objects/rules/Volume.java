@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import gl.canvas.rules.Canvas;
 
 public abstract class Volume extends GraphicalObject {
-	// Formes composant le volume
 	private ArrayList<Shape> shapes;
 
 

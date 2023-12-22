@@ -381,15 +381,11 @@ public abstract class Canvas extends GLCanvas
 	 */
 	@Override
 	public void display(GLAutoDrawable canvas) {
-		// Incrémenter le nombre d'itérations d'affichage
 		this.setFrameCount(this.getFrameCount() + 1);
-		// Récupérer le temps actuel
+
 		long currentTime = System.nanoTime();
-		// Calculer le temps écoulé depuis le dernier calcul du temps (itération
-		// précédentes)
 		long deltaTime = currentTime - this.getLastRenderTime();
-		this.setLastRenderTime(currentTime);
-		// Calculer le nombre de FPS
 		this.setFps((int) TimeUnit.SECONDS.toNanos(1) / (int) deltaTime);
+		this.setLastRenderTime(currentTime);
 	}
 }

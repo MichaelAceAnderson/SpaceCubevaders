@@ -9,20 +9,13 @@ import common.RGBColor;
 import gl.canvas.rules.Canvas;
 
 public abstract class GraphicalObject {
-	// Position
-	protected float posX, posY, posZ;
-	// Angle
-	protected float angleX, angleY, angleZ;
-	// Taille
-	protected float scaleX, scaleY, scaleZ;
-	// Couleur
-	protected float red, green, blue;
-	// Mouvements dans le temps
-	protected float speedX, speedY, speedZ;
-	// Rotations dans le temps
-	protected float rotationX, rotationY, rotationZ;
-	// Canvas dans lequel l'objet est affiché
 	protected Canvas canvas;
+	protected float posX, posY, posZ;
+	protected float angleX, angleY, angleZ;
+	protected float scaleX, scaleY, scaleZ;
+	protected float red, green, blue;
+	protected float speedX, speedY, speedZ;
+	protected float rotationX, rotationY, rotationZ;
 
 	// Limites de la boîte de collision
 	public static enum Boundary {
@@ -607,7 +600,6 @@ public abstract class GraphicalObject {
 		this.getGl2().glPushMatrix();
 		{
 			// Effectuer des transformations sur l'objet à dessiner
-
 			this.getGl2().glTranslatef(this.getPosX(), this.getPosY(), this.getPosZ());
 			this.getGl2().glRotatef(this.getAngleX(), 1.0f, 0.0f, 0.0f);
 			this.getGl2().glRotatef(this.getAngleZ(), 0.0f, 0.0f, 1.0f);

@@ -6,7 +6,6 @@ import gl.objects.rules.GraphicalObject;
 import gl.objects.volumes.Cube;
 
 public class Ennemy extends Entity {
-	// Direction de l'ennemi
 	private Direction direction;
 
 	/**

@@ -83,13 +83,11 @@ public class GameCanvas extends Canvas {
 	 * Action à effectuer lors de la fermeture de la fenêtre
 	 * 
 	 * @param canvas Le canvas OpenGL
-	 * 
-	 * @see GLEventListener#dispose(GLAutoDrawable)
 	 */
 	@Override
 	public void dispose(GLAutoDrawable canvas) {
-		// Libérer les ressources allouées par OpenGL
 		canvas.getAnimator().stop();
+		// Libérer les ressources allouées par OpenGL
 		canvas.getGL().getGL2().glFlush();
 
 		System.exit(0);
@@ -134,7 +132,6 @@ public class GameCanvas extends Canvas {
 	@Override
 	public void reshape(GLAutoDrawable drawable,
 			int x, int y, int width, int height) {
-		// Récupérer le contexte OpenGL
 		GL2 gl2 = drawable.getGL().getGL2();
 		// Définir la zone d'affichage
 		gl2.glViewport(0, 0, width, height);
@@ -151,7 +148,7 @@ public class GameCanvas extends Canvas {
 		this.setDrawDistance(80.0f);
 		glu.gluPerspective(this.getFov(), this.getAspect(),
 				this.getNearClip(), this.getDrawDistance());
-		// Définir le mode de projection à utiliser)
+		// Définir le mode de projection à utiliser
 		gl2.glMatrixMode(GL2.GL_MODELVIEW);
 	}
 }

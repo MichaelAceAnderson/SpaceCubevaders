@@ -29,10 +29,7 @@ public abstract class Shape extends GraphicalObject {
 	}
 
 	/**
-	 * Dessiner cette forme.
-	 * Cette méthode doit être implémentée dans les classes filles afin de
-	 * déterminer comment la forme doit être dessinée et affichée dans la méthode
-	 * display().
+	 * Dessiner cette forme
 	 * 
 	 * @see GraphicalObject#draw()
 	 * @see GraphicalObject#display()
