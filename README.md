@@ -25,15 +25,13 @@ N'hésitez pas à jouer avec pour comprendre le fonctionnement du rendu.
 ### To-do
 
 - [ ] Régler les bugs connus
-- [ ] Rendre les limites du jeu dépendantes du nombre d'ennemies par ligne
+- [ ] (Optionnel) Refactoriser les codes de positions et de collisions
 - [ ] (Optionnel) Ajouter des menus
   - [ ] (Optionnel) Ajouter un menu d'accueil
   - [ ] (Optionnel) Ajouter un menu de pause
   - [ ] (Optionnel) Ajouter un menu de fin de partie
   - [ ] (Optionnel) Ajouter un menu de sélection de jeu
   - [ ] (Optionnel) Ajouter un menu de paramètres (son, musique, etc...)
-- [ ] (Optionnel) Refactoriser les codes de positions et de collisions
-  - [ ] Faire une méthode getBoundary pour utiliser proprement l'enum Boundary éviter getBoundingBox
 - [ ] (Optionnel) Prendre en compte les rotations dans la BoundingBox et la détection des collisions
 - [ ] (Optionnel) Encapsuler correctement les méthodes & attributs
 - [ ] (Optionnel) Ajouter des constantes de messages pour un éventuel système de langues
@@ -46,7 +44,7 @@ N'hésitez pas à jouer avec pour comprendre le fonctionnement du rendu.
 - La position/collision des objets graphiques en mouvement/rotation n'est pas toujours détectée correctement
 - Les composites ne tournent pas autour d'eux même mais autour d'un point fixe distant de leur centre
 - La détection de la visibilité d'un objet graphique n'est pas calculée à partir de la perspective de la caméra mais à partir de la profondeur d'affichage maximum (Voir `isVisible()` de [GraphicalObject](src/gl/objects/rules/GraphicalObject.java))
-- La boîte de collisions ne prend pas en compte les rotations de l'objet ou la profondeur nulle d'une forme (Voir `getBoundingBox()` de [GraphicalObject](src/gl/objects/rules/GraphicalObject.java))
+- La boîte de collisions ne prend pas en compte les rotations de l'objet ou la profondeur nulle d'une forme (Voir `getBoundaries()` de [GraphicalObject](src/gl/objects/rules/GraphicalObject.java))
 
 ### Architecture
 

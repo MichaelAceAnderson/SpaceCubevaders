@@ -429,12 +429,7 @@ public abstract class GraphicalObject {
 	 * 
 	 * @return Les coordonnées des limites
 	 */
-	/**
-	 * Récupérer les coordonnées des limites de ce volume
-	 * 
-	 * @see GraphicalObject#getBoundingBox()
-	 */
-	public float[] getBoundingBox() {
+	public float[] getBoundaries() {
 		float[] centerPosition = { this.getPosX(), this.getPosY(), this.getPosZ() };
 		float[] size = { this.getScaleX(), this.getScaleY(), this.getScaleZ() };
 
@@ -451,6 +446,15 @@ public abstract class GraphicalObject {
 	}
 
 	/**
+	 * Récupérer la coordonnée d'une frontière de cet objet graphique
+	 * 
+	 * @param boundary La frontière à récupérer
+	 */
+	public float getBoundary(Boundary boundary) {
+		return this.getBoundaries()[boundary.ordinal()];
+	}
+
+	/**
 	 * Vérifier si cet objet graphique est en collision avec un autre objet
 	 * graphique
 	 * 
@@ -459,8 +463,8 @@ public abstract class GraphicalObject {
 	 * @return true si les objets sont en collision, false sinon
 	 */
 	public boolean isColliding(GraphicalObject object) {
-		float[] thisBoundingBox = this.getBoundingBox();
-		float[] objectBoundingBox = object.getBoundingBox();
+		float[] thisBoundingBox = this.getBoundaries();
+		float[] objectBoundingBox = object.getBoundaries();
 
 		// Si le dessus de cet objet est plus haut que le dessous de l'autre objet
 		boolean isColliding = (thisBoundingBox[Boundary.MAX_Y.ordinal()] >= objectBoundingBox[Boundary.MIN_Y.ordinal()]
@@ -487,32 +491,32 @@ public abstract class GraphicalObject {
 	 */
 	public boolean isVisible() {
 		// Si l'objet est derrière le champ de vision de la caméra
-		if (this.getBoundingBox()[Boundary.MAX_Z.ordinal()] > 0) {
+		if (this.getBoundary(Boundary.MAX_Z) > 0) {
 			return false;
 		}
 
 		// Si l'objet est plus loin que la profondeur maximum
-		if (this.getBoundingBox()[Boundary.MIN_Z.ordinal()] < -this.getCanvas().getDrawDistance()) {
+		if (this.getBoundary(Boundary.MIN_Z) < -this.getCanvas().getDrawDistance()) {
 			return false;
 		}
 
 		// Si l'objet est plus à gauche que la limite de gauche
-		if (this.getBoundingBox()[Boundary.MIN_X.ordinal()] < -this.getCanvas().getDrawDistance()) {
+		if (this.getBoundary(Boundary.MIN_X) < -this.getCanvas().getDrawDistance()) {
 			return false;
 		}
 
 		// Si l'objet est plus à droite que la limite de droite
-		if (this.getBoundingBox()[Boundary.MAX_X.ordinal()] > this.getCanvas().getDrawDistance()) {
+		if (this.getBoundary(Boundary.MAX_X) > this.getCanvas().getDrawDistance()) {
 			return false;
 		}
 
 		// Si l'objet est plus haut que la limite haute
-		if (this.getBoundingBox()[Boundary.MAX_Y.ordinal()] > this.getCanvas().getDrawDistance()) {
+		if (this.getBoundary(Boundary.MAX_Y) > this.getCanvas().getDrawDistance()) {
 			return false;
 		}
 
 		// Si l'objet est plus bas que la limite basse
-		if (this.getBoundingBox()[Boundary.MIN_Y.ordinal()] < -this.getCanvas().getDrawDistance()) {
+		if (this.getBoundary(Boundary.MAX_X) < -this.getCanvas().getDrawDistance()) {
 			return false;
 		}
 
@@ -543,24 +547,25 @@ public abstract class GraphicalObject {
 		this.getGl2().glBegin(GL2.GL_LINES);
 		{
 			this.getGl2().glColor3f(RGBColor.YELLOW[0], RGBColor.YELLOW[1], RGBColor.YELLOW[2]);
-			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MIN_X.ordinal()],
+			this.getGl2().glVertex3f(this.getBoundary(Boundary.MIN_X),
 					this.getPosY(),
 					this.getPosZ());
-			this.getGl2().glVertex3f(this.getBoundingBox()[Boundary.MAX_X.ordinal()],
+			this.getGl2().glVertex3f(
+					this.getBoundary(Boundary.MAX_X),
 					this.getPosY(),
 					this.getPosZ());
 			this.getGl2().glVertex3f(this.getPosX(),
-					this.getBoundingBox()[Boundary.MIN_Y.ordinal()],
+					this.getBoundary(Boundary.MIN_Y),
 					this.getPosZ());
 			this.getGl2().glVertex3f(this.getPosX(),
-					this.getBoundingBox()[Boundary.MAX_Y.ordinal()],
+					this.getBoundary(Boundary.MAX_Y),
 					this.getPosZ());
 			this.getGl2().glVertex3f(this.getPosX(),
 					this.getPosY(),
-					this.getBoundingBox()[Boundary.MIN_Z.ordinal()]);
+					this.getBoundary(Boundary.MIN_Z));
 			this.getGl2().glVertex3f(this.getPosX(),
 					this.getPosY(),
-					this.getBoundingBox()[Boundary.MAX_Z.ordinal()]);
+					this.getBoundary(Boundary.MAX_Z));
 		}
 		this.getGl2().glEnd();
 		this.getGl2().glPolygonMode(GL.GL_FRONT_AND_BACK, GL2.GL_FILL);
@@ -713,12 +718,12 @@ public abstract class GraphicalObject {
 				+ "\tRotation: X: " + this.getRotationX() + ", Y: " + this.getRotationY() + ", Z: "
 				+ this.getRotationZ() + "\n"
 				+ "\tBoundingBox: " + "\n"
-				+ "\t\tDessus (MAX_Y): " + this.getBoundingBox()[Boundary.MAX_Y.ordinal()] + "\n"
-				+ "\t\tAvant (MAX_Z): " + this.getBoundingBox()[Boundary.MAX_Z.ordinal()] + "\n"
-				+ "\t\tArrière (MIN_Z): " + this.getBoundingBox()[Boundary.MIN_Z.ordinal()] + "\n"
-				+ "\t\tGauche: (MIN_X): " + this.getBoundingBox()[Boundary.MIN_X.ordinal()] + "\n"
-				+ "\t\tDroite: (MAX_X): " + this.getBoundingBox()[Boundary.MAX_X.ordinal()] + "\n"
-				+ "\t\tDessous: (MIN_Y): " + this.getBoundingBox()[Boundary.MIN_Y.ordinal()] + "\n"
+				+ "\t\tDessus (MAX_Y): " + this.getBoundary(Boundary.MAX_Y) + "\n"
+				+ "\t\tAvant (MAX_Z): " + this.getBoundary(Boundary.MAX_Z) + "\n"
+				+ "\t\tArrière (MIN_Z): " + this.getBoundary(Boundary.MIN_Z) + "\n"
+				+ "\t\tGauche: (MIN_X): " + this.getBoundary(Boundary.MIN_X) + "\n"
+				+ "\t\tDroite: (MAX_X): " + this.getBoundary(Boundary.MAX_X) + "\n"
+				+ "\t\tDessous: (MIN_Y): " + this.getBoundary(Boundary.MIN_Y) + "\n"
 				+ "\tVisible: " + this.isVisible();
 	}
 }

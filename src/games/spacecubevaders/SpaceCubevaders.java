@@ -436,7 +436,7 @@ public class SpaceCubevaders extends Game {
 		if (this.getPlayer().getMissile() != null) {
 			// Supprimer le missile s'il dépasse les limites du jeu
 			float ennemyZoneHeight = ENNEMIES_INITIAL_Y_FROM_PLAYER + ENNEMIES_ROWS * ENNEMIES_SPACING;
-			if (this.getPlayer().getMissile().getBoundingBox()[Boundary.MIN_Y.ordinal()] > this.getPlayer()
+			if (this.getPlayer().getMissile().getBoundary(Boundary.MIN_Y) > this.getPlayer()
 					.getRepresentation().getPosY()
 					+ ennemyZoneHeight) {
 				this.removeMissile(this.getPlayer());
