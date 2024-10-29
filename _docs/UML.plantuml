@@ -1,0 +1,74 @@
+@startuml Space Cubevaders
+class MainCanvas {
+}
+
+abstract class Canvas {
+}
+
+abstract class Frame { 
+}
+
+class GLFrame extends Frame{
+}
+MainCanvas "1" -- "1" GLFrame
+GLFrame "1" -- "1..*" Canvas
+Canvas -up-|> GLCanvas
+Canvas .up.|> GLEventListener
+
+class GameCanvas extends Canvas{
+}
+
+abstract class Game {
+}
+GameCanvas "1" -- "1" Game
+
+class SpaceCubevaders extends Game {
+}
+
+abstract class Entity {
+}
+
+class Player extends Entity{
+}
+SpaceCubevaders "1" -- "1" Player
+
+class Ennemy extends Entity{
+}
+SpaceCubevaders "1" -- "0..*" Ennemy
+
+abstract class GraphicalObject {
+}
+GameCanvas "1" -- "0..*" GraphicalObject
+
+abstract class Shape extends GraphicalObject{
+}
+
+class Volume extends GraphicalObject{
+}
+Volume "1" *- "1..*" Shape
+
+abstract class Composite extends GraphicalObject{
+}
+Composite "1" *- "1..*" GraphicalObject
+
+class Triangle extends Shape{
+}
+
+class Square extends Shape{
+}
+
+class Cube extends Volume{
+}
+
+class Pyramid extends Volume{
+}
+
+class Missile extends Composite{
+}
+Entity "1" -- "0..*" Missile
+note right of Missile : Does not work, \nreplaced by a cube \nin the code
+
+class Shelter {
+}
+SpaceCubevaders "1" -- "0..*" Shelter
+@enduml
