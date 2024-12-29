@@ -1,0 +1,6 @@
+**/bin/
+.vscode
+
+# Keep .gitkeep files, they are useful for keeping empty directories
+# Note: Put the directories to ignore before this line
+!**/.gitkeep
