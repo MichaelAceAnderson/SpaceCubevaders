@@ -1,5 +1,7 @@
 package gl.canvas;
 
+import java.util.Iterator;
+
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
@@ -46,7 +48,10 @@ public class GameCanvas extends Canvas {
 			if (Debug.getMode(Debug.Mode.DRAW_GRID)) {
 				this.drawAxis(-2, -1, -5);
 			}
-			for (GraphicalObject object : this.getObjects()) {
+
+			Iterator<GraphicalObject> iterator = this.getObjects().iterator();
+			while (iterator.hasNext()) {
+				GraphicalObject object = iterator.next();
 				if (object.isVisible()) {
 					object.display();
 					object.move(object.getSpeedX(), object.getSpeedY(), object.getSpeedZ());

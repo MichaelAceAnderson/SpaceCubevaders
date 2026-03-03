@@ -68,7 +68,8 @@ public abstract class Composite extends GraphicalObject {
 	@Override
 	public void draw() {
 		// Drawing this composite object consists of displaying all the objects that compose it
-		for (GraphicalObject component : this.getComponents()) {
+		for (java.util.Iterator<GraphicalObject> it = this.getComponents().iterator(); it.hasNext(); ) {
+			GraphicalObject component = it.next();
 			component.display();
 		}
 	}

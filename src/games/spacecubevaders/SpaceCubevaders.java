@@ -1,6 +1,7 @@
 package games.spacecubevaders;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 
@@ -40,6 +41,7 @@ public class SpaceCubevaders extends Game {
 	public final static float MAX_X = 16.0f;
 	public final static float ENDING_Y_FROM_PLAYER = 3.0f;
 	public final static float GAME_DISTANCE = 30.0f;
+
 	/**
 	 * Create a game
 	 * 
@@ -214,16 +216,17 @@ public class SpaceCubevaders extends Game {
 								new Cube(this.getCanvas(), startingX + col * ENNEMIES_SPACING,
 										startingY + row * ENNEMIES_SPACING,
 										-GAME_DISTANCE,
-								0.0f, 0.0f, 0.0f,
-								1, 1, 1,
-								0.0f, 0.0f, 0.0f,
-								0.0f, 0.0f, 0.0f,
-								RGBColor.GREEN[0], RGBColor.GREEN[1], RGBColor.GREEN[2])));
+										0.0f, 0.0f, 0.0f,
+										1, 1, 1,
+										0.0f, 0.0f, 0.0f,
+										0.0f, 0.0f, 0.0f,
+										RGBColor.GREEN[0], RGBColor.GREEN[1], RGBColor.GREEN[2])));
 			}
 		}
 
 		this.getCanvas().getAnimator().resume();
 	}
+
 	/**
 	 * Set the game level
 	 * 
@@ -268,14 +271,14 @@ public class SpaceCubevaders extends Game {
 	 */
 	@Override
 	public void update() {
-		if (this.getShelters() != null) {
-			if (this.getShelters().size() > 0) {
-				this.updateShelters();
-			}
-		}
 		if (this.getEnnemies() != null) {
 			if (this.getEnnemies().size() > 0) {
 				this.updateEnnemies();
+			}
+		}
+		if (this.getShelters() != null) {
+			if (this.getShelters().size() > 0) {
+				this.updateShelters();
 			}
 		}
 		if (this.getPlayer() != null) {
@@ -287,14 +290,11 @@ public class SpaceCubevaders extends Game {
 	 * Update the shelters
 	 */
 	public void updateShelters() {
-		for (Shelter shelter : this.getShelters()) {
-			for (Cube shelterComponent : shelter.getBlocks()) {
-				// To avoid a ConcurrentModificationException, we do not remove the shelter
-				// components in case of destruction, we only remove them from the canvas
-				// and only process those that are still there
-				if (!this.getCanvas().getObjects().contains(shelterComponent)) {
-					continue;
-				}
+		for (Iterator<Shelter> shelterIterator = this.getShelters().iterator(); shelterIterator.hasNext();) {
+			Shelter shelter = shelterIterator.next();
+
+			for (Iterator<Cube> shelterComponentIterator = shelter.getBlocks().iterator(); shelterComponentIterator.hasNext();) {
+				Cube shelterComponent = shelterComponentIterator.next();
 
 				if (this.getPlayer().getMissile() != null) {
 					if (this.getPlayer().getMissile().isColliding(shelterComponent)) {
@@ -310,18 +310,22 @@ public class SpaceCubevaders extends Game {
 					}
 				}
 
-				for (Ennemy ennemy : this.getEnnemies()) {
-					if (ennemy.getMissile() != null) {
-						if (ennemy.getMissile().isColliding(shelterComponent)) {
-							if (Debug.getMode(Mode.VERBOSE)) {
-								System.out.println(
-										"Collision between the missile and block "
-												+ shelter.getBlocks().indexOf(shelterComponent)
-												+ " of shelter " + this.getShelters().indexOf(shelter) + " !");
-							}
-							this.getCanvas().getObjects().remove(shelterComponent);
+				if (this.getEnnemies() != null) {
+					for (Iterator<Ennemy> ennemyIterator = this.getEnnemies().iterator(); ennemyIterator.hasNext();) {
+						Ennemy ennemy = ennemyIterator.next();
+						
+						if (ennemy.getMissile() != null) {
+							if (ennemy.getMissile().isColliding(shelterComponent)) {
+								if (Debug.getMode(Mode.VERBOSE)) {
+									System.out.println(
+											"Collision between the ennemy's missile and block "
+													+ shelter.getBlocks().indexOf(shelterComponent)
+													+ " of shelter " + this.getShelters().indexOf(shelter) + " !");
+								}
+								this.getCanvas().getObjects().remove(shelterComponent);
 
-							this.removeMissile(ennemy);
+								this.removeMissile(ennemy);
+							}
 						}
 					}
 				}
@@ -333,7 +337,9 @@ public class SpaceCubevaders extends Game {
 	 * Update the enemies
 	 */
 	public void updateEnnemies() {
-		for (Ennemy ennemy : this.getEnnemies()) {
+		for (Iterator<Ennemy> ennemyIterator = this.getEnnemies().iterator(); ennemyIterator.hasNext();) {
+			Ennemy ennemy = ennemyIterator.next();
+
 			float shootProbability = (this.getLevel() * 0.0001f);
 			if (Math.random() < shootProbability) {
 				ennemy.shoot();
@@ -356,7 +362,9 @@ public class SpaceCubevaders extends Game {
 	 * @param direction Direction to reverse
 	 */
 	public void reverseEnnemies(Direction direction) {
-		for (Ennemy ennemyToReverse : this.getEnnemies()) {
+		for (Iterator<Ennemy> ennemyIterator = this.getEnnemies().iterator(); ennemyIterator.hasNext();) {
+			Ennemy ennemyToReverse = ennemyIterator.next();
+
 			float currentSpeed = ennemyToReverse.getSpeed();
 			ennemyToReverse.setSpeed(0.5f);
 			ennemyToReverse.move(Direction.DOWN);
@@ -370,7 +378,9 @@ public class SpaceCubevaders extends Game {
 	 * Update the player
 	 */
 	public void updatePlayer() {
-		for (Ennemy ennemy : this.getEnnemies()) {
+		for (Iterator<Ennemy> ennemyIterator = this.getEnnemies().iterator(); ennemyIterator.hasNext();) {
+			Ennemy ennemy = ennemyIterator.next();
+			
 			if (ennemy.getRepresentation().getPosY() <= this.getPlayer().getRepresentation().getPosY()
 					+ ENDING_Y_FROM_PLAYER) {
 
@@ -441,6 +451,7 @@ public class SpaceCubevaders extends Game {
 			}
 		}
 	}
+
 	/**
 	 * Remove the missile from a game entity
 	 *

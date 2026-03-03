@@ -3,18 +3,18 @@
 All information related to contributing to the project can be found in this file. It is **mandatory** to read it before contributing to the project in order to follow the conventions and make the development process easier for everyone. Thank you for your understanding!
 
 - [Contributing to SpaceCubevaders](#contributing-to-spacecubevaders)
-	- [Getting the Project](#getting-the-project)
-	- [Project Conventions](#project-conventions)
-		- [Versioning](#versioning)
-		- [Git](#git)
-		- [Code](#code)
-			- [Indentation](#indentation)
-			- [Code Quality](#code-quality)
-	- [Technical Design](#technical-design)
-		- [Diagrams and schemas](#diagrams-and-schemas)
-		- [Development Environment](#development-environment)
-		- [Structure](#structure)
-		- [Displaying an Object](#displaying-an-object)
+  - [Getting the Project](#getting-the-project)
+  - [Project Conventions](#project-conventions)
+    - [Versioning](#versioning)
+    - [Git](#git)
+    - [Code](#code)
+      - [Indentation](#indentation)
+      - [Code Quality](#code-quality)
+  - [Technical Design](#technical-design)
+    - [Diagrams and schemas](#diagrams-and-schemas)
+    - [Development Environment](#development-environment)
+    - [Structure](#structure)
+    - [Displaying an Object](#displaying-an-object)
 
 ## Getting the Project
 
@@ -200,8 +200,10 @@ public void display() {
 /* Draw the volume */
 public void draw() {
  // Drawing this volume involves displaying all the shapes that compose it
- for (Shape shape : this.getShapes()) {
-  shape.display();
- }
+  Iterator<Shape> iterator = this.getShapes().iterator();
+  while (iterator.hasNext()) {
+    Shape shape = iterator.next();
+    shape.display();
+  }
 }
 ```

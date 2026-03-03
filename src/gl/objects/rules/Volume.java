@@ -1,6 +1,7 @@
 package gl.objects.rules;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import gl.canvas.rules.Canvas;
 
@@ -68,7 +69,9 @@ public abstract class Volume extends GraphicalObject {
 	@Override
 	public void draw() {
 		// Drawing this volume consists of displaying all the shapes that compose it
-		for (Shape shape : this.getShapes()) {
+		Iterator<Shape> iterator = this.getShapes().iterator();
+		while (iterator.hasNext()) {
+			Shape shape = iterator.next();
 			shape.display();
 		}
 	}

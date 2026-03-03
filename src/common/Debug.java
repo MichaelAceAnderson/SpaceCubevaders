@@ -1,5 +1,7 @@
 package common;
 
+import java.util.Iterator;
+
 import gl.canvas.rules.Canvas;
 import gl.objects.rules.GraphicalObject;
 
@@ -66,18 +68,22 @@ public final class Debug {
 	public static void printInfo(Canvas canvas) {
 		System.out.println(Debug.getModes());
 
-		for (GraphicalObject object : canvas.getObjects()) {
+		for (Iterator<GraphicalObject> graphicalObjectIterator = canvas.getObjects().iterator(); graphicalObjectIterator.hasNext();) {
+			GraphicalObject object = graphicalObjectIterator.next();
+			
 			// Display the properties of the object
 			System.out.println(object.toString());
 			// Check for collisions with other objects
-			for (GraphicalObject otherObject : canvas.getObjects()) {
-				if (object != otherObject) {
-					if (object.isColliding(otherObject)) {
+			for (Iterator<GraphicalObject> collidingObjectIterator = canvas.getObjects().iterator(); collidingObjectIterator.hasNext();) {
+				GraphicalObject collidinGraphicalObject = collidingObjectIterator.next();
+
+				if (object != collidinGraphicalObject) {
+					if (object.isColliding(collidinGraphicalObject)) {
 						System.out.println(
 								"\t" + "This object is colliding with an object "
-										+ otherObject.getClass().getSimpleName()
-										+ " at coordinates " + otherObject.getPosX() + ", " + otherObject.getPosY()
-										+ ", " + otherObject.getPosZ());
+										+ collidinGraphicalObject.getClass().getSimpleName()
+										+ " at coordinates " + collidinGraphicalObject.getPosX() + ", " + collidinGraphicalObject.getPosY()
+										+ ", " + collidinGraphicalObject.getPosZ());
 					}
 				}
 			}
