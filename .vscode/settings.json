@@ -1,0 +1,11 @@
+{
+	"java.project.sourcePaths": [
+		"src"
+	],
+	"java.project.referencedLibraries": [
+		"c:\\Users\\asavoie\\Documents\\Perso\\SpaceCubevaders\\lib\\gluegen-rt.jar",
+		"c:\\Users\\asavoie\\Documents\\Perso\\SpaceCubevaders\\lib\\jogl-all-natives-windows-amd64.jar",
+		"c:\\Users\\asavoie\\Documents\\Perso\\SpaceCubevaders\\lib\\jogl-all.jar",
+		"c:\\Users\\asavoie\\Documents\\Perso\\SpaceCubevaders\\lib\\gluegen-rt-natives-windows-amd64.jar"
+	]
+}
